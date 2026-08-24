@@ -45,6 +45,9 @@ Then open any session in your tool — agents, commands and skills are live.
 > **✦ Expansion (v9.2):** competitor-informed study added 13 specialists (`@product-shaper` `@ux-researcher` `@brand-guardian` `@growth-analyst` `@code-polisher` `@test-engineer` `@perf-auditor` `@a11y-auditor` `@release-manager` `@incident-detective` `@prompt-smith` `@context-steward` `@portfolio-steward`) — the Council is now **40/40** real.  
 > **✦ Extended Council (v9.1):** all remaining members are now real agents too — the Council is **27/27** invocable on every platform: `@agent-weaver` · `@data-modeler` · `@stream-partitioner` · `@integrative-architect` · `@risk-assessor` · `@cinematic-director` · `@design-system-master` · `@responsive-layout` · `@print-publisher` · `@motion-coder` · `@cicd-automator` · `@sandbox-isolator` · `@dep-manager` · `@voice-engineer` · `@data-engineer` · `@hadi-core`
 
+
+📖 **Full details:** [COUNCIL.md](COUNCIL.md) — all forty by division | [SKILLS_CATALOG.md](SKILLS_CATALOG.md) — every skill described
+
 ## 4) The Six Commands — Lifecycle
 
 ```

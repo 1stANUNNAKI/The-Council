@@ -45,6 +45,9 @@
 > **✦ التوسعة (v9.2):** بعد دراسة المنافس أُضيف 13 متخصصاً جديداً (`@product-shaper` `@ux-researcher` `@brand-guardian` `@growth-analyst` `@code-polisher` `@test-engineer` `@perf-auditor` `@a11y-auditor` `@release-manager` `@incident-detective` `@prompt-smith` `@context-steward` `@portfolio-steward`) — والمجلس الآن **40/40** حقيقياً.  
 > **✦ المجلس الموسّع (v9.1):** أصبح الأربعة والعشرون الباقون وكيلاً حقيقياً أيضاً — المجلس الآن **27/27** قابلاً للاستدعاء في كل المنصات: `@agent-weaver` · `@data-modeler` · `@stream-partitioner` · `@integrative-architect` · `@risk-assessor` · `@cinematic-director` · `@design-system-master` · `@responsive-layout` · `@print-publisher` · `@motion-coder` · `@cicd-automator` · `@sandbox-isolator` · `@dep-manager` · `@voice-engineer` · `@data-engineer` · `@hadi-core`
 
+
+📖 **التفاصيل الكاملة:** [COUNCIL.md](COUNCIL.md) — الأربعون وكيلاً بالفرق | [SKILLS_CATALOG.md](SKILLS_CATALOG.md) — كل مهارة بوصفها
+
 ## 4) الأوامر الست — دورة الحياة
 
 ```

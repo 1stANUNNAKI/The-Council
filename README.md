@@ -169,6 +169,8 @@ Automated reality-check across source + 4 deploy targets:
 - العربية — [USAGE_AR.md](USAGE_AR.md)
 - English — [USAGE_EN.md](USAGE_EN.md)
 - 中文 — [USAGE_ZH.md](USAGE_ZH.md)
+- Council roster — [COUNCIL.md](COUNCIL.md)
+- Skills catalog — [SKILLS_CATALOG.md](SKILLS_CATALOG.md)
 - Constitution — [AGENTS.md](AGENTS.md)
 
 ---

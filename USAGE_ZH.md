@@ -45,6 +45,9 @@ Majlis **不是**编辑器，也不是 Claude Code 或 OpenCode 的替代品。�
 > **✦ 扩展（v9.2）：**经竞品研究新增13名专家（`@product-shaper` `@ux-researcher` `@brand-guardian` `@growth-analyst` `@code-polisher` `@test-engineer` `@perf-auditor` `@a11y-auditor` `@release-manager` `@incident-detective` `@prompt-smith` `@context-steward` `@portfolio-steward`）—— 议会达成 **40/40**。  
 > **✦ 扩展议会（v9.1）：**其余成员现已成为真实智能体 —— 议会达成 **27/27**，可在所有平台上调用：`@agent-weaver` · `@data-modeler` · `@stream-partitioner` · `@integrative-architect` · `@risk-assessor` · `@cinematic-director` · `@design-system-master` · `@responsive-layout` · `@print-publisher` · `@motion-coder` · `@cicd-automator` · `@sandbox-isolator` · `@dep-manager` · `@voice-engineer` · `@data-engineer` · `@hadi-core`
 
+
+📖 **完整详情：** [COUNCIL.md](COUNCIL.md) — 按部门划分的四十位 | [SKILLS_CATALOG.md](SKILLS_CATALOG.md) — 每项技能说明
+
 ## 4) 六大命令 — 生命周期
 
 ```
