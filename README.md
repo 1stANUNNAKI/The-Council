@@ -1,30 +1,32 @@
 <div align="center">
 
+[![العربية](https://img.shields.io/badge/العربية-الدليل_الكامل-green?style=for-the-badge)](USAGE_AR.md)
+[![English](https://img.shields.io/badge/English-Full_Guide-blue?style=for-the-badge)](USAGE_EN.md)
+[![中文](https://img.shields.io/badge/中文-完整指南-red?style=for-the-badge)](USAGE_ZH.md)
+
 # 🏛️ MAJLIS · The Council — المجلس
 
-### **40 real agents · 90+ skills · 6 governing commands · 30+ platforms · one command**
+### **One mind. Every tool.** — عقلٌ واحد في كل أدواتك — 一个大脑，贯通所有工具
 
-**One mind. Every tool.** — عقلٌ واحد في كل أدواتك
+![Version](https://img.shields.io/badge/version-9.2.0-gold)
+![Agents](https://img.shields.io/badge/real_agents-40-3ddc97)
+![Skills](https://img.shields.io/badge/skills-90_trilingual-e8b64c)
+![Platforms](https://img.shields.io/badge/platforms-30+-7c9eff)
+![Audit](https://img.shields.io/badge/integrity-774%2F0_pass-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
+
+**A disciplined council of 40 real agents and 90 curated skills —
+installed with one command into OpenCode, Claude Code, Codex, Gemini CLI and 26+ more platforms.
+Nothing ships without test evidence and a green security gate.**
 
 `npx majlis-council --all`
-
-[Installation](#-installation) · [The Council](#-the-council-of-forty) · [Commands](#-six-governing-commands) · [Pipeline](#-the-pipeline) · [Security Gate](#-the-red-gate) · [Docs AR](USAGE_AR.md) / [EN](USAGE_EN.md) / [ZH](USAGE_ZH.md)
 
 </div>
 
 ---
 
-## What Majlis is
-
-Majlis is **not an editor and not a model**. It is a *discipline layer* that installs on top of the AI coding tool you already use (OpenCode, Claude Code, Codex, Gemini CLI, Cursor, Copilot…). After one command you get, inside that tool:
-
-- **40 real subagents** with fixed roles and least-privilege permission matrices
-- **90+ curated skills** deployed in the universal `SKILL.md` standard
-- A **governing lifecycle** (6 commands) that refuses to ship code without runnable test evidence and a passed security gate
-- An append-only audit trail (`CHRONICLE.md`) plus distilled lessons (`LESSONS.md`)
-- A **self-healing updater**: bump `VERSION.txt` → next launch silently redeploys everything everywhere
-
-Everything is plain Markdown + a tiny installer. No runtime lock-in, no daemon, no account.
+## 📑 Table of Contents
+[Install](#-installation) · [Council](#-the-council-of-forty) · [Commands](#-six-governing-commands) · [Pipeline](#-the-pipeline) · [Skills](#-skills-90--trilingual) · [Security](#-the-red-gate) · [Self-Heal](#-self-healing-updates) · [Platforms](#-platforms) · [Publish](#-publish-your-own-copy) · [Integrity](#-integrity)
 
 ---
 
@@ -32,151 +34,144 @@ Everything is plain Markdown + a tiny installer. No runtime lock-in, no daemon, 
 
 | Goal | Command |
 |---|---|
-| Everything (recommended) | `npx majlis-council --all` |
-| Only one platform | `npx majlis-council --claude` · `--codex` · `--opencode` · `--gemini` · `--universal` |
-| Add rule-pointers to one project | `npx majlis-council --scaffold C:\path\to\project` |
-| From source on Windows | `powershell -File install_system.ps1` |
+| **Everything** | `npx majlis-council --all` |
+| Single platform | `npx majlis-council --claude` · `--codex` · `--opencode` · `--gemini` · `--universal` |
+| Project scaffold (Cursor/Windsurf/Copilot…) | `npx majlis-council --scaffold <project-path>` |
+| From source (Windows) | `powershell -File install_system.ps1` |
 
-> `--universal` deploys to `~/.agents/skills` (agentskills.io) which GitHub Copilot, Kilo, Aider and ~26 more tools read natively.
+---
 
 ## 🏛️ The Council of Forty
 
-Every member below is a **real subagent file** with its own frontmatter, permissions and playbook skill. Verified by automated audit: `709 checks · 0 failures`.
+> Full bilingual roster with divisions, roles and reference skills → **[COUNCIL.md](COUNCIL.md)**
 
-### Command & Strategy
-| Agent | Role |
+| Division | Members |
 |---|---|
-| 🧠 `@hadi-core` | Supreme brain — arbitration, final strategic calls |
-| 🎼 `@hadi-maestro` | Orchestrator — decomposes work, routes every step |
-| 🧭 `@product-shaper` | Turns ideas into PRDs, user stories, acceptance criteria |
+| 🧭 **Command & Strategy** | `@hadi-core` · `@hadi-maestro` · `@product-shaper` |
+| 🔍 **Recon & Risk** | `@rased-explorer` · `@risk-assessor` · `@incident-detective` |
+| ⚙️ **Engineering** | `@emad-api-shield` · `@data-modeler` · `@integrative-architect` · `@stream-partitioner` · `@dep-manager` · `@cicd-automator` · `@sandbox-isolator` · `@motion-coder` · `@data-engineer` · `@release-manager` |
+| 🛡️ **Quality & Security** | `@sareem-security` · `@baher-qa` · `@nadif-clean-code` · `@code-polisher` · `@test-engineer` · `@perf-auditor` · `@a11y-auditor` |
+| 🎨 **Experience & Identity** | `@bayan-diagrams` · `@design-system-master` · `@responsive-layout` · `@ux-researcher` · `@brand-guardian` · `@print-publisher` · `@growth-analyst` · `@cinematic-director` |
+| 📚 **Knowledge & Ops** | `@sajeel-logger` · `@hakim-mentor` · `@balegh-docs` · `@mubtakir-tools` · `@agent-weaver` · `@prompt-smith` · `@context-steward` · `@portfolio-steward` · `@voice-engineer` |
 
-### Reconnaissance & Risk
-| Agent | Role |
-|---|---|
-| 🔍 `@rased-explorer` | 360° codebase recon before any change |
-| 🕵️‍♂️ `@risk-assessor` | Feasibility studies; prices risk before it is paid |
-| 🔎 `@incident-detective` | Blameless root-cause analysis when things break |
-
-### Engineering
-| Agent | Role |
-|---|---|
-| ⚙️ `@emad-api-shield` | Backend/API build & hardening (authn/z, validation, rate limits) |
-| 🗄️ `@data-modeler` | Schemas, ERDs, normalized relations |
-| 📐 `@integrative-architect` | Integration blueprints & contracts |
-| 🔀 `@stream-partitioner` | Memory-safe chunking of huge payloads |
-| 📦 `@dep-manager` | Dependency audits, pruning, pinning |
-| 🔄 `@cicd-automator` | Pipelines that fail loudly and ship safely |
-| 🧪 `@sandbox-isolator` | Isolated execution for risky experiments |
-| 💻 `@motion-coder` | Remotion/FFmpeg video assembly at 60FPS |
-
-### Quality & Security (the gates)
-| Agent | Role |
-|---|---|
-| 🛡️ `@sareem-security` | **Red gate**: secrets → config exposure → API defenses → PASS/FAIL |
-| 🎯 `@baher-qa` | Evidence-only QA: lint → typecheck → tests |
-| 🧼 `@nadif-clean-code` | Final clean-code review, anti-sycophancy rubric |
-| ✨ `@code-polisher` | 4-pass behavior-preserving polish after review |
-| ⚗️ `@test-engineer` | Unit/integration/e2e suites in your existing framework |
-| ⚡ `@perf-auditor` | Profiling & load discipline (p50/p95/p99), k6-based |
-| ♿ `@a11y-auditor` | WCAG 2.2 AA compliance reviews |
-
-### Experience & Identity
-| Agent | Role |
-|---|---|
-| 📈 `@bayan-diagrams` | Mermaid architecture/ERD/sequence visualizations |
-| 🖌️ `@design-system-master` | Tokens, palettes, Shadcn/HSL identity |
-| 📱 `@responsive-layout` | Multi-device layout correctness |
-| 🔬 `@ux-researcher` | Usability heuristics & journey evidence |
-| 👑 `@brand-guardian` | Voice/tone/identity consistency |
-| 🖨️ `@print-publisher` | Press-perfect vector PDFs (300DPI) |
-| 🚀 `@growth-analyst` | Funnels, experiments, tracking wiring |
-
-### Knowledge & Operations
-| Agent | Role |
-|---|---|
-| 📝 `@sajeel-logger` | Append-only timestamped chronicle |
-| 🧠 `@hakim-mentor` | Retrospectives → LESSONS.md |
-| 📣 `@balegh-docs` | Bilingual EN/AR docs & release notes from real diffs |
-| 🧰 `@mubtakir-tools` | Search → evaluate → wire external tools/skills |
-| 🐣 `@agent-weaver` | Creates new subagents & skills safely |
-| 🪄 `@prompt-smith` | Forges/refines prompts & playbooks |
-| 📚 `@context-steward` | Compressed indexes & token budgets |
-| 🗂️ `@portfolio-steward` | Cross-project health dashboard |
-| 🎙️ `@voice-engineer` | TTS/narration pipelines |
-| 📊 `@data-engineer` | Routes the ~40 science-database skills |
+---
 
 ## 🕹️ Six Governing Commands
 
-Deployed natively per platform: OpenCode `/majlis-start` · Claude `/majlis-start` · Codex `/prompts:majlis-start` · Gemini `/majlis:start` · elsewhere just say *"run majlis start"*.
+Native per platform — OpenCode `/majlis-start` · Claude `/majlis-start` · Codex `/prompts:majlis-start` · Gemini `/majlis:start` · elsewhere: *"run majlis start"*.
 
 | Command | Does | Enforced gate |
 |---|---|---|
-| `/majlis:start` | Guided init → `.majlis/PROJECT.md` `ROADMAP.md` `STATE.md` | — |
-| `/majlis:plan <n>` | Wave decomposition; every task carries a runnable `verify:` contract | plan without verification = **rejected** |
-| `/majlis:build` | Parallel wave execution via proper agents; atomic commit per wave | forbidden globs respected; verify must pass |
-| `/majlis:review` | Panel of 2–4 reviewers, non-overlapping rubrics, anti-sycophancy clauses | BLOCKER bounces back (max 3 cycles) |
-| `/majlis:security` | TruffleHog → Nuclei → OWASP ZAP → manual audit | `SECURITY: PASS` mandatory to proceed |
-| `/majlis:status` | Dashboard + routes to exact next action | read-only |
+| `/majlis:start` | Guided init → `.majlis/` PROJECT + ROADMAP + STATE | — |
+| `/majlis:plan <n>` | Wave decomposition with runnable `verify:` contracts | no-verify plans **rejected** |
+| `/majlis:build` | Parallel waves via proper agents · atomic commits | forbidden globs · verify passes |
+| `/majlis:review` | 2–4 reviewer panel · anti-sycophancy rubrics | BLOCKER bounces (≤3 cycles) |
+| `/majlis:security` | TruffleHog → Nuclei → OWASP ZAP → manual audit | **SECURITY: PASS** mandatory |
+| `/majlis:status` | Dashboard + exact next action | read-only |
+
+---
 
 ## 🔄 The Pipeline
 
 ```mermaid
 flowchart LR
-    A["Request"] --> B["/majlis:start"]
-    B --> C["/majlis:plan n"]
-    C --> R{"🔍 recon"}
-    R --> D["/majlis:build"]
-    D --> Q{"🎯 QA gates"}
-    Q -->|fail| D
-    Q -->|pass| S{"🛡️ SECURITY"}
-    S -->|FAIL| D
-    S -->|PASS| N{"🧼 clean-code"}
-    N --> L["📝 CHRONICLE"]
-    L --> X["✅ ship"]
+    subgraph PLAN["🗺️ 1 · Plan"]
+        A["📥 Request"] --> B["/majlis:start"]
+        B --> C["/majlis:plan n"]
+        C --> R{"🔍 Rased recon"}
+    end
+    subgraph EXEC["⚙️ 2 · Execute"]
+        R --> D["/majlis:build"]
+        D --> E["🛠️ Council agents<br/>verify contracts"]
+    end
+    subgraph GATES["🚦 3 · Gates — all must pass"]
+        E --> Q{"🎯 QA<br/>lint · types · tests"}
+        Q -->|fail| E
+        Q -->|pass| S{"🛡️ SECURITY<br/>secrets · vulns"}
+        S -->|FAIL| E
+        S -->|pass| N{"🧼 CLEAN-CODE<br/>anti-sycophancy"}
+        N -->|BLOCKER| E
+    end
+    subgraph MEM["📚 4 · Memory"]
+        N -->|pass| L["📝 CHRONICLE.md"]
+        L --> X["✅ SHIP"]
+        X -.-> H["🧠 LESSONS.md"]
+    end
+    classDef plan fill:#12203a,stroke:#7c9eff,color:#e8edf7
+    classDef exec fill:#0f2418,stroke:#3ddc97,color:#e8edf7
+    classDef gate fill:#2a1218,stroke:#ff5d73,color:#e8edf7
+    classDef mem fill:#241a08,stroke:#e8b64c,color:#e8edf7
+    class A,B,C,R plan
+    class D,E exec
+    class Q,S,N gate
+    class L,X,H mem
 ```
 
-## 🌐 Platform Coverage
+---
 
-| Tier | Platforms | What you get |
+## 🧩 Skills (90 · Trilingual)
+
+> Every skill with **English · العربية · 中文** descriptions → **[SKILLS_CATALOG.md](SKILLS_CATALOG.md)**
+
+| Category | Count | Highlights |
 |---|---|---|
-| Native agents | OpenCode, Claude Code | 40 subagents + 6 slash commands + skills auto-discovery |
-| Prompt-native | Codex CLI, Gemini CLI | `$skills`, `/prompts:majlis-*`, `/majlis:*` |
-| Rules + universal | Cursor, Windsurf, Copilot, Antigravity, Kilo, Aider, +26 | rule pointers + `~/.agents/skills` standard |
+| 🛡️ Security Pipeline | 5 | trufflehog · nuclei · owasp-zap · clean-code · k6 |
+| 🏛️ Council Playbooks | 20 | orchestration · chronicle · audit360 · architect… |
+| 🔬 Science Databases | 35 | uniprot · pubmed · ensembl · gnomad · alphafold… |
+| 🎨 Creative Production | 13 | remotion · gsap · design-system · polish… |
+| ☁️ Cloudflare | 14 | workers · wrangler · durable-objects · turnstile… |
+| 🧰 System Meta | 3 | majlis-rules · antigravity-sdk · uv |
+
+Invoke: OpenCode/Claude auto-discover · Codex `$skill-name` · others: read `SKILL.md`.
+
+---
+
+## 🛡️ The Red Gate
+
+The signature nobody else ships: an **offensive security pipeline before every delivery** —
+`TruffleHog` secrets sweep → `Nuclei` config exposure → `OWASP ZAP` API defenses → human-grade audit → binary verdict.
+**`SECURITY: FAIL` freezes everything until blockers die.**
+
+---
 
 ## 🔁 Self-Healing Updates
 
-1. Edit anything in the package.
-2. Bump `VERSION.txt`.
-3. Next OpenCode launch: the bundled plugin detects drift and redeploys **all platforms in ~0.5s**, silently. Corrupted installs repair themselves. Log: `~/.config/opencode/.majlis_bootstrap.log`.
+Edit package → bump `VERSION.txt` → next OpenCode launch redeploys **all platforms in ~0.5s, silently**.
+Damaged installs repair themselves. Log: `~/.config/opencode/.majlis_bootstrap.log`.
 
-## 📤 Publishing your own copy
+---
 
-This repo ships an npm-ready bundle in [`npm/`](npm):
+## 🌐 Platforms
+
+| Tier | Platforms | You get |
+|---|---|---|
+| 🟢 Native agents | OpenCode · Claude Code | 40 subagents · slash commands · auto skills |
+| 🟡 Prompt-native | Codex · Gemini CLI | `$skills` · `/prompts:majlis-*` · `/majlis:*` |
+| 🔵 Rules + universal | Cursor · Windsurf · Copilot · Antigravity · Kilo · Aider · +26 | scaffold pointers · `~/.agents/skills` |
+
+---
+
+## 📤 Publish your own copy
 
 ```bash
 cd npm
-# set your scope/name in package.json once
-npm publish        # users then run: npx majlis-council --all
+# edit package.json name/scope once
+npm publish        # world runs: npx majlis-council --all
 ```
+
+---
 
 ## ✅ Integrity
 
-Automated reality-check across source + 4 deploy targets:
-**709 assertions passing — 0 failures** (agents parity, skill validity/descriptions/deployment, command presence, landing-page references).
-
-## 📚 Full guides
-
-- العربية — [USAGE_AR.md](USAGE_AR.md)
-- English — [USAGE_EN.md](USAGE_EN.md)
-- 中文 — [USAGE_ZH.md](USAGE_ZH.md)
-- Council roster — [COUNCIL.md](COUNCIL.md)
-- Skills catalog — [SKILLS_CATALOG.md](SKILLS_CATALOG.md)
-- Constitution — [AGENTS.md](AGENTS.md)
+Automated reality-check (source + 4 deploy targets + landing references):
+**774 assertions passing — 0 failures.**
 
 ---
 
 <div align="center">
 
-**MIT License** · *Hunt first. Ship clean.* · يصطاد أولاً، يسلّم نقيّاً
+**MIT** · 🏛️ Majlis Council · *Hunt first. Ship clean.* · يصطاد أولاً، يسلّم نقيّاً
+
+[⭐ Star this repo](https://github.com/basharalameed/The-Council) if the Council serves you well
 
 </div>
