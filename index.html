@@ -3,239 +3,466 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MAJLIS · The Council — One mind. Every tool.</title>
-<meta name="description" content="Install a disciplined 40-agent council + 90 skills into OpenCode, Claude Code, Codex, Gemini CLI and 26+ platforms. One command. Mandatory QA & security gates. Self-updating.">
+<title>Majlis — Give your AI coder a boss.</title>
+<meta name="description" content="40 specialist AI agents with real permissions, runnable proofs, and a security gate that can veto any release. Installs into OpenCode, Claude Code, Codex, Gemini, Cursor and 26+ tools with one command. Free, MIT.">
+<meta property="og:title" content="Majlis — Give your AI coder a boss.">
+<meta property="og:description" content="Testers who demand proof. Scouts who can't touch your code. A security gate that freezes bad releases. One command. Free.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#070b14;--bg2:#0c1322;--card:#101a2e;--line:#1d2a45;--gold:#e8b64c;--em:#3ddc97;--red:#ff5d73;--txt:#e8edf7;--dim:#93a3bf}
+:root{--bg:#060a12;--bg2:#0b1322;--card:#0f1930;--line:#1c2a47;--gold:#e8b64c;--em:#3ddc97;--red:#ff5d73;--blue:#7c9eff;--txt:#e9eef8;--dim:#92a2bf}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:radial-gradient(1200px 600px at 70% -10%,#12203a 0%,var(--bg) 60%);color:var(--txt);font-family:'Inter',sans-serif;line-height:1.65}
-body[dir=rtl]{font-family:'Cairo',sans-serif}
-.wrap{max-width:1080px;margin:auto;padding:0 22px}
-h2{font-size:1.7rem;margin:64px 0 8px}h2 .n{color:var(--gold);font-family:monospace;margin-inline-end:.4rem}
-.sub{color:var(--dim);margin-bottom:26px}
-/* nav */
-nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
-.brand{font-weight:800;font-size:1.15rem;letter-spacing:.5px}
-.brand b{color:var(--gold)}
-#langBtn{background:var(--card);border:1px solid var(--line);color:var(--txt);padding:8px 16px;border-radius:10px;cursor:pointer;font-weight:600;font-family:inherit}
-#langBtn:hover{border-color:var(--gold)}
-/* hero */
-.hero{text-align:center;padding:70px 0 40px}
-.logo{font-size:4rem;line-height:1;filter:drop-shadow(0 0 24px rgba(232,182,76,.35))}
-.hero h1{font-size:clamp(2.3rem,6vw,3.6rem);font-weight:800;margin:14px 0 6px;letter-spacing:1px}
-.hero h1 span{color:var(--gold)}
-.tagline{font-size:1.25rem;color:var(--dim)}
-.tagline b{color:var(--em);font-weight:600}
-.install{display:inline-flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);padding:14px 20px;border-radius:14px;margin-top:30px;font-family:ui-monospace,Consolas,monospace;font-size:1.02rem}
-.install code{color:var(--em)}
-.install button{background:var(--gold);color:#141414;border:none;border-radius:8px;padding:7px 14px;font-weight:700;cursor:pointer;font-family:inherit}
-.stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 22px}
-.stat b{font-size:1.5rem;color:var(--gold);display:block;text-align:center}
-.stat span{color:var(--dim);font-size:.85rem}
-/* grids */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;transition:border-color .2s, transform .2s}
-.card:hover{border-color:var(--gold);transform:translateY(-2px)}
-.card .e{font-size:1.9rem}
-.card h3{font-size:1.02rem;margin:8px 0 2px}
-.card .id{color:var(--gold);font-family:ui-monospace,Consolas,monospace;font-size:.78rem}
-.card p{color:var(--dim);font-size:.86rem;margin-top:6px}
+body{background:radial-gradient(1100px 500px at 75% -10%,#13233f 0%,var(--bg) 55%);color:var(--txt);font-family:'Inter',system-ui,sans-serif;line-height:1.65}
+body[dir=rtl]{font-family:'Cairo',system-ui,sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:0 22px}
+a{color:var(--gold)}
+h2{font-size:1.85rem;margin:74px 0 6px}
+h2 .n{color:var(--gold);font-family:ui-monospace,monospace;margin-inline-end:.45rem}
+.sub{color:var(--dim);margin-bottom:26px;max-width:760px}
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(6,10,18,.78);border-bottom:1px solid var(--line)}
+nav .in{display:flex;justify-content:space-between;align-items:center;padding:13px 0}
+.brand{font-weight:800;font-size:1.1rem}.brand b{color:var(--gold)}
+.navlinks{display:flex;gap:16px;align-items:center}
+.navlinks a{color:var(--dim);text-decoration:none;font-size:.88rem}
+.navlinks a:hover{color:var(--txt)}
+.gh{background:var(--card);border:1px solid var(--line);padding:7px 14px;border-radius:10px;font-weight:600;color:var(--txt)!important}
+#langBtn{background:linear-gradient(135deg,var(--gold),#c9962f);color:#141414;border:none;padding:8px 15px;border-radius:10px;cursor:pointer;font-weight:800;font-family:inherit}
+.hero{text-align:center;padding:80px 0 24px}
+.kick{letter-spacing:3px;color:var(--gold);font-size:.82rem;font-weight:600;text-transform:uppercase}
+.logo{font-size:4.4rem;margin-top:18px;filter:drop-shadow(0 0 34px rgba(232,182,76,.45))}
+h1{font-size:clamp(2.5rem,7vw,4.2rem);font-weight:800;line-height:1.12;margin:10px 0 14px}
+h1 span{color:var(--gold)}
+.tag{max-width:680px;margin:auto;color:var(--dim);font-size:1.12rem}
+.tag b{color:var(--em);font-weight:600}
+.cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.btn{padding:13px 28px;border-radius:12px;font-weight:700;text-decoration:none;font-size:1rem;border:1px solid var(--line);background:var(--card);color:var(--txt)}
+.btn.primary{background:linear-gradient(135deg,var(--gold),#d09c2e);color:#151515;border:none;box-shadow:0 8px 32px rgba(232,182,76,.25)}
+.btn:hover{transform:translateY(-2px);transition:.2s}
+.install{display:inline-flex;align-items:center;gap:12px;background:#0a0f1c;border:1px solid var(--line);padding:14px 20px;border-radius:14px;margin-top:22px;font-family:ui-monospace,Consolas,monospace}
+.install code{color:var(--em)}.install button{background:none;border:none;color:var(--dim);cursor:pointer;font-size:1rem}
+.stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:46px 0 6px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 24px;min-width:118px}
+.stat b{font-size:1.65rem;color:var(--gold);display:block;text-align:center}
+.stat span{color:var(--dim);font-size:.8rem}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.fcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+.fcard .e{font-size:2rem}.fcard h3{margin:12px 0 6px;font-size:1.08rem}
+.fcard p{color:var(--dim);font-size:.89rem}
+.cmp{width:100%;border-collapse:collapse;background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.cmp th{background:var(--bg2);padding:13px 16px;text-align:start;color:var(--dim);font-size:.83rem;font-weight:600}
+.cmp th:last-child{color:var(--gold)}
+.cmp td{padding:12px 16px;border-top:1px solid var(--line);font-size:.9rem}
+.yes{color:var(--em);font-weight:600}.no{color:var(--red)}.mid{color:var(--gold)}
+.cmp td:first-child{color:var(--txt);font-weight:600}
+/* TERMINAL */
+.termwrap{position:relative}
+.term{background:#05080f;border:1px solid var(--line);border-radius:16px;overflow:hidden;font-family:ui-monospace,Consolas,'Courier New',monospace;font-size:.86rem}
+.term .bar{display:flex;gap:6px;padding:12px 16px;background:var(--bg2);border-bottom:1px solid var(--line);align-items:center}
+.dot{width:12px;height:12px;border-radius:50%}
+.term .bar span.ttl{margin-inline-start:10px;color:var(--dim);font-family:'Inter',sans-serif;font-size:.75rem}
+.tbody{padding:18px 20px;line-height:1.85;min-height:330px;direction:ltr;text-align:left}
+.tbody div{white-space:pre-wrap;word-break:break-word}
+.g{color:var(--em)}.y{color:var(--gold)}.r{color:var(--red)}.d{color:var(--dim)}.b{color:var(--blue)}
+.pass{display:inline-block;background:rgba(61,220,151,.12);border:1px solid #14503a;color:var(--em);padding:4px 14px;border-radius:8px;font-weight:700;margin-top:4px}
+.fail{display:inline-block;background:rgba(255,93,115,.12);border:1px solid #7a2e3c;color:var(--red);padding:4px 14px;border-radius:8px;font-weight:700;margin-top:4px}
+.caret{display:inline-block;width:8px;height:15px;background:var(--em);vertical-align:-2px;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.chip{background:var(--bg2);border:1px dashed var(--line);color:var(--dim);padding:6px 13px;border-radius:99px;font-size:.82rem;font-family:ui-monospace,Consolas,monospace}
-/* tables */
-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--line)}
-th{background:var(--bg2);text-align:start;padding:12px 16px;color:var(--gold);font-size:.85rem}
-td{padding:11px 16px;border-top:1px solid var(--line);font-size:.92rem}
-td code{background:var(--bg2);padding:2px 8px;border-radius:6px;color:var(--em);font-size:.85rem}
-/* flow */
-.flow{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;justify-content:center}
-.step{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;text-align:center;min-width:130px}
-.step b{display:block;color:var(--gold)}
-.step span{font-size:.8rem;color:var(--dim)}
-.arrow{align-self:center;color:var(--gold);font-size:1.3rem}
-.gate{border-color:var(--red)}
-.gate b{color:var(--red)}
-/* platforms */
-.plat{display:flex;flex-wrap:wrap;gap:10px}
-.pill{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 18px;flex:1;min-width:150px;text-align:center}
-.pill b{color:var(--em);display:block}.pill span{color:var(--dim);font-size:.8rem}
-/* banner */
-.banner{background:linear-gradient(90deg,rgba(255,93,115,.08),rgba(232,182,76,.06));border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin-top:20px}
-footer{text-align:center;color:var(--dim);padding:60px 0 34px;font-size:.9rem}
-footer a{color:var(--gold)}
-.hide{display:none!important}
-@media(max-width:640px){.flow{flex-direction:column}.arrow{transform:rotate(90deg)}}
+.chip{background:var(--bg2);border:1px solid var(--line);color:var(--dim);padding:8px 16px;border-radius:99px;cursor:pointer;font-family:ui-monospace,monospace;font-size:.83rem}
+.chip:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+.chip:disabled{opacity:.45;cursor:wait}
+.chip.done{border-color:#14503a;color:var(--em)}
+.hint{color:var(--dim);font-size:.8rem;margin-top:10px;font-style:italic}
+/* PIPELINE */
+.pipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.ph{border-radius:16px;padding:18px;border:1px solid var(--line)}
+.ph h4{font-size:.95rem;margin-bottom:8px}
+.ph .st{display:block;background:rgba(0,0,0,.25);border-radius:8px;padding:6px 10px;margin:6px 0;font-size:.82rem;font-family:ui-monospace,monospace}
+.ph.p1{background:#0d1830;border-color:#2c4a86}.ph.p1 h4{color:var(--blue)}
+.ph.p2{background:#0c2016;border-color:#1d5c40}.ph.p2 h4{color:var(--em)}
+.ph.p3{background:#241016;border-color:#7a2e3c}.ph.p3 h4{color:var(--red)}
+.ph.p4{background:#231a08;border-color:#6b5316}.ph.p4 h4{color:var(--gold)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.fb{background:var(--bg2);border:1px solid var(--line);color:var(--dim);padding:7px 15px;border-radius:99px;cursor:pointer;font-size:.83rem;font-family:inherit}
+.fb.on{border-color:var(--gold);color:var(--gold)}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}
+.ccard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;transition:.2s}
+.ccard:hover{border-color:var(--gold);transform:translateY(-2px)}
+.ccard .e{font-size:1.7rem}.ccard h4{font-size:.95rem;margin:6px 0 1px}
+.ccard .id{color:var(--gold);font-family:ui-monospace,monospace;font-size:.74rem}
+.ccard p{color:var(--dim);font-size:.8rem;margin-top:5px}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600}
+details p{color:var(--dim);margin-top:10px;font-size:.92rem}
+.final{text-align:center;background:linear-gradient(135deg,rgba(232,182,76,.08),rgba(61,220,151,.06));border:1px solid var(--line);border-radius:22px;padding:56px 30px;margin:74px 0}
+footer{text-align:center;color:var(--dim);padding:36px 0;font-size:.88rem;border-top:1px solid var(--line)}
+@media(max-width:700px){.navlinks a:not(.gh){display:none}.tbody{font-size:.76rem}}
 </style>
 </head>
 <body>
+
+<nav><div class="wrap in">
+  <div class="brand">🏛️ <b>Majlis</b></div>
+  <div class="navlinks">
+    <a href="#features" data-i="n_feat">Why it bites</a>
+    <a href="#demo" data-i="n_demo">Try it</a>
+    <a href="#council" data-i="n_council">The Forty</a>
+    <a href="#faq" data-i="n_faq">FAQ</a>
+    <a class="gh" href="https://github.com/basharalameed/The-Council" target="_blank">★ GitHub</a>
+    <button id="langBtn" onclick="toggleLang()">العربية</button>
+  </div>
+</div></nav>
+
 <div class="wrap">
 
-<nav>
-  <div class="brand">🏛️ <b>MAJLIS</b> · <span id="brandSub">The Council</span></div>
-  <button id="langBtn" onclick="toggleLang()">العربية 🌐</button>
-</nav>
-
-<!-- ═══════════ HERO ═══════════ -->
 <section class="hero">
+  <div class="kick" data-i="kick">40 AGENTS · 3 HARD GATES · 0 EXCUSES</div>
   <div class="logo">🏛️</div>
-  <h1 id="t_title">THE <span>COUNCIL</span></h1>
-  <p class="tagline" id="t_tag">One mind. <b>Every tool.</b></p>
-
-  <div class="install"><code id="t_install">npx majlis-council --all</code><button onclick="copyCmd(this)">⧉</button></div>
-
-  <p class="sub" style="margin-top:22px" id="t_heroP">A disciplined council of 40 real agents + 90 curated skills — installed into OpenCode, Claude Code, Codex, Gemini CLI and 26+ more platforms with one command. Nothing ships without tests and a security verdict.</p>
-
+  <h1 id="h1"></h1>
+  <p class="tag" id="tag"></p>
+  <div class="cta">
+    <a class="btn primary" href="#demo" id="cta1"></a>
+    <a class="btn" href="https://github.com/basharalameed/The-Council" target="_blank">★ GitHub</a>
+  </div>
+  <div class="install"><code>npx majlis-council --all</code><button onclick="copyCmd(this)" title="copy">⧉</button></div>
   <div class="stats">
-    <div class="stat"><b>40</b><span id="s_agents">real agents</span></div>
-    <div class="stat"><b>90+</b><span id="s_skills">skills</span></div>
-    <div class="stat"><b>6</b><span id="s_cmds">lifecycle commands</span></div>
-    <div class="stat"><b>30+</b><span id="s_plats">platforms</span></div>
-    <div class="stat"><b>$0</b><span id="s_cost">MIT license</span></div>
+    <div class="stat"><b>40</b><span data-i="s1"></span></div>
+    <div class="stat"><b>3</b><span data-i="s2"></span></div>
+    <div class="stat"><b>0.5s</b><span data-i="s3"></span></div>
+    <div class="stat"><b>30+</b><span data-i="s4"></span></div>
+    <div class="stat"><b>$0</b><span data-i="s5"></span></div>
   </div>
 </section>
 
-<!-- ═══════════ WHAT ═══════════ -->
-<h2><span class="n">01</span><span data-i="what">What it is</span></h2>
-<p class="sub" data-i="whatP">Majlis is not an editor. It is the discipline layer you install on top of your favorite AI coding tool — a full team with fixed roles, least-privilege permissions, mandatory quality gates and an append-only audit trail.</p>
+<h2 id="features"><span class="n">01</span><span data-i="f_t"></span></h2>
+<p class="sub" data-i="f_p"></p>
+<div class="grid4" id="featGrid"></div>
 
-<!-- ═══════════ COUNCIL ═══════════ -->
-<h2><span class="n">02</span><span data-i="council">The Council of Eleven</span></h2>
-<p class="sub" data-i="councilP">Core members, always on duty. Every one is a real subagent with its own permission matrix.</p>
-<div class="grid" id="coreGrid"></div>
-
-
-
-<!-- ═══════════ COMMANDS ═══════════ -->
-<h2><span class="n">03</span><span data-i="cmds">Six Governing Commands</span></h2>
-<p class="sub" data-i="cmdsP">The lifecycle is law: no phase without a plan, no plan without runnable verification, no ship without a green security gate.</p>
-<table>
-<thead><tr><th data-i="th_cmd">Command</th><th data-i="th_what">What it does</th><th data-i="th_gate">Enforced gate</th></tr></thead>
-<tbody id="cmdRows"></tbody>
+<h2><span class="n">02</span><span data-i="c_t"></span></h2>
+<p class="sub" data-i="c_p"></p>
+<table class="cmp">
+<thead><tr><th data-i="th_f"></th><th data-i="th_a"></th><th data-i="th_b"></th><th>🏛️ Majlis</th></tr></thead>
+<tbody id="cmpRows"></tbody>
 </table>
 
-<!-- ═══════════ FLOW ═══════════ -->
-<h2><span class="n">04</span><span data-i="flow">The Pipeline</span></h2>
-<p class="sub" data-i="flowP">Everything a request passes through. Red gates bounce work back automatically.</p>
-<div class="flow" id="flowRow"></div>
-
-<!-- ═══════════ SECURITY ═══════════ -->
-<h2><span class="n">05</span><span data-i="sec">The Red Gate 🛡️</span></h2>
-<div class="banner">
-  <p data-i="secP">Our signature: an <b style="color:var(--red)">offensive security pipeline</b> that runs before any delivery — TruffleHog secrets sweep → Nuclei config exposure → OWASP ZAP API defenses → human-grade audit → a binary verdict. <b style="color:var(--red)">SECURITY: FAIL</b> means nothing moves until blockers die.</p>
+<h2 id="demo"><span class="n">03</span><span data-i="d_t"></span></h2>
+<p class="sub" data-i="d_p"></p>
+<div class="termwrap">
+  <div class="term">
+    <div class="bar">
+      <span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>
+      <span class="ttl" id="ttl">you@yourmachine — majlis</span>
+    </div>
+    <div class="tbody" id="tbody"></div>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="hint" id="hint"></div>
 </div>
 
-<!-- ═══════════ PLATFORMS ═══════════ -->
-<h2><span class="n">06</span><span data-i="plats">Runs On</span></h2>
-<p class="sub" data-i="platsP">Native integrations for the big five; rule-pointers plus the universal agentskills.io standard carry the rest.</p>
-<div class="plat" id="platRow"></div>
+<h2><span class="n">04</span><span data-i="p_t"></span></h2>
+<p class="sub" data-i="p_p"></p>
+<div class="pipe" id="pipeRow"></div>
 
-<!-- ═══════════ SELF-HEAL ═══════════ -->
-<h2><span class="n">07</span><span data-i="heal">Self-Healing Updates</span></h2>
-<p class="sub" data-i="healP">Bump VERSION.txt → first launch of OpenCode silently redeploys the whole system to every platform in ~0.5 seconds. Damaged installs heal themselves. No manual updates, ever.</p>
+<h2 id="council"><span class="n">05</span><span data-i="k_t"></span></h2>
+<p class="sub" data-i="k_p"></p>
+<div class="filters" id="filters"></div>
+<div class="cgrid" id="cgrid"></div>
+
+<h2><span class="n">06</span><span data-i="q_t"></span></h2>
+<div id="faqBox"></div>
+
+<section class="final">
+  <div class="logo" style="font-size:3rem">🏛️</div>
+  <h2 style="margin:10px 0" id="fin_h"></h2>
+  <p class="sub" style="margin:0 auto 26px;max-width:560px" id="fin_p"></p>
+  <div class="cta" style="margin-top:0">
+    <a class="btn primary" href="#demo" id="fin_c1"></a>
+    <a class="btn" href="https://github.com/basharalameed/The-Council" target="_blank">★ GitHub</a>
+  </div>
+</section>
 
 <footer>
-  <p id="t_docs">Full guides: USAGE_AR.md · USAGE_EN.md · USAGE_ZH.md — constitution lives in AGENTS.md</p>
-  <p style="margin-top:8px"><a href="https://github.com/basharalameed/The-Council" target="_blank">github.com/basharalameed/The-Council</a> · MIT · <span id="t_foot">Hunt first. Ship clean.</span></p>
+  <p id="f_docs"></p>
+  <p style="margin-top:6px">MIT · <a href="https://github.com/basharalameed/The-Council" target="_blank">github.com/basharalameed/The-Council</a> · <span data-i="f_foot"></span></p>
 </footer>
 
 </div>
 <script>
-const I = {
- en:{title:'THE <span>COUNCIL</span>',tag:'One mind. <b>Every tool.</b>',heroP:"A disciplined council of 40 real agents + 90 curated skills — installed into OpenCode, Claude Code, Codex, Gemini CLI and 26+ more platforms with one command. Nothing ships without tests and a security verdict.",brandSub:'The Council',btn:'العربية 🌐',docs:'Full guides: USAGE_AR.md · USAGE_EN.md · USAGE_ZH.md — constitution lives in AGENTS.md',foot:'Hunt first. Ship clean.',dir:'ltr',lang:'en',
-  what:'What it is',whatP:"Majlis is not an editor. It is the discipline layer you install on top of your favorite AI coding tool — a full team with fixed roles, least-privilege permissions, mandatory quality gates and an append-only audit trail.",
-  council:'The Council — Forty Seats',councilP:'All forty seats, always on duty. Every one is a real subagent with its own permission matrix.',
-  extended:'✦ The Extended Bench — 16 specialists',extP:'Full coverage of the classic 27-seat council: every member is now invocable by @mention.',
-  cmds:'Six Governing Commands',cmdsP:'The lifecycle is law: no phase without a plan, no plan without runnable verification, no ship without a green security gate.',
-  th_cmd:'Command',th_what:'What it does',th_gate:'Enforced gate',
-  flow:'The Pipeline',flowP:'Everything a request passes through. Red gates bounce work back automatically.',
-  sec:'The Red Gate 🛡️',secP:'Our signature: an offensive security pipeline that runs before any delivery — TruffleHog secrets sweep → Nuclei config exposure → OWASP ZAP API defenses → human-grade audit → a binary verdict. SECURITY: FAIL means nothing moves until blockers die.',
-  plats:'Runs On',platsP:'Native integrations for the big five; rule-pointers plus the universal agentskills.io standard carry the rest.',
-  heal:'Self-Healing Updates',healP:'Bump VERSION.txt → first launch of OpenCode silently redeploys the whole system to every platform in ~0.5 seconds. Damaged installs heal themselves. No manual updates, ever.'},
- ar:{title:'المجلس',tag:'عقلٌ واحد. <b>في كل أدواتك.</b>',heroP:"مجلس منضبط من 40 وكيلاً حقيقياً وأكثر من 90 مهارة — يُركَّب بأمر واحد فوق OpenCode وClaude Code وCodex وGemini وأكثر من 26 منصة. لا تسليم بلا اختبارات وبوابة أمنية.",brandSub:'المجلس',btn:'English 🌐',docs:'الأدلة الكاملة: USAGE_AR.md · USAGE_EN.md · USAGE_ZH.md — والدستور في AGENTS.md',foot:'يصطاد أولاً، يسلّم نقيّاً.',dir:'rtl',lang:'ar',
-  what:'ما هو؟',whatP:'المجلس ليس محرراً. إنه طبقة الانضباط التي تركّبها فوق أداتك المفضلة — فريق كامل بأدوار ثابتة وصلاحيات مضبوطة وبوابات جودة إلزامية وسجل تدقيق غير قابل لإعادة الكتابة.',
-  council:'مجلس الأربعين',councilP:'الأربعون مقعداً كلها في الخدمة الدائمة، كلها وكلاء حقيقيون بصلاحيات خاصة.',
-  extended:'✦ المقعد الموسّع — 16 متخصصاً',extP:'تغطية كاملة للمجلس التاريخي ذي الـ27 مقعداً: الجميع الآن يستدعى بـ @.',
-  cmds:'الأوامر الحاكمة الست',cmdsP:'دورة الحياة قانون: لا مرحلة بلا خطة، ولا خطة بلا تحقق قابل للتشغيل، ولا تسليم ببوابة حمراء.',
-  th_cmd:'الأمر',th_what:'الوظيفة',th_gate:'البوابة المفروضة',
-  flow:'خط الإنتاج',flowP:'كل ما يمر به الطلب. البوابات الحمراء تعيد العمل تلقائياً.',
-  sec:'البوابة الحمراء 🛡️',secP:'توقيعنا: مسار أمني هجومي يسبق أي تسليم — TruffleHog للأسرار ← Nuclei للتكوينات ← OWASP ZAP لواجهات API ← تدقيق بشري ← حكم ثنائي. SECURITY: FAIL يعني توقفاً كاملاً حتى موت العوائق.',
-  plats:'يعمل على',platsP:'تكامل أصلي للخمس الكبار؛ ومؤشرات القواعد معيار agentskills.io العالمي يحمل البقية.',
-  heal:'تحديث ذاتي شافٍ',healP:'ارفع VERSION.txt ← أول إقلاع OpenCode يعيد النشر لكل المنصات خلال نصف ثانية بصمت. التلف يشفي نفسه. لا تحديث يدوي بعد اليوم.'}
-};
-const CORE=[
- ['🎼','hadi-maestro','Maestro Hadi','Strategic planning & task routing across the whole council.','التخطيط الاستراتيجي وتوجيه المهام للمجلس كله'],
- ['🔍','rased-explorer','Rased','360° codebase recon before anyone touches anything.','استكشاف الكود 360° قبل أي عمل'],
- ['⚙️','emad-api-shield','Emad','Backend builder & API hardening specialist.','بناء وتحصين الخلفية وواجهات API'],
- ['🎯','baher-qa','Baher','Quality gates: lint → typecheck → tests. Evidence or silence.','بوابات الجودة: أدلة أو صمت'],
- ['🛡️','sareem-security','Sareem','Red gate: secrets, vulnerabilities, PASS/FAIL verdict.','البوابة الحمراء: أسرار وثغرات وحكم نهائي'],
- ['🧼','nadif-clean-code','Nadif','Clean-code final review with anti-sycophancy rubric.','مراجعة الكود النظيف بقواعد ضد التملق'],
- ['📈','bayan-diagrams','Bayan','Mermaid architecture, ERD and sequence diagrams.','مخططات المعمارية والتسلسل والبيانات'],
- ['📝','sajeel-logger','Sajeel','Append-only timestamped audit chronicle.','سجل زمني غير قابل لإعادة الكتابة'],
- ['🧠','hakim-mentor','Hakim','Retrospectives distilled into LESSONS.md.','الدروس المستخلصة الموثقة'],
- ['🧰','mubtakir-tools','Mubtakir','Searches, evaluates and wires external tools & skills.','بحث وتقييم وتركيب الأدوات'],
- ['📣','balegh-docs','Balegh','Bilingual EN/AR docs and release notes from real diffs.','توثيق ثنائي اللغة من الواقع لا الهواء'],
- ['🧭','product-shaper','Product Shaper','Turns vague ideas into PRDs, stories, acceptance criteria.','صياغة الأفكار الضبابية إلى منتج قابل للبناء'],
- ['🔬','ux-researcher','UX Researcher','Usability heuristics, journey maps, friction evidence.','كلام المستخدم داخل المجلس بالأدلة'],
- ['👑','brand-guardian','Brand Guardian','Voice, tone and identity consistency enforcement.','صوت واحد وهوية واحدة في كل المخرجات'],
- ['🚀','growth-analyst','Growth Analyst','Funnels, experiments, conversion instrumentation.','تحويل الاستخدام إلى نمو متراكم'],
- ['✨','code-polisher','Code Polisher','Multi-pass behavior-preserving cleanup.','تنقيح رباعي المراحل دون كسر السلوك'],
- ['⚗️','test-engineer','Test Engineer','Unit/integration/e2e suites in your existing framework.','جناح اختبارات بإطار المشروع الحقيقي'],
- ['⚡','perf-auditor','Perf Auditor','Profiling, load tests, p50/p95/p99 discipline.','أرقام أداء قبل وبعد، بلا انحدارات'],
- ['♿','a11y-auditor','A11y Auditor','WCAG 2.2 AA, keyboard nav, semantic markup.','واجهة يستخدمها الجميع هي الحد الأدنى'],
- ['🚢','release-manager','Release Manager','Versioning, changelogs, tested rollback plans.','إصدارات مملة وقابلة للتراجع دائماً'],
- ['🔎','incident-detective','Incident Detective','Blameless RCA, 5-whys, timeline reconstruction.','السبب الجذري الحقيقي لا كبش الفداء'],
- ['🪄','prompt-smith','Prompt Smith','Forges/refines agent prompts and playbooks.','تعليمات حادة بمعايير إنجاز قابلة للقياس'],
- ['📚','context-steward','Context Steward','Compressed knowledge index and token budgets.','أقصى إشارة لكل توكن سياق'],
- ['🗂️','portfolio-steward','Portfolio Steward','Cross-project health, dependencies, allocation.','كل المشاريع ساحة معركة واحدة'],
- ['🐣','agent-weaver','Agent Weaver','Creates new subagents and skills safely.','صناعة وكلاء ومهارات جديدة بأمان'],
- ['🗄️','data-modeler','Data Modeler','Schemas, ERDs, normalized relations.','نمذجة البيانات والعلاقات'],
- ['🔀','stream-partitioner','Stream Partitioner','Memory-safe chunking of huge payloads.','تقسيم التدفقات الضخمة بأمان الذاكرة'],
- ['📐','integrative-architect','Integrative Architect','Integration blueprints and contracts.','مخططات التكامل وعقوده'],
- ['🕵️‍♂️','risk-assessor','Risk Assessor','Feasibility studies and risk pricing.','تسعير المخاطر قبل دفع الثمن'],
- ['🎨','cinematic-director','Cinematic Director','Directs motion/video productions.','قيادة الإنتاج المرئي'],
- ['🖌️','design-system-master','Design Master','Tokens, palettes, Shadcn/HSL identity.','لغة بصرية واحدة متماسكة'],
- ['📱','responsive-layout','Responsive Layout','Multi-device correctness guaranteed.','لا شاشة مكسورة أبداً'],
- ['🖨️','print-publisher','Print Publisher','Press-perfect vector PDFs at 300DPI.','طباعة مثالية من الشاشة'],
- ['💻','motion-coder','Motion Coder','Remotion compositions + FFmpeg renders.','من القصة إلى الفيديو 60FPS'],
- ['🔄','cicd-automator','CI/CD Automator','Green pipelines by construction.','أنابيب خضراء بالتصميم'],
- ['🧪','sandbox-isolator','Sandbox Isolator','Runs risky code without casualties.','تجارب بضحايا صفر'],
- ['📦','dep-manager','Dep Manager','Audits, prunes, pins dependencies.','حد أدنى وزن أقصى أمان'],
- ['🎙️','voice-engineer','Voice Engineer','TTS, narration, audio pipelines.','صوت المجلس'],
- ['📊','data-engineer','Data Engineer','Routes 40 science-database skills.','توجيه قواعد البيانات العلمية'],
- ['🧠','hadi-core','Hadi Core','Supreme arbitration for the whole Council.','محكمة الاستئناف العليا للمجلس']];
-const EXT=['@agent-weaver','@data-modeler','@stream-partitioner','@integrative-architect','@risk-assessor','@cinematic-director','@design-system-master','@responsive-layout','@print-publisher','@motion-coder','@cicd-automator','@sandbox-isolator','@dep-manager','@voice-engineer','@data-engineer','@hadi-core'];
-const CMDS=[['/majlis:start','Initialize: guided questions → PROJECT + ROADMAP + STATE','—','أسئلة موجّهة ← ملفات المشروع الثلاثة','—'],
- ['/majlis:plan n','Decompose into waves with mandatory verify contracts','plan without runnable verify = rejected','تفكيك لموجات بعقود تحقق إلزامية','خطة بلا تحقق = مرفوضة'],
- ['/majlis:build','Execute waves in parallel through council agents','forbidden globs respected','تنفيذ مواز عبر الوكلاء','احترام المحظورات'],
- ['/majlis:review','Review panel of 2-4, anti-sycophancy rubrics, max 3 cycles','BLOCKER bounces back','لجنة مراجعة ضد التملق','BLOCKER يعيد البناء'],
- ['/majlis:security','Red gate: secrets → configs → API defenses → verdict','SECURITY PASS mandatory','المسار الأحمر الكامل','PASS إلزامي'],
- ['/majlis:status','Progress dashboard + exact next action','read-only','لوحة التقدم والتوجيه','قراءة فقط']];
-const FLOW=[['📥','Request','الطلب'],['🏛️','majlis:start','ابدأ'],['🗺️','majlis:plan','خطط'],['🔍','Rased recon','راصد'],['⚙️','majlis:build','نفّذ'],['🎯','QA gates','الاختبارات'],['🛡️','SECURITY','الأمن','gate'],['🧼','Clean code','النظافة'],['📝','Chronicle','السجل'],['✅','Ship','التسليم']];
-const PLATS=[['OpenCode','27 agents · /majlis-*'],['Claude Code','27 agents · slash cmds'],['Codex','$skills · /prompts:'],['Gemini CLI','/majlis:* commands'],['Cursor/Windsurf','rules + plain lang'],['Copilot + 26 more','agentskills.io']];
+/* ================= 40 AGENTS ================= */
+const AG=[
+['🧠','hadi-core','Hadi Core','Final word on any dispute','الكلمة الأخيرة في أي خلاف','lead'],
+['🎼','hadi-maestro','Maestro Hadi','Breaks work down, routes every step','يفكك العمل ويوجّه كل خطوة','lead'],
+['🧭','product-shaper','Product Shaper','Turns ideas into specs with acceptance criteria','يحوّل الفكرة إلى مواصفات بمعايير قبول','lead'],
+['🔍','rased-explorer','Rased','Reads your codebase before anyone touches it','يقرأ كودك قبل أن يلمسه أحد','recon'],
+['🕵️‍♂️','risk-assessor','Risk Assessor','Prices the damage before you pay it','يسعّر الضرر قبل أن تدفع ثمنه','recon'],
+['🔎','incident-detective','Incident Detective','Finds root causes, blames nobody','يجذور العطل دون لوم أحد','recon'],
+['⚙️','emad-api-shield','Emad','Builds backends that survive attacks','يبني خلفيات تصمد أمام الهجمات','eng'],
+['🗄️','data-modeler','Data Modeler','Schemas you will not curse in year two','مخططات لن تلعنها بعد سنتين','eng'],
+['📐','integrative-architect','Integrative Architect','Designs how systems talk, contracts first','يصمم حديث الأنظمة بالعقود أولاً','eng'],
+['🔀','stream-partitioner','Stream Partitioner','Chunks huge payloads without melting RAM','يقسّم البيانات الضخمة بلا ذوبان الذاكرة','eng'],
+['📦','dep-manager','Dep Manager','Kills vulnerable dependencies before CVEs do','يقتل الاعتمادات المثقوبة قبل الثغرات','eng'],
+['🔄','cicd-automator','CI/CD Automator','Pipelines that fail loudly, ship safely','خطوط تفشل بصوت عال وتسليم بأمان','eng'],
+['🧪','sandbox-isolator','Sandbox Isolator','Runs risky experiments without casualties','تجارب خطرة بلا ضحايا','eng'],
+['💻','motion-coder','Motion Coder','Programmatic video at 60FPS','فيديو برمجي بستين إطاراً','eng'],
+['📊','data-engineer','Data Engineer','Routes 35 science-database skills','يوجّه مهارات قواعد البيانات العلمية','eng'],
+['🚢','release-manager','Release Manager','Versioned, changelogged, rollback tested','إصدارات مرقمة وسجل وتراجع مجرَّب','eng'],
+['🛡️','sareem-security','Sareem','The red gate. Can freeze any release.','البوابة الحمراء. تجمّد أي إصدار.','gate'],
+['🎯','baher-qa','Baher','Demands running proof, accepts nothing less','يطلب الدليل الجاري وقبول ما دونه','gate'],
+['🧼','nadif-clean-code','Nadif','Reviews like a senior who hates shortcuts','يراجع كخبير يكره الطرق المختصرة','gate'],
+['✨','code-polisher','Code Polisher','Four passes, zero behavior changes','أربع جولات صقل بلا كسر سلوك','gate'],
+['⚗️','test-engineer','Test Engineer','Tests in YOUR framework, not his favorite','اختبارات بإطارك أنت لا إطار غيره','gate'],
+['⚡','perf-auditor','Perf Auditor','p95 or it did not happen','المئين 95 أو لم يحدث شيء','gate'],
+['♿','a11y-auditor','A11y Auditor','If keyboard users cannot reach it, it is broken','إن لم يصل إليه لوحة مفاتيح فهو معطوب','gate'],
+['📈','bayan-diagrams','Bayan','Architecture people actually understand','معمارٍ يفهمه البشر فعلاً','exp'],
+['🖌️','design-system-master','Design Master','One visual language, everywhere','لغة بصرية واحدة في كل مكان','exp'],
+['📱','responsive-layout','Responsive Layout','No broken viewport has survived him','لم تنجُ أمامه شاشة مكسورة','exp'],
+['🔬','ux-researcher','UX Researcher','Friction found with evidence, not opinions','الاحتكاك بالأدلة لا بالآراء','exp'],
+['👑','brand-guardian','Brand Guardian','Your voice, consistent or not shipped','صوتك متسقاً وإلا لم يُسلَّم','exp'],
+['🖨️','print-publisher','Print Publisher','PDFs a print shop will accept','ملفات PDF تقبلها المطابع','exp'],
+['🚀','growth-analyst','Growth Analyst','Funnels measured, guesses rejected','قمعات مقاسة والتخمين مرفوض','exp'],
+['🎨','cinematic-director','Cinematic Director','Directs motion productions end-to-end','يقود الإنتاج المرئي من أوله لآخره','exp'],
+['📝','sajeel-logger','Sajeel','Append-only history. Nobody rewrites it.','تاريخٍ لا يُمحى ولا يعاد كتابته','know'],
+['🧠','hakim-mentor','Hakim','Turns failures into documented lessons','يحوّل الإخفاق لدروس موثقة','know'],
+['📣','balegh-docs','Balegh','Docs written from real diffs, not wishes','توثيق من الفروقات الحقيقية لا الأمنيات','know'],
+['🧰','mubtakir-tools','Mubtakir','Hunts tools, wires them, drops the junk','يصطاد الأدوات ويوصّلها ويرمي الخردة','know'],
+['🐣','agent-weaver','Agent Weaver','Spawns new agents when the bench is short','يولّد وكلاء جدداً عند نقص الصف','know'],
+['🪄','prompt-smith','Prompt Smith','Forges prompts that survive production','يطاوع أوامر تصمد في الإنتاج','know'],
+['📚','context-steward','Context Steward','Maximum signal per token spent','أقصى إشارة من كل توكن تدفعه','know'],
+['🗂️','portfolio-steward','Portfolio Steward','Health dashboard for ALL your projects','لوحة صحّة لكل مشاريعك','know'],
+['🎙️','voice-engineer','Voice Engineer','TTS and narration pipelines','خطوط تعليق صوتي','know']];
+const TEAMS={lead:['Command','القيادة'],recon:['Recon','الرصد'],eng:['Builders','البنّاؤون'],gate:['Gates','البوابات'],exp:['Experience','التجربة'],know:['Memory','الذاكرة']};
 
-function render(lang){
- const d=I[lang];document.body.dir=d.dir;document.documentElement.lang=d.lang;
- document.getElementById('t_title').innerHTML=d.title;
- document.getElementById('t_tag').innerHTML=d.tag;
- document.getElementById('t_heroP').textContent=d.heroP;
- document.getElementById('brandSub').textContent=d.brandSub;
- document.getElementById('langBtn').textContent=d.btn;
- document.getElementById('t_docs').textContent=d.docs;
- document.getElementById('t_foot').textContent=d.foot;
- document.querySelectorAll('[data-i]').forEach(el=>{el.textContent=d[el.dataset.i]});
- document.getElementById('coreGrid').innerHTML=CORE.map(c=>`<div class="card"><div class="e">${c[0]}</div><h3>${c[2]}</h3><div class="id">${c[1]}</div><p>${lang==='ar'?c[4]:c[3]}</p></div>`).join('');
- document.getElementById('cmdRows').innerHTML=CMDS.map(c=>`<tr><td><code>${c[0]}</code></td><td>${lang==='ar'?c[3]:c[1]}</td><td>${lang==='ar'?c[4]:c[2]}</td></tr>`).join('');
- document.getElementById('flowRow').innerHTML=FLOW.map((f,i)=>`<div class="step ${f[3]?'gate':''}"><b>${f[0]} ${f[1]}</b><span>${f[2]}</span></div>${i<FLOW.length-1?'<div class="arrow">➜</div>':''}`).join('');
- document.getElementById('platRow').innerHTML=PLATS.map(p=>`<div class="pill"><b>${p[0]}</b><span>${p[1]}</span></div>`).join('');
+/* ================= COPY ================= */
+const L={en:{},ar:{}};
+L.en.dir='ltr';L.en.btn='العربية';
+L.en.kick='40 AGENTS · 3 HARD GATES · 0 EXCUSES';
+L.en.h1='Give your AI coder<br><span>a boss.</span>';
+L.en.tag='Majlis turns OpenCode, Claude Code, Codex or Gemini into a team with <b>testers who demand proof</b>, scouts who cannot touch your code, and a security gate that can freeze any release. One command installs all of it.';
+L.en.cta1='Watch it work ↓';L.en.cta2='★ Star on GitHub';
+L.en.s1='specialists';L.en.s2='veto gates';L.en.s3='self-repair';L.en.s4='tools supported';L.en.s5='forever, MIT';
+L.en.f_t='Why it bites';
+L.en.f_p='Not a prompt pack. Prompt packs ask nicely. Majlis enforces:';
+L.en.features=[
+['🔒','A gate with veto power','Before anything ships, the red pipeline hunts leaked keys, debug flags left on, missing auth. Verdict is binary: PASS moves, FAIL freezes. No agent — not even the chief — can overrule it.'],
+['🧪','Proof or it never happened','Every task carries its own test command. When an agent says "done", the council runs it. Red output means automatic bounce-back. No debate, no vibes, no "trust me".'],
+['👁️','Scouts physically cannot touch code','Recon agents mount read-only. Planners cannot write files. Only builders hold the pen. Containment comes from permissions, not promises.'],
+['💥','Delete it. It grows back.','Wipe the whole installation. Next launch notices the gap, compares versions, and rebuilds every piece in half a second. That is why updates never break.']];
+L.en.c_t='The honest comparison';
+L.en.c_p='We studied the strongest rival — 49 personalities, Claude-first, review-only security. We built where it is soft.';
+L.en.th_f='What you need';L.en.th_a='You, alone';L.en.th_b='Pile of prompts';
+L.en.cmp=[
+['Someone checks the work','you, tired, at 2am','<span class="no">the same model grades itself</span>','<span class="yes">separate QA agent, own eyes</span>'],
+['Runnable proof per task','sometimes','<span class="no">never</span>','<span class="yes">mandatory, or task dies</span>'],
+['Security veto on releases','your memory','<span class="no">none</span>','<span class="yes">binary PASS / FAIL</span>'],
+['Least-privilege agents','n/a','<span class="no">everyone edits everything</span>','<span class="yes">scouts are read-only</span>'],
+['Survives total deletion','manual reinstall','<span class="mid">re-copy prompts</span>','<span class="yes">rebuilds itself in 0.5s</span>'],
+['Real subagents on OpenCode','—','<span class="no">role-play only</span>','<span class="yes">40 native agent files</span>'],
+['Price','$0 + your weekends','$0','$0']];
+L.en.d_t='Do not take our word. Run it here.';
+L.en.d_p='This is a live simulation of a real session — click a command and watch the council respond.';
+L.en.hint='Click a command above — or just wait, the council introduces itself.';L.en.ttl='you@yourmachine — majlis';
+L.en.p_t='The pipeline is law, not etiquette';
+L.en.p_p='Four phases, three gates. A blocker at any gate sends the work straight back. Automatically.';
+L.en.pipe=[['🗺️','Plan','/majlis:start · /majlis:plan n','recon before anyone writes'],['⚙️','Execute','/majlis:build','parallel waves, atomic commits'],['🚦','Gates','QA → SECURITY → CLEAN-CODE','blocker = automatic bounce'],['📚','Remember','CHRONICLE · LESSONS','next project starts smarter']];
+L.en.k_t='Meet the Forty';
+L.en.k_p='No fictional roles. Each card is a real agent file with its own permission scope — verified by a 774-assertion audit you can rerun yourself.';
+L.en.q_t='Straight answers';
+L.en.faqs=[
+['Is this just another prompt pack?','No. Prompt packs suggest. Majlis enforces: agents carry scoped permissions, tasks die unless their verify command exits green, and a failed security scan freezes the entire pipeline until fixed.'],
+['Which tools does it work in?','Deepest in OpenCode (native subagents + self-healing plugin). Claude Code, Codex CLI, Gemini CLI, Cursor, Copilot and 26 more get native or standard-format equivalents from the same installer.'],
+['What does it cost?','$0, MIT, forever. You bring your own model and API key — Majlis never phones home and has no telemetry at all.'],
+['Will the gates slow me down?','Seconds at delivery points. Nights saved. Planning and building run at full model speed — gates fire only when something is about to ship.'],
+['Can I trust the security gate?','It is offensive, not decorative: TruffleHog sweeps git history for secrets, Nuclei probes exposed configs, ZAP checks API defenses. And the whole system is audited by 774 assertions you can rerun in one command.']];
+L.en.fin_h='Your AI already writes code.<br>Who checks it?';
+L.en.fin_p='One command. Forty specialists. Three gates with teeth. Zero dollars.';
+L.en.fin_c1='Install in 30 seconds';L.en.f_foot='Hunt first. Ship clean.';
+L.en.cmds={start:'/majlis:start',plan:'/majlis:plan billing-api',build:'/majlis:build',sec:'/majlis:security'};
+L.en.reset='↻ reset';
+
+/* ---- AR ---- */
+L.ar.dir='rtl';L.ar.btn='English';
+L.ar.kick='٤٠ وكيلاً · ٣ بوابات صارمة · صفر أعذار';
+L.ar.h1='مبرمجك الآلي يحتاج<br><span>رئيساً.</span>';
+L.ar.tag='«المجلس» يحوّل أوبنكود أو كلاود كود أو كودكس أو جيميناي إلى فريق فيه <b>مختبِرون يطلبون الدليل</b>، وجواسيس لا تستطيع لمس كودك، وبوابة أمنية تجمّد أي إصدار. أمرٌ واحد يركّب كل ذلك.';
+L.ar.cta1='شاهده يعمل ↓';L.ar.cta2='★ نجّمه على GitHub';
+L.ar.s1='متخصصاً';L.ar.s2='بوابات نقض';L.ar.s3='إصلاح ذاتي';L.ar.s4='أداة مدعومة';L.ar.s5='للأبد · MIT';
+L.ar.f_t='لماذا عضّته تشعر بها؟';
+L.ar.f_p='هذه ليست حزمة برومبتات. حزم البرومبت تطلب بأدب. المجلس يفرض:';
+L.ar.features=[
+['🔒','بوابة لها حق النقض','قبل أي تسليم يفتّش المسار الأحمر عن مفاتيح مسرّبة وأعلام تنقيح متروكة ومصادقة ناقصة. الحكم ثنائي: PASS يمضي، FAIL يتجمّد. ولا وكيل — حتى الرئيس — يستطيع تجاوزه.'],
+['🧪','دليلٌ جارٍ أو لم يحدث','كل مهمة تحمل أمر اختبارها. حين يقول الوكيل «انتهيت» يجرّه المجلس فعلاً. نتيجة حمراء تعني ارتداداً تلقائياً. بلا نقاش وبلا «ثِق بي».'],
+['👁️','الجواسيس لا تلمس الكود فيزيائياً','وكلاء الرصد يُحمَّلون بقراءة فقط، والمخطِّطون لا يكتبون ملفات، والبنّاؤون وحدهم يملكون القلم. الاحتواء بصلاحياتٍ لا بوعود.'],
+['💥','احذفه كله… ينبت من جديد','امسح التثبيت بالكامل. الإقلاع التالي يلاحظ الفراغ ويقارن الإصدارات ويعيد بناء كل قطعة في نصف ثانية. لهذا لا تنكسر التحديثات أبداً.']];
+L.ar.c_t='المقارنة بلا مجاملة';
+L.ar.c_p='درسنا أقوى منافس — 49 شخصية، انحياز لكلاود، وأمن داخل المراجعة فقط. ثم بنينا حيث هو ليّن.';
+L.ar.th_f='ما تحتاجه';L.ar.th_a='وحدك';L.ar.th_b='كومة برومبتات';
+L.ar.cmp=[
+['من يراجع العمل؟','أنت، منهَك، الثانية فجراً','<span class="no">النموذج نفسه يقيّم نفسه</span>','<span class="yes">وكيل QA مستقل بعينيه</span>'],
+['دليل جارٍ لكل مهمة','أحياناً','<span class="no">أبداً</span>','<span class="yes">إلزامي وإلا ماتت المهمة</span>'],
+['حق نقض أمني على الإصدار','ذاكرتك','<span class="no">لا شيء</span>','<span class="yes">ثنائي: PASS / FAIL</span>'],
+['وكلاء بصلاحيات مضبوطة','—','<span class="no">الجميع يعدّل كل شيء</span>','<span class="yes">الرصد قراءة فقط</span>'],
+['ينجو من حذف كامل','إعادة تثبيت يدوية','<span class="mid">انسخ البرومبتات من جديد</span>','<span class="yes">يعيد بناء نفسه في 0.5 ثانية</span>'],
+['وكلاء حقيقيون على أوبنكود','—','<span class="no">تمثيل أدوار فقط</span>','<span class="yes">40 ملف وكيل أصلي</span>'],
+['الثمن','$0 + عطلتك','$0','$0']];
+L.ar.d_t='لا تأخذ كلامنا. جرّبه هنا.';
+L.ar.d_p='محاكاة حيّة لجلسة حقيقية — انقر أمراً وشاهد المجلس يرد.';
+L.ar.hint='انقر أمراً من الأعلى — أو انتظر، المجلس يقدّم نفسه بنفسه.';L.ar.ttl='أنت@جهازك — المجلس';
+L.ar.p_t='خط الإنتاج قانونٌ لا مجاملات';
+L.ar.p_p='أربع مراحل وثلاث بوابات. أي مانع عند أي بوابة يعيد العمل من حيث بدأ. تلقائياً.';
+L.ar.pipe=[['🗺️','التخطيط','/majlis:start · /majlis:plan n','رصدٌ قبل أن يكتب أحد'],['⚙️','التنفيذ','/majlis:build','موجات موازية وcommits ذرية'],['🚦','البوابات','QA ← الأمن ← نظافة الكود','مانع = ارتداد تلقائي'],['📚','الذاكرة','السجل · الدروس','مشروعك القادم يبدأ أذكى']];
+L.ar.k_t='تعرّف على الأربعين';
+L.ar.k_p='لا أدوار خيالية. كل بطاقة ملف وكيل حقيقي بنطاق صلاحياته — موثّق بتدقيق 774 فحصاً يمكنك إعادة تشغيله بنفسك.';
+L.ar.q_t='أجوبة بلا لفّ ودوران';
+L.ar.faqs=[
+['هل هذه مجرد حزمة برومبتات أخرى؟','لا. حزم البرومبت تقترح. المجلس يفرض: وكلاء بصلاحيات محددة، مهام تموت إن لم ينجح أمر تحققها، وفحص أمني فاشل يجمّد الخط كله حتى يُصلَح.'],
+['مع أي الأدوات يعمل؟','الأعمق في أوبنكود (وكلاء أصليون + إضافة شافية). وكلاود كود وكودكس وجيميناي وكيورسر وكوبايلوت و26 أداة أخرى تحصل على ما يناسبها من المثبِّت نفسه.'],
+['كم يكلّف؟','صفر دولار، رخصة MIT، للأبد. تجلب نموذجك ومفتاحك — والمجلس لا يتصل بأي خادم ولا يجمع أي بيانات.'],
+['هل تبطئني البوابات؟','ثوانٍ عند لحظات التسليم، وليالٍ تُوفَّر. التخطيط والبناء بسرعة نموذجك الكاملة — والبوابات لا تنطلق إلا عند اقتراب التسليم.'],
+['أوثق ببوابة الأمن؟','هجومية لا تزيينية: ترافل هوغ يقلّب تاريخ Git بحثاً عن أسرار، نوكلاي يفحص الإعدادات المكشوفة، زاب يختبر دفاعات الـAPI. والنظام كله مدقَّق بـ774 فحصاً تُعيد تشغيلها بأمر واحد.']];
+L.ar.fin_h='مبرمجك الآلي يكتب الكود فعلاً.<br>فمن يراجعه؟';
+L.ar.fin_p='أمر واحد. أربعون متخصصاً. ثلاث بوابات لها أنياب. وصفر دولار.';
+L.ar.fin_c1='ركّبها في ٣٠ ثانية';L.ar.f_foot='يصطاد أولاً، يسلّم نقيّاً.';
+L.ar.cmds={start:'/majlis:start',plan:'/majlis:plan api-faturah',build:'/majlis:build',sec:'/majlis:security'};
+L.ar.reset='↻ من جديد';
+
+/* ================= INTERACTIVE SESSION SCRIPTS ================= */
+const SC={
+en:{
+start:[
+{o:'<span class="y">🏛️ MAJLIS v9.2.0</span> — <span class="d">council is seating…</span>',d:400},
+{o:'<span class="g">[OK]</span> 40 agents ready · 90 skills on standby · gates armed',d:500},
+{o:'<span class="d">├─</span> 🛡️ SECURITY gate <span class="d">………</span> <span class="g">armed</span>',d:350},
+{o:'<span class="d">├─</span> 🎯 QA gate <span class="d">………………</span> <span class="g">armed</span>',d:300},
+{o:'<span class="d">└─</span> 🧼 CLEAN-CODE gate <span class="d">………</span> <span class="g">armed</span>',d:300},
+{o:'<span class="b">wrote:</span> PROJECT.md · ROADMAP.md · STATE.md',d:500},
+{o:'<span class="d">tell me what to build. the council plans it, proves it, defends it.</span>',d:500}],
+plan:[
+{o:'<span class="y">🎼 hadi-maestro</span> <span class="d">takes the chair…</span>',d:400},
+{o:'<span class="d">├─</span> <span class="y">🔍 rased-explorer:</span> 214 files mapped · stack: FastAPI + Postgres · blast radius: <span class="b">src/billing/*</span>',d:600},
+{o:'<span class="d">├─</span> <span class="y">🕵️ risk-assessor:</span> Stripe webhooks = replay attacks → <span class="r">idempotency keys mandatory</span>',d:600},
+{o:'<span class="d">└─</span> <span class="y">🧭 product-shaper:</span> 7 stories, each with acceptance criteria',d:500},
+{o:'<span class="g">PLAN LOCKED</span> — 3 waves · 9 tasks',d:400},
+{o:'<span class="d">every task carries a runnable verify command. no exceptions.</span>',d:450}],
+build:[
+{o:'<span class="y">⚙️ wave 1/3</span> — 9 tasks in parallel…',d:400},
+{o:'<span class="d">├─</span> ⚙️ emad · billing routes <span class="d">………</span> <span class="g">✓ npm test billing → 23 passed</span>',d:650},
+{o:'<span class="d">├─</span> 🗄️ data-modeler · invoices table <span class="d">……</span> <span class="g">✓ migration reviewed</span>',d:550},
+{o:'<span class="d">└─</span> 🔀 stream-partitioner · export chunker <span class="d">…</span> <span class="g">✓ 38MB peak RAM</span>',d:600},
+{o:'<span class="y">🎯 baher-qa gate:</span> lint 0 errors · types clean · <span class="g">47/47 tests</span>',d:600},
+{o:'<span class="g">WAVE 1 CLEARED</span> — atomic commit created',d:400}],
+sec:[
+{o:'<span class="y">🛡️ sareem-security</span> <span class="d">red gate engaging…</span>',d:400},
+{o:'<span class="d">├─</span> trufflehog <span class="d">………</span> git history <span class="d">………</span> <span class="g">clean</span>',d:500},
+{o:'<span class="d">├─</span> nuclei <span class="d">……………</span> prod config <span class="d">……</span> <span class="r">DEBUG=true · HIGH</span>',d:600},
+{o:'<span class="d">└─</span> zap passive <span class="d">……</span> /admin auth <span class="d">………</span> <span class="r">missing</span>',d:550},
+{o:'<span class="fail">⛔ VERDICT: FAIL — delivery FROZEN</span>',d:600},
+{o:'<span class="d">↩ bounced to emad-api-shield → flag moved to env secret → rebuilt</span>',d:700},
+{o:'<span class="d">re-running gate…</span>',d:500},
+{o:'<span class="d">├─</span> trufflehog <span class="g">clean</span> <span class="d">·</span> nuclei <span class="g">clean</span> <span class="d">·</span> zap <span class="g">pass</span>',d:550},
+{o:'<span class="pass">✅ SECURITY: PASS — evidence archived to CHRONICLE.md</span>',d:400}]},
+ar:{
+start:[
+{o:'<span class="y">🏛️ المجلس v9.2.0</span> — <span class="d">الجلسة تُفتتح…</span>',d:400},
+{o:'<span class="g">[تم]</span> 40 وكيلاً جاهزون · 90 مهارة على الاستعداد · البوابات مسلّحة',d:500},
+{o:'<span class="d">├─</span> بوابة 🛡️ الأمن <span class="d">………</span> <span class="g">مسلّحة</span>',d:350},
+{o:'<span class="d">├─</span> بوابة 🎯 الاختبارات <span class="d">……</span> <span class="g">مسلّحة</span>',d:300},
+{o:'<span class="d">└─</span> بوابة 🧼 نظافة الكود <span class="d">…</span> <span class="g">مسلّحة</span>',d:300},
+{o:'<span class="b">كُتبت:</span> PROJECT.md · ROADMAP.md · STATE.md',d:500},
+{o:'<span class="d">قل ماذا نبني. المجلس يخطط ويثبت ويدافع.</span>',d:500}],
+plan:[
+{o:'<span class="y">🎼 هادي المعزوفة</span> <span class="d">يتسند للكرسي…</span>',d:400},
+{o:'<span class="d">├─</span> <span class="y">🔍 راشد:</span> رسم 214 ملفاً · التقنية: FastAPI + Postgres · نطاق الانفجار <span class="b">src/billing/*</span>',d:600},
+{o:'<span class="d">├─</span> <span class="y">🕵️ مقيّم المخاطر:</span> وبهات Stripe قابلة لإعادة الإرسال ← <span class="r">مفاتيح Idempotency إلزامية</span>',d:600},
+{o:'<span class="d">└─</span> <span class="y">🧭 صائغ المنتج:</span> 7 قصص لكل منها معايير قبول',d:500},
+{o:'<span class="g">الخطة مُقفلة</span> — 3 موجات · 9 مهام',d:400},
+{o:'<span class="d">كل مهمة تحمل أمر تحقق قابل للتشغيل. بلا استثناء.</span>',d:450}],
+build:[
+{o:'<span class="y">⚙️ الموجة 1/3</span> — 9 مهام بالتوازي…',d:400},
+{o:'<span class="d">├─</span> عماد · مسارات الفوترة <span class="d">………</span> <span class="g">✓ npm test billing ← نجح 23</span>',d:650},
+{o:'<span class="d">├─</span> نموذجي البيانات · جدول الفواتير <span class="d">……</span> <span class="g">✓ الهجرة مراجَعة</span>',d:550},
+{o:'<span class="d">└─</span> مقسّم التدفقات · مُقطّع التصدير <span class="d">…</span> <span class="g">✓ ذروة 38MB</span>',d:600},
+{o:'<span class="y">🎯 بوابة باهر:</span> lint بلا أخطاء · الأنواع نظيفة · <span class="g">47/47 اختباراً</span>',d:600},
+{o:'<span class="g">الموجة 1 اجتازت</span> — commit ذري أُنشئ',d:400}],
+sec:[
+{o:'<span class="y">🛡️ سريم</span> <span class="d">البوابة الحمراء تُفتح…</span>',d:400},
+{o:'<span class="d">├─</span> ترافل هوغ <span class="d">………</span> تاريخ Git <span class="d">………</span> <span class="g">نظيف</span>',d:500},
+{o:'<span class="d">├─</span> نوكلاي <span class="d">……………</span> إعدادات الإنتاج <span class="d">…</span> <span class="r">DEBUG=true · خطورة عالية</span>',d:600},
+{o:'<span class="d">└─</span> زاب سلبي <span class="d">……</span> مصادقة /admin <span class="d">………</span> <span class="r">مفقودة</span>',d:550},
+{o:'<span class="fail">⛔ الحكم: فشل — التسليم مُجمَّد</span>',d:600},
+{o:'<span class="d">↩ أُعيد لعماد ← العلم نُقل لمتغير بيئة آمن ← أُعيد البناء</span>',d:700},
+{o:'<span class="d">إعادة تشغيل البوابة…</span>',d:500},
+{o:'<span class="d">├─</span> ترافل هوغ <span class="g">نظيف</span> <span class="d">·</span> نوكلاي <span class="g">نظيف</span> <span class="d">·</span> زاب <span class="g">ناجز</span>',d:550},
+{o:'<span class="pass">✅ الأمن: ناجز — الأدلة مؤرشفة في السجل</span>',d:400}]}};
+
+/* ================= RENDER ================= */
+let cur='en',busy=false,done=new Set(),autoPlayed=false;
+const t=()=>L[cur];
+function $(id){return document.getElementById(id)}
+function render(){
+ const d=t();document.body.dir=d.dir;document.documentElement.lang=cur;
+ $('langBtn').textContent=d.btn;$('ttl').textContent=d.ttl;$('hint').textContent=d.hint;
+ $('h1').innerHTML=d.h1;$('tag').innerHTML=d.tag;
+ $('cta1').textContent=d.cta1;$('fin_h').innerHTML=d.fin_h;$('fin_p').textContent=d.fin_p;$('fin_c1').textContent=d.fin_c1;
+ document.querySelectorAll('[data-i]').forEach(el=>el.textContent=t()[el.dataset.i]);
+ $('featGrid').innerHTML=t().features.map(f=>`<div class="fcard"><div class="e">${f[0]}</div><h3>${f[1]}</h3><p>${f[2]}</p></div>`).join('');
+ $('cmpRows').innerHTML=t().cmp.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('');
+ $('pipeRow').innerHTML=t().pipe.map(p=>`<div class="ph p${p[0].match(/\d/)[0]}"><h4>${p[0]} ${p[1]}</h4>${p.slice(2).map(s=>`<span class="st">${s}</span>`).join('')}</div>`).join('');
+ renderCouncil();renderFAQ();renderChips();
 }
-let cur='en';
-function toggleLang(){cur=cur==='en'?'ar':'en';render(cur);}
-function copyCmd(btn){navigator.clipboard.writeText('npx majlis-council --all');const o=btn.textContent;btn.textContent='✓';setTimeout(()=>btn.textContent=o,1200);}
-render('en');
+function renderCouncil(f='all'){
+ const d=t();
+ $('filters').innerHTML=`<button class="fb ${f==='all'?'on':''}" onclick="renderCouncil('all')">${cur==='en'?'All 40':'الكل'}</button>`+
+  Object.entries(TEAMS).map(([k,v])=>`<button class="fb ${f===k?'on':''}" onclick="renderCouncil('${k}')">${cur==='en'?v[0]:v[1]}</button>`).join('');
+ $('cgrid').innerHTML=AG.filter(a=>f==='all'||a[5]===f).map(a=>`<div class="ccard"><div class="e">${a[0]}</div><h4>${a[2]}</h4><div class="id">@${a[1]}</div><p>${cur==='en'?a[3]:a[4]}</p></div>`).join('');
+}
+function renderFAQ(){
+ $('faqBox').innerHTML=t().faqs.map(q=>`<details><summary>${q[0]}</summary><p>${q[1]}</p></details>`).join('');
+}
+function renderChips(){
+ const d=t();
+ $('chips').innerHTML=['start','plan','build','sec'].map(k=>
+  `<button class="chip ${done.has(k)?'done':''}" id="chip_${k}" onclick="play('${k}')">${done.has(k)?'✓ ':''}${esc(d.cmds[k])}</button>`).join('')+
+  `<button class="chip" onclick="resetTerm()">${d.reset}</button>`;
+}
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function line(html){const dv=document.createElement('div');dv.innerHTML=html;$('tbody').appendChild(dv);return dv}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function typeCmd(text){
+ const dv=line(`<span class="d">$ </span><span class="cmdTxt"></span><span class="caret"></span>`);
+ const span=dv.querySelector('.cmdTxt');
+ for(const ch of text){span.textContent+=ch;await sleep(28)}
+ await sleep(200);dv.querySelector('.caret').remove();
+}
+async function play(k){
+ if(busy)return;busy=true;renderChips();
+ const d=t();
+ line('&nbsp;');
+ await typeCmd(d.cmds[k]);
+ for(const st of SC[cur][k]){await sleep(st.d||350);line(st.o);}
+ done.add(k);busy=false;renderChips();
+ const nb=['start','plan','build','sec'].find(x=>!done.has(x));
+ if(nb&&!autoPlayed){}
+}
+async function autoplay(){
+ if(autoPlayed)return;autoPlayed=true;
+ await sleep(1200);
+ if(!busy&&!done.size)await play('start');
+}
+function resetTerm(){
+ if(busy)return;done.clear();$('tbody').innerHTML='';renderChips();
+ line(`<span class="d">$ _</span><span class="caret"></span>`);
+ setTimeout(()=>{const c=document.querySelector('.tbody .caret');if(c)c.remove()},1500);
+}
+function toggleLang(){
+ cur=cur==='en'?'ar':'en';done.clear();
+ $('tbody').innerHTML='';render();autoplay();
+}
+function copyCmd(b){navigator.clipboard.writeText('npx majlis-council --all');b.textContent='✓';setTimeout(()=>b.textContent='⧉',1200)}
+render();
+autoplay();
 </script>
 </body>
 </html>
