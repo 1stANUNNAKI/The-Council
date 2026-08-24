@@ -70,18 +70,18 @@
 
 ```mermaid
 flowchart LR
-    A[📥 طلب] --> B[/majlis:start]
-    B --> C[/majlis:plan n]
-    C --> D{🔍 راصد<br/>استكشاف}
-    D --> E[/majlis:build]
-    E --> F[⚙️ عماد ينفذ<br/>+ عقود verify]
-    F --> G[/majlis:review]
+    A["📥 طلب"] --> B["/majlis:start"]
+    B --> C["/majlis:plan n"]
+    C --> D{"🔍 راصد استكشاف"}
+    D --> E["/majlis:build"]
+    E --> F["⚙️ عماد ينفذ عقود verify"]
+    F --> G["/majlis:review"]
     G -->|BLOCKER| F
-    G -->|PASS| H[/majlis:security]
+    G -->|PASS| H["/majlis:security"]
     H -->|FAIL| F
-    H -->|PASS| I[🧼 ندیف<br/>بوابة النظافة]
+    H -->|PASS| I["🧼 ندیف بوابة النظافة"]
     I --> J[📝 سجيل<br/>CHRONICLE.md]
-    J --> K[✅ تسليم]
+    J --> K["✅ تسليم"]
     K -.-> L[🧠 حكيم LESSONS.md]
 ```
 

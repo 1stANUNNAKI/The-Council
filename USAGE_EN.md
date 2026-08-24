@@ -70,18 +70,18 @@ Then open any session in your tool — agents, commands and skills are live.
 
 ```mermaid
 flowchart LR
-    A[Request] --> B[/majlis:start]
-    B --> C[/majlis:plan n]
-    C --> D{🔍 Rased<br/>recon}
-    D --> E[/majlis:build]
-    E --> F[⚙️ Emad executes<br/>verify contracts]
-    F --> G[/majlis:review]
+    A["Request"] --> B["/majlis:start"]
+    B --> C["/majlis:plan n"]
+    C --> D{"🔍 Rased<br/>recon"}
+    D --> E["/majlis:build"]
+    E --> F["⚙️ Emad executes verify contracts"]
+    F --> G["/majlis:review"]
     G -->|BLOCKER| F
-    G -->|PASS| H[/majlis:security]
+    G -->|PASS| H["/majlis:security"]
     H -->|FAIL| F
     H -->|PASS| I[🧼 Nadif<br/>clean-code gate]
     I --> J[📝 Sajeel<br/>CHRONICLE.md]
-    J --> K[✅ Ship]
+    J --> K["✅ Ship"]
     K -.-> L[🧠 Hakim LESSONS.md]
 ```
 

@@ -122,17 +122,17 @@ Deployed natively per platform: OpenCode `/majlis-start` · Claude `/majlis-star
 
 ```mermaid
 flowchart LR
-    A[Request] --> B[/majlis:start]
-    B --> C[/majlis:plan n]
-    C --> R{🔍 recon}
-    R --> D[/majlis:build]
-    D --> Q{🎯 QA gates}
+    A["Request"] --> B["/majlis:start"]
+    B --> C["/majlis:plan n"]
+    C --> R{"🔍 recon"}
+    R --> D["/majlis:build"]
+    D --> Q{"🎯 QA gates"}
     Q -->|fail| D
-    Q -->|pass| S{🛡️ SECURITY}
+    Q -->|pass| S{"🛡️ SECURITY"}
     S -->|FAIL| D
-    S -->|PASS| N{🧼 clean-code}
-    N --> L[📝 CHRONICLE]
-    L --> X[✅ ship]
+    S -->|PASS| N{"🧼 clean-code"}
+    N --> L["📝 CHRONICLE"]
+    L --> X["✅ ship"]
 ```
 
 ## 🌐 Platform Coverage

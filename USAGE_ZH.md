@@ -70,18 +70,18 @@ Majlis **不是**编辑器，也不是 Claude Code 或 OpenCode 的替代品。�
 
 ```mermaid
 flowchart LR
-    A[请求] --> B[/majlis:start]
-    B --> C[/majlis:plan n]
-    C --> D{🔍 Rased<br/>侦察}
-    D --> E[/majlis:build]
-    E --> F[⚙️ Emad 执行<br/>验证契约]
-    F --> G[/majlis:review]
+    A["请求"] --> B["/majlis:start"]
+    B --> C["/majlis:plan n"]
+    C --> D{"🔍 Rased 侦察"}
+    D --> E["/majlis:build"]
+    E --> F["⚙️ Emad 执行验证契约"]
+    F --> G["/majlis:review"]
     G -->|BLOCKER| F
-    G -->|PASS| H[/majlis:security]
+    G -->|PASS| H["/majlis:security"]
     H -->|FAIL| F
-    H -->|PASS| I[🧼 Nadif<br/>整洁代码门]
+    H -->|PASS| I["🧼 Nadif 整洁代码门"]
     I --> J[📝 Sajeel<br/>CHRONICLE.md]
-    J --> K[✅ 交付]
+    J --> K["✅ 交付"]
     K -.-> L[🧠 Hakim LESSONS.md]
 ```
 
