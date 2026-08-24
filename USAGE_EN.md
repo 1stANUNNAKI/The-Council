@@ -2,7 +2,7 @@
 ### Complete Usage Guide | v9.0
 
 > **"One mind. Every tool."**
-> A disciplined agent council: 11 real specialized agents + 90+ curated skills, installed with one command into any AI coding tool, enforcing a mandatory pipeline: plan → build → verify → security gate → chronicle — and it self-updates on every release.
+> A disciplined agent council: 40 real specialized agents + 90+ curated skills, installed with one command into any AI coding tool, enforcing a mandatory pipeline: plan → build → verify → security gate → chronicle — and it self-updates on every release.
 
 ---
 
@@ -23,7 +23,7 @@ Majlis is **not** an editor or a Claude Code/OpenCode replacement. It is a **dis
 
 Then open any session in your tool — agents, commands and skills are live.
 
-## 3) The Council of Eleven
+## 3) The Council of Forty
 
 | Invoke | Agent | Role | Permissions |
 |----------|--------|------|-------------|
@@ -42,6 +42,7 @@ Then open any session in your tool — agents, commands and skills are live.
 > On platforms without subagents (Codex/Cursor/Gemini…), roles are available as `/prompts:majlis-*` commands or assumed per the role table in the master rules.
 
 
+> **✦ Expansion (v9.2):** competitor-informed study added 13 specialists (`@product-shaper` `@ux-researcher` `@brand-guardian` `@growth-analyst` `@code-polisher` `@test-engineer` `@perf-auditor` `@a11y-auditor` `@release-manager` `@incident-detective` `@prompt-smith` `@context-steward` `@portfolio-steward`) — the Council is now **40/40** real.  
 > **✦ Extended Council (v9.1):** all remaining members are now real agents too — the Council is **27/27** invocable on every platform: `@agent-weaver` · `@data-modeler` · `@stream-partitioner` · `@integrative-architect` · `@risk-assessor` · `@cinematic-director` · `@design-system-master` · `@responsive-layout` · `@print-publisher` · `@motion-coder` · `@cicd-automator` · `@sandbox-isolator` · `@dep-manager` · `@voice-engineer` · `@data-engineer` · `@hadi-core`
 
 ## 4) The Six Commands — Lifecycle
@@ -111,7 +112,7 @@ majlis/
 ├── VERSION.txt          Version (drives self-update)
 ├── install_system.ps1   Windows installer
 ├── deploy_skills.ps1    Skills-only deployer
-├── agents/              11 agents (native OpenCode format)
+├── agents/              40 agents (native OpenCode format)
 ├── commands/            6 majlis-*.md workflows
 ├── skills/              Skill source of truth (77 deployed)
 ├── templates/           Rule-pointer texts

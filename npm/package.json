@@ -1,10 +1,12 @@
 {
   "name": "majlis-council",
-  "version": "9.0.0",
+  "version": "9.2.0",
   "description": "MAJLIS - The Council: one command installs a disciplined 11-agent team + curated skills into OpenCode, Claude Code, Codex, Gemini CLI and any agentskills.io platform.",
   "license": "MIT",
   "type": "commonjs",
-  "bin": { "majlis": "bin/install.js" },
+  "bin": {
+    "majlis": "bin/install.js"
+  },
   "files": [
     "bin/install.js",
     "skills/",
@@ -15,11 +17,26 @@
     "AGENTS.md",
     "VERSION.txt"
   ],
-  "engines": { "node": ">=16" },
+  "engines": {
+    "node": ">=16"
+  },
   "keywords": [
-    "ai-agents", "multi-agent", "claude-code", "codex", "opencode",
-    "gemini-cli", "cursor", "skills", "agent-skills", "security-pipeline",
-    "qa-gates", "council", "majlis"
+    "ai-agents",
+    "multi-agent",
+    "claude-code",
+    "codex",
+    "opencode",
+    "gemini-cli",
+    "cursor",
+    "skills",
+    "agent-skills",
+    "security-pipeline",
+    "qa-gates",
+    "council",
+    "majlis"
   ],
-  "repository": { "type": "git", "url": "https://github.com/basharalameed/The-Council" }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/basharalameed/The-Council"
+  }
 }

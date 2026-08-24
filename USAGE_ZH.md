@@ -2,7 +2,7 @@
 ### 完整使用指南 | 版本 9.0
 
 > **"一个大脑。贯通所有工具。"**
-> 纪律严明的智能体议会：11个真实的专业智能体 + 90多个精选技能，一条命令安装到任何AI编程工具中，强制执行流水线：规划 → 构建 → 验证 → 安全门 → 编年记录 —— 并随每次发布自动更新自身。
+> 纪律严明的智能体议会：40个真实的专业智能体 + 90多个精选技能，一条命令安装到任何AI编程工具中，强制执行流水线：规划 → 构建 → 验证 → 安全门 → 编年记录 —— 并随每次发布自动更新自身。
 
 ---
 
@@ -23,7 +23,7 @@ Majlis **不是**编辑器，也不是 Claude Code 或 OpenCode 的替代品。�
 
 安装后在您的工具中打开任意会话——智能体、命令和技能即刻可用。
 
-## 3) 十一位议会议员
+## 3) 四十位议会议员
 
 | 调用方式 | 智能体 | 职责 | 权限 |
 |----------|--------|------|------|
@@ -42,6 +42,7 @@ Majlis **不是**编辑器，也不是 Claude Code 或 OpenCode 的替代品。�
 > 在没有子智能体系统的平台（Codex/Cursor/Gemini…）上，角色以 `/prompts:majlis-*` 命令提供，或按照主规则中的角色表进行角色扮演。
 
 
+> **✦ 扩展（v9.2）：**经竞品研究新增13名专家（`@product-shaper` `@ux-researcher` `@brand-guardian` `@growth-analyst` `@code-polisher` `@test-engineer` `@perf-auditor` `@a11y-auditor` `@release-manager` `@incident-detective` `@prompt-smith` `@context-steward` `@portfolio-steward`）—— 议会达成 **40/40**。  
 > **✦ 扩展议会（v9.1）：**其余成员现已成为真实智能体 —— 议会达成 **27/27**，可在所有平台上调用：`@agent-weaver` · `@data-modeler` · `@stream-partitioner` · `@integrative-architect` · `@risk-assessor` · `@cinematic-director` · `@design-system-master` · `@responsive-layout` · `@print-publisher` · `@motion-coder` · `@cicd-automator` · `@sandbox-isolator` · `@dep-manager` · `@voice-engineer` · `@data-engineer` · `@hadi-core`
 
 ## 4) 六大命令 — 生命周期

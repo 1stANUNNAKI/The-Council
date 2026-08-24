@@ -4,7 +4,7 @@
 
 **One mind. Every tool.** · **عقلٌ واحد في كل أدواتك**
 
-A disciplined council of **27 real agents + 90 curated skills**, installed with one command
+A disciplined council of **40 real agents + 90 curated skills**, installed with one command
 into OpenCode, Claude Code, Codex, Gemini CLI, Cursor and 26+ more platforms.
 
 Mandatory pipeline: `plan → build → verify → security gate → chronicle` — self-updating.
@@ -34,11 +34,11 @@ Windows source installer: `powershell -File install_system.ps1`
 | `/majlis:security` | TruffleHog → Nuclei → OWASP ZAP → **SECURITY PASS mandatory** |
 | `/majlis:status` | dashboard + exact next action |
 
-## 🏛️ The Council (27)
+## 🏛️ The Council (40)
 
 Core eleven: `@hadi-maestro` · `@rased-explorer` · `@emad-api-shield` · `@baher-qa` · `@sareem-security` · `@nadif-clean-code` · `@bayan-diagrams` · `@sajeel-logger` · `@hakim-mentor` · `@mubtakir-tools` · `@balegh-docs`
 
-Extended sixteen: `@agent-weaver` · `@data-modeler` · `@stream-partitioner` · `@integrative-architect` · `@risk-assessor` · `@cinematic-director` · `@design-system-master` · `@responsive-layout` · `@print-publisher` · `@motion-coder` · `@cicd-automator` · `@sandbox-isolator` · `@dep-manager` · `@voice-engineer` · `@data-engineer` · `@hadi-core`
+Extended twenty-nine: `@agent-weaver` · `@data-modeler` · `@stream-partitioner` · `@integrative-architect` · `@risk-assessor` · `@cinematic-director` · `@design-system-master` · `@responsive-layout` · `@print-publisher` · `@motion-coder` · `@cicd-automator` · `@sandbox-isolator` · `@dep-manager` · `@voice-engineer` · `@data-engineer` · `@hadi-core` · `@product-shaper` · `@ux-researcher` · `@brand-guardian` · `@growth-analyst` · `@code-polisher` · `@test-engineer` · `@perf-auditor` · `@a11y-auditor` · `@release-manager` · `@incident-detective` · `@prompt-smith` · `@context-steward` · `@portfolio-steward`
 
 ## 📚 Docs
 

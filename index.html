@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MAJLIS · The Council — One mind. Every tool.</title>
-<meta name="description" content="Install a disciplined 27-agent council + 90 skills into OpenCode, Claude Code, Codex, Gemini CLI and 26+ platforms. One command. Mandatory QA & security gates. Self-updating.">
+<meta name="description" content="Install a disciplined 40-agent council + 90 skills into OpenCode, Claude Code, Codex, Gemini CLI and 26+ platforms. One command. Mandatory QA & security gates. Self-updating.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
@@ -87,10 +87,10 @@ footer a{color:var(--gold)}
 
   <div class="install"><code id="t_install">npx majlis-council --all</code><button onclick="copyCmd(this)">⧉</button></div>
 
-  <p class="sub" style="margin-top:22px" id="t_heroP">A disciplined council of 27 real agents + 90 curated skills — installed into OpenCode, Claude Code, Codex, Gemini CLI and 26+ more platforms with one command. Nothing ships without tests and a security verdict.</p>
+  <p class="sub" style="margin-top:22px" id="t_heroP">A disciplined council of 40 real agents + 90 curated skills — installed into OpenCode, Claude Code, Codex, Gemini CLI and 26+ more platforms with one command. Nothing ships without tests and a security verdict.</p>
 
   <div class="stats">
-    <div class="stat"><b>27</b><span id="s_agents">real agents</span></div>
+    <div class="stat"><b>40</b><span id="s_agents">real agents</span></div>
     <div class="stat"><b>90+</b><span id="s_skills">skills</span></div>
     <div class="stat"><b>6</b><span id="s_cmds">lifecycle commands</span></div>
     <div class="stat"><b>30+</b><span id="s_plats">platforms</span></div>
@@ -107,9 +107,7 @@ footer a{color:var(--gold)}
 <p class="sub" data-i="councilP">Core members, always on duty. Every one is a real subagent with its own permission matrix.</p>
 <div class="grid" id="coreGrid"></div>
 
-<h2 style="font-size:1.15rem;margin-top:34px" data-i="extended">✦ The Extended Bench — 16 specialists</h2>
-<p class="sub" data-i="extP">Full coverage of the classic 27-seat council: every member is now invocable by @mention.</p>
-<div class="chips" id="extChips"></div>
+
 
 <!-- ═══════════ COMMANDS ═══════════ -->
 <h2><span class="n">03</span><span data-i="cmds">Six Governing Commands</span></h2>
@@ -147,9 +145,9 @@ footer a{color:var(--gold)}
 </div>
 <script>
 const I = {
- en:{title:'THE <span>COUNCIL</span>',tag:'One mind. <b>Every tool.</b>',heroP:"A disciplined council of 27 real agents + 90 curated skills — installed into OpenCode, Claude Code, Codex, Gemini CLI and 26+ more platforms with one command. Nothing ships without tests and a security verdict.",brandSub:'The Council',btn:'العربية 🌐',docs:'Full guides: USAGE_AR.md · USAGE_EN.md · USAGE_ZH.md — constitution lives in AGENTS.md',foot:'Hunt first. Ship clean.',dir:'ltr',lang:'en',
+ en:{title:'THE <span>COUNCIL</span>',tag:'One mind. <b>Every tool.</b>',heroP:"A disciplined council of 40 real agents + 90 curated skills — installed into OpenCode, Claude Code, Codex, Gemini CLI and 26+ more platforms with one command. Nothing ships without tests and a security verdict.",brandSub:'The Council',btn:'العربية 🌐',docs:'Full guides: USAGE_AR.md · USAGE_EN.md · USAGE_ZH.md — constitution lives in AGENTS.md',foot:'Hunt first. Ship clean.',dir:'ltr',lang:'en',
   what:'What it is',whatP:"Majlis is not an editor. It is the discipline layer you install on top of your favorite AI coding tool — a full team with fixed roles, least-privilege permissions, mandatory quality gates and an append-only audit trail.",
-  council:'The Council of Eleven',councilP:'Core members, always on duty. Every one is a real subagent with its own permission matrix.',
+  council:'The Council — Forty Seats',councilP:'All forty seats, always on duty. Every one is a real subagent with its own permission matrix.',
   extended:'✦ The Extended Bench — 16 specialists',extP:'Full coverage of the classic 27-seat council: every member is now invocable by @mention.',
   cmds:'Six Governing Commands',cmdsP:'The lifecycle is law: no phase without a plan, no plan without runnable verification, no ship without a green security gate.',
   th_cmd:'Command',th_what:'What it does',th_gate:'Enforced gate',
@@ -157,9 +155,9 @@ const I = {
   sec:'The Red Gate 🛡️',secP:'Our signature: an offensive security pipeline that runs before any delivery — TruffleHog secrets sweep → Nuclei config exposure → OWASP ZAP API defenses → human-grade audit → a binary verdict. SECURITY: FAIL means nothing moves until blockers die.',
   plats:'Runs On',platsP:'Native integrations for the big five; rule-pointers plus the universal agentskills.io standard carry the rest.',
   heal:'Self-Healing Updates',healP:'Bump VERSION.txt → first launch of OpenCode silently redeploys the whole system to every platform in ~0.5 seconds. Damaged installs heal themselves. No manual updates, ever.'},
- ar:{title:'المجلس',tag:'عقلٌ واحد. <b>في كل أدواتك.</b>',heroP:"مجلس منضبط من 27 وكيلاً حقيقياً وأكثر من 90 مهارة — يُركَّب بأمر واحد فوق OpenCode وClaude Code وCodex وGemini وأكثر من 26 منصة. لا تسليم بلا اختبارات وبوابة أمنية.",brandSub:'المجلس',btn:'English 🌐',docs:'الأدلة الكاملة: USAGE_AR.md · USAGE_EN.md · USAGE_ZH.md — والدستور في AGENTS.md',foot:'يصطاد أولاً، يسلّم نقيّاً.',dir:'rtl',lang:'ar',
+ ar:{title:'المجلس',tag:'عقلٌ واحد. <b>في كل أدواتك.</b>',heroP:"مجلس منضبط من 40 وكيلاً حقيقياً وأكثر من 90 مهارة — يُركَّب بأمر واحد فوق OpenCode وClaude Code وCodex وGemini وأكثر من 26 منصة. لا تسليم بلا اختبارات وبوابة أمنية.",brandSub:'المجلس',btn:'English 🌐',docs:'الأدلة الكاملة: USAGE_AR.md · USAGE_EN.md · USAGE_ZH.md — والدستور في AGENTS.md',foot:'يصطاد أولاً، يسلّم نقيّاً.',dir:'rtl',lang:'ar',
   what:'ما هو؟',whatP:'المجلس ليس محرراً. إنه طبقة الانضباط التي تركّبها فوق أداتك المفضلة — فريق كامل بأدوار ثابتة وصلاحيات مضبوطة وبوابات جودة إلزامية وسجل تدقيق غير قابل لإعادة الكتابة.',
-  council:'مجلس الأحد عشر',councilP:'الأعضاء الأساسيون في الخدمة الدائمة، كلهم وكلاء حقيقيون بصلاحيات خاصة.',
+  council:'مجلس الأربعين',councilP:'الأربعون مقعداً كلها في الخدمة الدائمة، كلها وكلاء حقيقيون بصلاحيات خاصة.',
   extended:'✦ المقعد الموسّع — 16 متخصصاً',extP:'تغطية كاملة للمجلس التاريخي ذي الـ27 مقعداً: الجميع الآن يستدعى بـ @.',
   cmds:'الأوامر الحاكمة الست',cmdsP:'دورة الحياة قانون: لا مرحلة بلا خطة، ولا خطة بلا تحقق قابل للتشغيل، ولا تسليم ببوابة حمراء.',
   th_cmd:'الأمر',th_what:'الوظيفة',th_gate:'البوابة المفروضة',
@@ -179,7 +177,36 @@ const CORE=[
  ['📝','sajeel-logger','Sajeel','Append-only timestamped audit chronicle.','سجل زمني غير قابل لإعادة الكتابة'],
  ['🧠','hakim-mentor','Hakim','Retrospectives distilled into LESSONS.md.','الدروس المستخلصة الموثقة'],
  ['🧰','mubtakir-tools','Mubtakir','Searches, evaluates and wires external tools & skills.','بحث وتقييم وتركيب الأدوات'],
- ['📣','balegh-docs','Balegh','Bilingual EN/AR docs and release notes from real diffs.','توثيق ثنائي اللغة من الواقع لا الهواء']];
+ ['📣','balegh-docs','Balegh','Bilingual EN/AR docs and release notes from real diffs.','توثيق ثنائي اللغة من الواقع لا الهواء'],
+ ['🧭','product-shaper','Product Shaper','Turns vague ideas into PRDs, stories, acceptance criteria.','صياغة الأفكار الضبابية إلى منتج قابل للبناء'],
+ ['🔬','ux-researcher','UX Researcher','Usability heuristics, journey maps, friction evidence.','كلام المستخدم داخل المجلس بالأدلة'],
+ ['👑','brand-guardian','Brand Guardian','Voice, tone and identity consistency enforcement.','صوت واحد وهوية واحدة في كل المخرجات'],
+ ['🚀','growth-analyst','Growth Analyst','Funnels, experiments, conversion instrumentation.','تحويل الاستخدام إلى نمو متراكم'],
+ ['✨','code-polisher','Code Polisher','Multi-pass behavior-preserving cleanup.','تنقيح رباعي المراحل دون كسر السلوك'],
+ ['⚗️','test-engineer','Test Engineer','Unit/integration/e2e suites in your existing framework.','جناح اختبارات بإطار المشروع الحقيقي'],
+ ['⚡','perf-auditor','Perf Auditor','Profiling, load tests, p50/p95/p99 discipline.','أرقام أداء قبل وبعد، بلا انحدارات'],
+ ['♿','a11y-auditor','A11y Auditor','WCAG 2.2 AA, keyboard nav, semantic markup.','واجهة يستخدمها الجميع هي الحد الأدنى'],
+ ['🚢','release-manager','Release Manager','Versioning, changelogs, tested rollback plans.','إصدارات مملة وقابلة للتراجع دائماً'],
+ ['🔎','incident-detective','Incident Detective','Blameless RCA, 5-whys, timeline reconstruction.','السبب الجذري الحقيقي لا كبش الفداء'],
+ ['🪄','prompt-smith','Prompt Smith','Forges/refines agent prompts and playbooks.','تعليمات حادة بمعايير إنجاز قابلة للقياس'],
+ ['📚','context-steward','Context Steward','Compressed knowledge index and token budgets.','أقصى إشارة لكل توكن سياق'],
+ ['🗂️','portfolio-steward','Portfolio Steward','Cross-project health, dependencies, allocation.','كل المشاريع ساحة معركة واحدة'],
+ ['🐣','agent-weaver','Agent Weaver','Creates new subagents and skills safely.','صناعة وكلاء ومهارات جديدة بأمان'],
+ ['🗄️','data-modeler','Data Modeler','Schemas, ERDs, normalized relations.','نمذجة البيانات والعلاقات'],
+ ['🔀','stream-partitioner','Stream Partitioner','Memory-safe chunking of huge payloads.','تقسيم التدفقات الضخمة بأمان الذاكرة'],
+ ['📐','integrative-architect','Integrative Architect','Integration blueprints and contracts.','مخططات التكامل وعقوده'],
+ ['🕵️‍♂️','risk-assessor','Risk Assessor','Feasibility studies and risk pricing.','تسعير المخاطر قبل دفع الثمن'],
+ ['🎨','cinematic-director','Cinematic Director','Directs motion/video productions.','قيادة الإنتاج المرئي'],
+ ['🖌️','design-system-master','Design Master','Tokens, palettes, Shadcn/HSL identity.','لغة بصرية واحدة متماسكة'],
+ ['📱','responsive-layout','Responsive Layout','Multi-device correctness guaranteed.','لا شاشة مكسورة أبداً'],
+ ['🖨️','print-publisher','Print Publisher','Press-perfect vector PDFs at 300DPI.','طباعة مثالية من الشاشة'],
+ ['💻','motion-coder','Motion Coder','Remotion compositions + FFmpeg renders.','من القصة إلى الفيديو 60FPS'],
+ ['🔄','cicd-automator','CI/CD Automator','Green pipelines by construction.','أنابيب خضراء بالتصميم'],
+ ['🧪','sandbox-isolator','Sandbox Isolator','Runs risky code without casualties.','تجارب بضحايا صفر'],
+ ['📦','dep-manager','Dep Manager','Audits, prunes, pins dependencies.','حد أدنى وزن أقصى أمان'],
+ ['🎙️','voice-engineer','Voice Engineer','TTS, narration, audio pipelines.','صوت المجلس'],
+ ['📊','data-engineer','Data Engineer','Routes 40 science-database skills.','توجيه قواعد البيانات العلمية'],
+ ['🧠','hadi-core','Hadi Core','Supreme arbitration for the whole Council.','محكمة الاستئناف العليا للمجلس']];
 const EXT=['@agent-weaver','@data-modeler','@stream-partitioner','@integrative-architect','@risk-assessor','@cinematic-director','@design-system-master','@responsive-layout','@print-publisher','@motion-coder','@cicd-automator','@sandbox-isolator','@dep-manager','@voice-engineer','@data-engineer','@hadi-core'];
 const CMDS=[['/majlis:start','Initialize: guided questions → PROJECT + ROADMAP + STATE','—','أسئلة موجّهة ← ملفات المشروع الثلاثة','—'],
  ['/majlis:plan n','Decompose into waves with mandatory verify contracts','plan without runnable verify = rejected','تفكيك لموجات بعقود تحقق إلزامية','خطة بلا تحقق = مرفوضة'],
@@ -201,7 +228,6 @@ function render(lang){
  document.getElementById('t_foot').textContent=d.foot;
  document.querySelectorAll('[data-i]').forEach(el=>{el.textContent=d[el.dataset.i]});
  document.getElementById('coreGrid').innerHTML=CORE.map(c=>`<div class="card"><div class="e">${c[0]}</div><h3>${c[2]}</h3><div class="id">${c[1]}</div><p>${lang==='ar'?c[4]:c[3]}</p></div>`).join('');
- document.getElementById('extChips').innerHTML=EXT.map(x=>`<span class="chip">${x}</span>`).join('');
  document.getElementById('cmdRows').innerHTML=CMDS.map(c=>`<tr><td><code>${c[0]}</code></td><td>${lang==='ar'?c[3]:c[1]}</td><td>${lang==='ar'?c[4]:c[2]}</td></tr>`).join('');
  document.getElementById('flowRow').innerHTML=FLOW.map((f,i)=>`<div class="step ${f[3]?'gate':''}"><b>${f[0]} ${f[1]}</b><span>${f[2]}</span></div>${i<FLOW.length-1?'<div class="arrow">➜</div>':''}`).join('');
  document.getElementById('platRow').innerHTML=PLATS.map(p=>`<div class="pill"><b>${p[0]}</b><span>${p[1]}</span></div>`).join('');
