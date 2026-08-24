@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAJLIS · The Council — One mind. Every tool.</title>
+<meta name="description" content="Install a disciplined 27-agent council + 90 skills into OpenCode, Claude Code, Codex, Gemini CLI and 26+ platforms. One command. Mandatory QA & security gates. Self-updating.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070b14;--bg2:#0c1322;--card:#101a2e;--line:#1d2a45;--gold:#e8b64c;--em:#3ddc97;--red:#ff5d73;--txt:#e8edf7;--dim:#93a3bf}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(1200px 600px at 70% -10%,#12203a 0%,var(--bg) 60%);color:var(--txt);font-family:'Inter',sans-serif;line-height:1.65}
+body[dir=rtl]{font-family:'Cairo',sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:0 22px}
+h2{font-size:1.7rem;margin:64px 0 8px}h2 .n{color:var(--gold);font-family:monospace;margin-inline-end:.4rem}
+.sub{color:var(--dim);margin-bottom:26px}
+/* nav */
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.brand{font-weight:800;font-size:1.15rem;letter-spacing:.5px}
+.brand b{color:var(--gold)}
+#langBtn{background:var(--card);border:1px solid var(--line);color:var(--txt);padding:8px 16px;border-radius:10px;cursor:pointer;font-weight:600;font-family:inherit}
+#langBtn:hover{border-color:var(--gold)}
+/* hero */
+.hero{text-align:center;padding:70px 0 40px}
+.logo{font-size:4rem;line-height:1;filter:drop-shadow(0 0 24px rgba(232,182,76,.35))}
+.hero h1{font-size:clamp(2.3rem,6vw,3.6rem);font-weight:800;margin:14px 0 6px;letter-spacing:1px}
+.hero h1 span{color:var(--gold)}
+.tagline{font-size:1.25rem;color:var(--dim)}
+.tagline b{color:var(--em);font-weight:600}
+.install{display:inline-flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);padding:14px 20px;border-radius:14px;margin-top:30px;font-family:ui-monospace,Consolas,monospace;font-size:1.02rem}
+.install code{color:var(--em)}
+.install button{background:var(--gold);color:#141414;border:none;border-radius:8px;padding:7px 14px;font-weight:700;cursor:pointer;font-family:inherit}
+.stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 22px}
+.stat b{font-size:1.5rem;color:var(--gold);display:block;text-align:center}
+.stat span{color:var(--dim);font-size:.85rem}
+/* grids */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;transition:border-color .2s, transform .2s}
+.card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.card .e{font-size:1.9rem}
+.card h3{font-size:1.02rem;margin:8px 0 2px}
+.card .id{color:var(--gold);font-family:ui-monospace,Consolas,monospace;font-size:.78rem}
+.card p{color:var(--dim);font-size:.86rem;margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{background:var(--bg2);border:1px dashed var(--line);color:var(--dim);padding:6px 13px;border-radius:99px;font-size:.82rem;font-family:ui-monospace,Consolas,monospace}
+/* tables */
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+th{background:var(--bg2);text-align:start;padding:12px 16px;color:var(--gold);font-size:.85rem}
+td{padding:11px 16px;border-top:1px solid var(--line);font-size:.92rem}
+td code{background:var(--bg2);padding:2px 8px;border-radius:6px;color:var(--em);font-size:.85rem}
+/* flow */
+.flow{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;justify-content:center}
+.step{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;text-align:center;min-width:130px}
+.step b{display:block;color:var(--gold)}
+.step span{font-size:.8rem;color:var(--dim)}
+.arrow{align-self:center;color:var(--gold);font-size:1.3rem}
+.gate{border-color:var(--red)}
+.gate b{color:var(--red)}
+/* platforms */
+.plat{display:flex;flex-wrap:wrap;gap:10px}
+.pill{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 18px;flex:1;min-width:150px;text-align:center}
+.pill b{color:var(--em);display:block}.pill span{color:var(--dim);font-size:.8rem}
+/* banner */
+.banner{background:linear-gradient(90deg,rgba(255,93,115,.08),rgba(232,182,76,.06));border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin-top:20px}
+footer{text-align:center;color:var(--dim);padding:60px 0 34px;font-size:.9rem}
+footer a{color:var(--gold)}
+.hide{display:none!important}
+@media(max-width:640px){.flow{flex-direction:column}.arrow{transform:rotate(90deg)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <div class="brand">🏛️ <b>MAJLIS</b> · <span id="brandSub">The Council</span></div>
+  <button id="langBtn" onclick="toggleLang()">العربية 🌐</button>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="logo">🏛️</div>
+  <h1 id="t_title">THE <span>COUNCIL</span></h1>
+  <p class="tagline" id="t_tag">One mind. <b>Every tool.</b></p>
+
+  <div class="install"><code id="t_install">npx majlis-council --all</code><button onclick="copyCmd(this)">⧉</button></div>
+
+  <p class="sub" style="margin-top:22px" id="t_heroP">A disciplined council of 27 real agents + 90 curated skills — installed into OpenCode, Claude Code, Codex, Gemini CLI and 26+ more platforms with one command. Nothing ships without tests and a security verdict.</p>
+
+  <div class="stats">
+    <div class="stat"><b>27</b><span id="s_agents">real agents</span></div>
+    <div class="stat"><b>90+</b><span id="s_skills">skills</span></div>
+    <div class="stat"><b>6</b><span id="s_cmds">lifecycle commands</span></div>
+    <div class="stat"><b>30+</b><span id="s_plats">platforms</span></div>
+    <div class="stat"><b>$0</b><span id="s_cost">MIT license</span></div>
+  </div>
+</section>
+
+<!-- ═══════════ WHAT ═══════════ -->
+<h2><span class="n">01</span><span data-i="what">What it is</span></h2>
+<p class="sub" data-i="whatP">Majlis is not an editor. It is the discipline layer you install on top of your favorite AI coding tool — a full team with fixed roles, least-privilege permissions, mandatory quality gates and an append-only audit trail.</p>
+
+<!-- ═══════════ COUNCIL ═══════════ -->
+<h2><span class="n">02</span><span data-i="council">The Council of Eleven</span></h2>
+<p class="sub" data-i="councilP">Core members, always on duty. Every one is a real subagent with its own permission matrix.</p>
+<div class="grid" id="coreGrid"></div>
+
+<h2 style="font-size:1.15rem;margin-top:34px" data-i="extended">✦ The Extended Bench — 16 specialists</h2>
+<p class="sub" data-i="extP">Full coverage of the classic 27-seat council: every member is now invocable by @mention.</p>
+<div class="chips" id="extChips"></div>
+
+<!-- ═══════════ COMMANDS ═══════════ -->
+<h2><span class="n">03</span><span data-i="cmds">Six Governing Commands</span></h2>
+<p class="sub" data-i="cmdsP">The lifecycle is law: no phase without a plan, no plan without runnable verification, no ship without a green security gate.</p>
+<table>
+<thead><tr><th data-i="th_cmd">Command</th><th data-i="th_what">What it does</th><th data-i="th_gate">Enforced gate</th></tr></thead>
+<tbody id="cmdRows"></tbody>
+</table>
+
+<!-- ═══════════ FLOW ═══════════ -->
+<h2><span class="n">04</span><span data-i="flow">The Pipeline</span></h2>
+<p class="sub" data-i="flowP">Everything a request passes through. Red gates bounce work back automatically.</p>
+<div class="flow" id="flowRow"></div>
+
+<!-- ═══════════ SECURITY ═══════════ -->
+<h2><span class="n">05</span><span data-i="sec">The Red Gate 🛡️</span></h2>
+<div class="banner">
+  <p data-i="secP">Our signature: an <b style="color:var(--red)">offensive security pipeline</b> that runs before any delivery — TruffleHog secrets sweep → Nuclei config exposure → OWASP ZAP API defenses → human-grade audit → a binary verdict. <b style="color:var(--red)">SECURITY: FAIL</b> means nothing moves until blockers die.</p>
+</div>
+
+<!-- ═══════════ PLATFORMS ═══════════ -->
+<h2><span class="n">06</span><span data-i="plats">Runs On</span></h2>
+<p class="sub" data-i="platsP">Native integrations for the big five; rule-pointers plus the universal agentskills.io standard carry the rest.</p>
+<div class="plat" id="platRow"></div>
+
+<!-- ═══════════ SELF-HEAL ═══════════ -->
+<h2><span class="n">07</span><span data-i="heal">Self-Healing Updates</span></h2>
+<p class="sub" data-i="healP">Bump VERSION.txt → first launch of OpenCode silently redeploys the whole system to every platform in ~0.5 seconds. Damaged installs heal themselves. No manual updates, ever.</p>
+
+<footer>
+  <p id="t_docs">Full guides: USAGE_AR.md · USAGE_EN.md · USAGE_ZH.md — constitution lives in AGENTS.md</p>
+  <p style="margin-top:8px"><a href="https://github.com/basharalameed/The-Council" target="_blank">github.com/basharalameed/The-Council</a> · MIT · <span id="t_foot">Hunt first. Ship clean.</span></p>
+</footer>
+
+</div>
+<script>
+const I = {
+ en:{title:'THE <span>COUNCIL</span>',tag:'One mind. <b>Every tool.</b>',heroP:"A disciplined council of 27 real agents + 90 curated skills — installed into OpenCode, Claude Code, Codex, Gemini CLI and 26+ more platforms with one command. Nothing ships without tests and a security verdict.",brandSub:'The Council',btn:'العربية 🌐',docs:'Full guides: USAGE_AR.md · USAGE_EN.md · USAGE_ZH.md — constitution lives in AGENTS.md',foot:'Hunt first. Ship clean.',dir:'ltr',lang:'en',
+  what:'What it is',whatP:"Majlis is not an editor. It is the discipline layer you install on top of your favorite AI coding tool — a full team with fixed roles, least-privilege permissions, mandatory quality gates and an append-only audit trail.",
+  council:'The Council of Eleven',councilP:'Core members, always on duty. Every one is a real subagent with its own permission matrix.',
+  extended:'✦ The Extended Bench — 16 specialists',extP:'Full coverage of the classic 27-seat council: every member is now invocable by @mention.',
+  cmds:'Six Governing Commands',cmdsP:'The lifecycle is law: no phase without a plan, no plan without runnable verification, no ship without a green security gate.',
+  th_cmd:'Command',th_what:'What it does',th_gate:'Enforced gate',
+  flow:'The Pipeline',flowP:'Everything a request passes through. Red gates bounce work back automatically.',
+  sec:'The Red Gate 🛡️',secP:'Our signature: an offensive security pipeline that runs before any delivery — TruffleHog secrets sweep → Nuclei config exposure → OWASP ZAP API defenses → human-grade audit → a binary verdict. SECURITY: FAIL means nothing moves until blockers die.',
+  plats:'Runs On',platsP:'Native integrations for the big five; rule-pointers plus the universal agentskills.io standard carry the rest.',
+  heal:'Self-Healing Updates',healP:'Bump VERSION.txt → first launch of OpenCode silently redeploys the whole system to every platform in ~0.5 seconds. Damaged installs heal themselves. No manual updates, ever.'},
+ ar:{title:'المجلس',tag:'عقلٌ واحد. <b>في كل أدواتك.</b>',heroP:"مجلس منضبط من 27 وكيلاً حقيقياً وأكثر من 90 مهارة — يُركَّب بأمر واحد فوق OpenCode وClaude Code وCodex وGemini وأكثر من 26 منصة. لا تسليم بلا اختبارات وبوابة أمنية.",brandSub:'المجلس',btn:'English 🌐',docs:'الأدلة الكاملة: USAGE_AR.md · USAGE_EN.md · USAGE_ZH.md — والدستور في AGENTS.md',foot:'يصطاد أولاً، يسلّم نقيّاً.',dir:'rtl',lang:'ar',
+  what:'ما هو؟',whatP:'المجلس ليس محرراً. إنه طبقة الانضباط التي تركّبها فوق أداتك المفضلة — فريق كامل بأدوار ثابتة وصلاحيات مضبوطة وبوابات جودة إلزامية وسجل تدقيق غير قابل لإعادة الكتابة.',
+  council:'مجلس الأحد عشر',councilP:'الأعضاء الأساسيون في الخدمة الدائمة، كلهم وكلاء حقيقيون بصلاحيات خاصة.',
+  extended:'✦ المقعد الموسّع — 16 متخصصاً',extP:'تغطية كاملة للمجلس التاريخي ذي الـ27 مقعداً: الجميع الآن يستدعى بـ @.',
+  cmds:'الأوامر الحاكمة الست',cmdsP:'دورة الحياة قانون: لا مرحلة بلا خطة، ولا خطة بلا تحقق قابل للتشغيل، ولا تسليم ببوابة حمراء.',
+  th_cmd:'الأمر',th_what:'الوظيفة',th_gate:'البوابة المفروضة',
+  flow:'خط الإنتاج',flowP:'كل ما يمر به الطلب. البوابات الحمراء تعيد العمل تلقائياً.',
+  sec:'البوابة الحمراء 🛡️',secP:'توقيعنا: مسار أمني هجومي يسبق أي تسليم — TruffleHog للأسرار ← Nuclei للتكوينات ← OWASP ZAP لواجهات API ← تدقيق بشري ← حكم ثنائي. SECURITY: FAIL يعني توقفاً كاملاً حتى موت العوائق.',
+  plats:'يعمل على',platsP:'تكامل أصلي للخمس الكبار؛ ومؤشرات القواعد معيار agentskills.io العالمي يحمل البقية.',
+  heal:'تحديث ذاتي شافٍ',healP:'ارفع VERSION.txt ← أول إقلاع OpenCode يعيد النشر لكل المنصات خلال نصف ثانية بصمت. التلف يشفي نفسه. لا تحديث يدوي بعد اليوم.'}
+};
+const CORE=[
+ ['🎼','hadi-maestro','Maestro Hadi','Strategic planning & task routing across the whole council.','التخطيط الاستراتيجي وتوجيه المهام للمجلس كله'],
+ ['🔍','rased-explorer','Rased','360° codebase recon before anyone touches anything.','استكشاف الكود 360° قبل أي عمل'],
+ ['⚙️','emad-api-shield','Emad','Backend builder & API hardening specialist.','بناء وتحصين الخلفية وواجهات API'],
+ ['🎯','baher-qa','Baher','Quality gates: lint → typecheck → tests. Evidence or silence.','بوابات الجودة: أدلة أو صمت'],
+ ['🛡️','sareem-security','Sareem','Red gate: secrets, vulnerabilities, PASS/FAIL verdict.','البوابة الحمراء: أسرار وثغرات وحكم نهائي'],
+ ['🧼','nadif-clean-code','Nadif','Clean-code final review with anti-sycophancy rubric.','مراجعة الكود النظيف بقواعد ضد التملق'],
+ ['📈','bayan-diagrams','Bayan','Mermaid architecture, ERD and sequence diagrams.','مخططات المعمارية والتسلسل والبيانات'],
+ ['📝','sajeel-logger','Sajeel','Append-only timestamped audit chronicle.','سجل زمني غير قابل لإعادة الكتابة'],
+ ['🧠','hakim-mentor','Hakim','Retrospectives distilled into LESSONS.md.','الدروس المستخلصة الموثقة'],
+ ['🧰','mubtakir-tools','Mubtakir','Searches, evaluates and wires external tools & skills.','بحث وتقييم وتركيب الأدوات'],
+ ['📣','balegh-docs','Balegh','Bilingual EN/AR docs and release notes from real diffs.','توثيق ثنائي اللغة من الواقع لا الهواء']];
+const EXT=['@agent-weaver','@data-modeler','@stream-partitioner','@integrative-architect','@risk-assessor','@cinematic-director','@design-system-master','@responsive-layout','@print-publisher','@motion-coder','@cicd-automator','@sandbox-isolator','@dep-manager','@voice-engineer','@data-engineer','@hadi-core'];
+const CMDS=[['/majlis:start','Initialize: guided questions → PROJECT + ROADMAP + STATE','—','أسئلة موجّهة ← ملفات المشروع الثلاثة','—'],
+ ['/majlis:plan n','Decompose into waves with mandatory verify contracts','plan without runnable verify = rejected','تفكيك لموجات بعقود تحقق إلزامية','خطة بلا تحقق = مرفوضة'],
+ ['/majlis:build','Execute waves in parallel through council agents','forbidden globs respected','تنفيذ مواز عبر الوكلاء','احترام المحظورات'],
+ ['/majlis:review','Review panel of 2-4, anti-sycophancy rubrics, max 3 cycles','BLOCKER bounces back','لجنة مراجعة ضد التملق','BLOCKER يعيد البناء'],
+ ['/majlis:security','Red gate: secrets → configs → API defenses → verdict','SECURITY PASS mandatory','المسار الأحمر الكامل','PASS إلزامي'],
+ ['/majlis:status','Progress dashboard + exact next action','read-only','لوحة التقدم والتوجيه','قراءة فقط']];
+const FLOW=[['📥','Request','الطلب'],['🏛️','majlis:start','ابدأ'],['🗺️','majlis:plan','خطط'],['🔍','Rased recon','راصد'],['⚙️','majlis:build','نفّذ'],['🎯','QA gates','الاختبارات'],['🛡️','SECURITY','الأمن','gate'],['🧼','Clean code','النظافة'],['📝','Chronicle','السجل'],['✅','Ship','التسليم']];
+const PLATS=[['OpenCode','27 agents · /majlis-*'],['Claude Code','27 agents · slash cmds'],['Codex','$skills · /prompts:'],['Gemini CLI','/majlis:* commands'],['Cursor/Windsurf','rules + plain lang'],['Copilot + 26 more','agentskills.io']];
+
+function render(lang){
+ const d=I[lang];document.body.dir=d.dir;document.documentElement.lang=d.lang;
+ document.getElementById('t_title').innerHTML=d.title;
+ document.getElementById('t_tag').innerHTML=d.tag;
+ document.getElementById('t_heroP').textContent=d.heroP;
+ document.getElementById('brandSub').textContent=d.brandSub;
+ document.getElementById('langBtn').textContent=d.btn;
+ document.getElementById('t_docs').textContent=d.docs;
+ document.getElementById('t_foot').textContent=d.foot;
+ document.querySelectorAll('[data-i]').forEach(el=>{el.textContent=d[el.dataset.i]});
+ document.getElementById('coreGrid').innerHTML=CORE.map(c=>`<div class="card"><div class="e">${c[0]}</div><h3>${c[2]}</h3><div class="id">${c[1]}</div><p>${lang==='ar'?c[4]:c[3]}</p></div>`).join('');
+ document.getElementById('extChips').innerHTML=EXT.map(x=>`<span class="chip">${x}</span>`).join('');
+ document.getElementById('cmdRows').innerHTML=CMDS.map(c=>`<tr><td><code>${c[0]}</code></td><td>${lang==='ar'?c[3]:c[1]}</td><td>${lang==='ar'?c[4]:c[2]}</td></tr>`).join('');
+ document.getElementById('flowRow').innerHTML=FLOW.map((f,i)=>`<div class="step ${f[3]?'gate':''}"><b>${f[0]} ${f[1]}</b><span>${f[2]}</span></div>${i<FLOW.length-1?'<div class="arrow">➜</div>':''}`).join('');
+ document.getElementById('platRow').innerHTML=PLATS.map(p=>`<div class="pill"><b>${p[0]}</b><span>${p[1]}</span></div>`).join('');
+}
+let cur='en';
+function toggleLang(){cur=cur==='en'?'ar':'en';render(cur);}
+function copyCmd(btn){navigator.clipboard.writeText('npx majlis-council --all');const o=btn.textContent;btn.textContent='✓';setTimeout(()=>btn.textContent=o,1200);}
+render('en');
+</script>
+</body>
+</html>
