@@ -41,6 +41,7 @@ function Normalize-Name([string]$raw) {
   return (($n -replace '[^a-z0-9-]','') -replace '-{2,}','-').Trim('-')
 }
 $library = @{}
+$skillDirs = @{}
 $srcSkills = Join-Path $pkg 'skills'
 foreach ($dir in (Get-ChildItem -LiteralPath $srcSkills -Directory)) {
   if ($dir.Name -eq 'science_skills_common') { continue }
@@ -56,12 +57,19 @@ foreach ($dir in (Get-ChildItem -LiteralPath $srcSkills -Directory)) {
     if ($newText -ne $text) { $text = $newText }
   }
   $library[$target] = $text
+  $skillDirs[$target] = $dir.FullName
 }
 function Deploy-SkillLibrary([string]$destRoot) {
   foreach ($k in $library.Keys) {
     $d = Join-Path $destRoot $k
     New-Item -ItemType Directory -Path $d -Force | Out-Null
     [System.IO.File]::WriteAllText((Join-Path $d 'SKILL.md'), $library[$k], $utf8)
+    $srcD = $skillDirs[$k]
+    foreach ($sub in (Get-ChildItem -LiteralPath $srcD -Directory)) {
+      $dst = Join-Path $d $sub.Name
+      if (Test-Path -LiteralPath $dst) { Remove-Item -LiteralPath $dst -Recurse -Force }
+      Copy-Item -LiteralPath $sub.FullName -Destination $dst -Recurse -Force
+    }
   }
   return $library.Count
 }

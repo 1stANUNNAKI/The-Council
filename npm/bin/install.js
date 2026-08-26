@@ -43,6 +43,7 @@ function wf(p, content) { mkdirp(path.dirname(p)); fs.writeFileSync(p, content, 
 // ---- build normalized skill library ----
 function buildLibrary() {
   const lib = {};
+  const dirs = {};
   const src = path.join(PKG, 'skills');
   for (const dir of fs.readdirSync(src)) {
     if (EXCLUDE.has(dir)) continue;
@@ -57,7 +58,9 @@ function buildLibrary() {
       text = text.replace(/(^description:\s*)(>-\s*\n[\s\S]*?(?=\n[a-z-]+:|\n---)|.*(?=\n[a-z-]+:|\n---))/m, `$1description: ${DESC_FIX[target]}`);
     }
     lib[target] = text;
+    dirs[target] = path.join(src, dir);
   }
+  global.__dirs = dirs;
   return lib;
 }
 
@@ -96,7 +99,7 @@ function pointerText() {
 const R = [];
 function ok(s) { R.push(s); }
 
-function deploySkills(dest) { const lib = global.__lib; let n = 0; for (const [k, v] of Object.entries(lib)) { wf(path.join(dest, k, 'SKILL.md'), v); n++; } return n; }
+function deploySkills(dest) { const lib = global.__lib; const dirs = global.__dirs; let n = 0; for (const k of Object.keys(lib)) { wf(path.join(dest, k, 'SKILL.md'), lib[k]); for (const sub of fs.readdirSync(dirs[k], { withFileTypes: true })) { if (!sub.isDirectory()) continue; fs.cpSync(path.join(dirs[k], sub.name), path.join(dest, k, sub.name), { recursive: true }); } n++; } return n; }
 function deployAgentsClaude(dest, agents) { for (const [id, a] of Object.entries(agents)) { let fm = `---\nname: ${id}\ndescription: ${a.desc}\n`; const t = CLAUDE_TOOLS[id]; if (t) fm += `tools: ${t}\n`; wf(path.join(dest, `${id}.md`), `${fm}---\n\n${a.body}\n`); } return Object.keys(agents).length; }
 function deployAgentsCodex(dest, agents) { for (const [id, a] of Object.entries(agents)) { const px = `---\ndescription: Adopt the Majlis '${id}' role for this task.\nargument-hint: TASK\n---\n\nAdopt the following agent role exactly, then execute the TASK supplied after the role definition.\n\n## Role: ${id}\n\n${a.body}\n\n## TASK\n$ARGUMENTS\n`; wf(path.join(dest, `majlis-${id}.md`), px); } return Object.keys(agents).length; }
 function deployCommands(dest, wrapCodex) { for (const f of listCommands()) { let c = fs.readFileSync(path.join(PKG, 'commands', f), UTF8); if (wrapCodex && !/^---/m.test(c)) c = `---\ndescription: Majlis workflow command\nargument-hint: ARGS\n---\n\n${c}`; wf(path.join(dest, f), c); } return listCommands().length; }
