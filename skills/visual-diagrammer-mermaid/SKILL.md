@@ -2,6 +2,11 @@
 name: visual-diagrammer-mermaid
 description: >
   Generates clean Mermaid charts, system architecture diagrams, and sequence flow visualizations.
+version: 1.0.0
+category: council
+owner: bayan-diagrams
+tags: [mermaid, diagrams]
+lang: [en, ar]
 ---
 
 # 📈 بَيَان - وكيل تمثيل وتحليل البيانات البصرية ورسوم Mermaid (Agent 08)
@@ -19,7 +24,7 @@ description: >
 
 ## Overview
 تحويل المفاهيم المعقدة والهيكليات إلى مخططات بصرية جذابة وسهلة الفهم باستخدام كود Mermaid نقي.
-- **مستودع GitHub المعتمد:** [https://github.com/antigravity-core/visual-diagrammer](https://github.com/antigravity-core/visual-diagrammer)
+- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
 
 **Do NOT use when:**
 - إدراج وسم HTML داخل نصوص العقد لتجنب أخطاء بناء المخطط.

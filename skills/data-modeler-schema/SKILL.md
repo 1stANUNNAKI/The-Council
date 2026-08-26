@@ -2,6 +2,11 @@
 name: data-modeler-schema
 description: >
   Designs robust database schemas, ERDs, and relationship models adhering to normal forms.
+version: 1.0.0
+category: council
+owner: data-modeler
+tags: [erd, normalization]
+lang: [en, ar]
 ---
 
 # 🗄️ ناظم - مهندس نمذجة وهيكلة وتأطير العلاقات في البيانات (Agent 06)
@@ -19,7 +24,7 @@ description: >
 
 ## Overview
 تأطير العلاقات وتصميم الجداول والمخططات المنطقية لقواعد البيانات ومجموعات البيانات في النظام.
-- **مستودع GitHub المعتمد:** [https://github.com/antigravity-core/data-modeler](https://github.com/antigravity-core/data-modeler)
+- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
 
 **Do NOT use when:**
 - إنشاء مخططات بيانات معقدة غير مبررة للأنظمة البسيطة.

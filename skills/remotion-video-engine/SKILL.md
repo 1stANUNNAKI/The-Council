@@ -3,6 +3,11 @@ name: remotion-video-engine
 description: >
   وثيقة مهارة مخصصة لإنشاء وإنتاج الموشن جرافيكس والفيديوهات البرمجية الديناميكية باستخدام Remotion و React.
   تغطي آلية معالجة المدخلات من مجلد start/<project_name> وقراءة الصور والبرومبت والطلبات، وتحويلها إلى مقاطع فيديو متكاملة وحفظها في out/.
+version: 1.0.0
+category: creative
+owner: motion-coder
+tags: [remotion, video-pipeline]
+lang: [ar, en]
 ---
 
 # 🎬 وثيقة استخدام مهارة ريموشن (Remotion Motion Graphics Skill)
@@ -86,7 +91,7 @@ description: >
 ```json
 {
   "projectName": "promo_demo",
-  "title": "مرحباً بكم في نظام أنتيغرافيتي للموشن جرافيك",
+  "title": "مرحباً بكم في نظام المجلس للموشن جرافيك",
   "subtitle": "إنتاج فيديو برمجي عالي الدقة",
   "primaryColor": "#6366f1",
   "fps": 30,

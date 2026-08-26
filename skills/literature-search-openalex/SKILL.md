@@ -7,6 +7,11 @@ description: >
   open-access PDFs, finding an author's publications, aggregating bibliometric
   data (citation counts, h-index, impact factor), exploring the research
   taxonomies, or performing DOI lookups.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # OpenAlex Skill

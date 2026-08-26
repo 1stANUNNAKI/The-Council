@@ -2,6 +2,11 @@
 name: risk-assessor-feasibility
 description: >
   Evaluates technical risks, feasibility studies, performance bottlenecks, and security trade-offs.
+version: 1.0.0
+category: council
+owner: risk-assessor
+tags: [feasibility, threat-model]
+lang: [en, ar]
 ---
 
 # 🕵️‍♂️ ثاقب - وكيل تقييم المخاطر الفنية ودراسات الجدوى (Agent 10)
@@ -19,7 +24,7 @@ description: >
 
 ## Overview
 فحص وتقييم كافة المخاطر البرمجية والأمنية والتأكد من جدوى واستقرار النظام قبل الاعتماد النهائي.
-- **مستودع GitHub المعتمد:** [https://github.com/antigravity-core/risk-assessor](https://github.com/antigravity-core/risk-assessor)
+- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
 
 **Do NOT use when:**
 - التثبيط أو منع الميزات؛ ينحصر دوره في تقديم التقييم والحلول الوقائية البديلة.

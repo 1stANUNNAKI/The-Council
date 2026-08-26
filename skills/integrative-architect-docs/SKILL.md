@@ -2,6 +2,11 @@
 name: integrative-architect-docs
 description: >
   Engineers standard system architecture, tech stack selection, and 14 integration documents.
+version: 1.0.0
+category: council
+owner: integrative-architect
+tags: [architecture, integration]
+lang: [en, ar]
 ---
 
 # 📐 معمار - مهندس المتطلبات التكاملية والـ 14 وثيقة (Agent 09)
@@ -19,7 +24,7 @@ description: >
 
 ## Overview
 بناء المخطط المعماري الكامل وتفادي الديون الفنية قبل كتابة أي خط كود تشغيلي.
-- **مستودع GitHub المعتمد:** [https://github.com/antigravity-core/integrative-architect](https://github.com/antigravity-core/integrative-architect)
+- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
 
 **Do NOT use when:**
 - كتابة الأكواد التشغيلية التفصيلية؛ مهمته صياغة المخطط وإعطاؤه لفارس وعماد.

@@ -2,6 +2,11 @@
 name: neuro-marketing-copywriter
 description: >
   Applies Grand Slam offer frameworks, high-converting copywriting, and neuro-marketing funnels.
+version: 1.0.0
+category: creative
+owner: growth-analyst
+tags: [offers, conversion]
+lang: [en, ar]
 ---
 
 # 📣 بَليغ - استراتيجي التسويق العصبي وعروض القوة القاتلة (Agent 23)

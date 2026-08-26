@@ -7,6 +7,11 @@ description: >-
   and specific compounds or genes. Verify medical spelling, match raw citations,
   and cache result sets for bulk processing. Interfaces NCBI E-utilities and PMC
   BioC APIs.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # PubMed API

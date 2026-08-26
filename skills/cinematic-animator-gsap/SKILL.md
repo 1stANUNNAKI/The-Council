@@ -2,6 +2,11 @@
 name: cinematic-animator-gsap
 description: >
   Creates fluid 60FPS UI animations, scroll triggers, GSAP timelines, and micro-interactions.
+version: 1.0.0
+category: creative
+owner: cinematic-director
+tags: [visual, production]
+lang: [en, ar]
 ---
 
 # 🎨 إلهام - خبير الأنيميشن والحركة السينمائية (Agent 11)

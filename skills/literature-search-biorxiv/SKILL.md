@@ -6,6 +6,11 @@ description: >
   and browsing by date range with category and keyword filters. Keyword
   filtering is local, so date ranges MUST be narrow (1-4 weeks) with a
   category to prevent timeouts.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # bioRxiv and medRxiv Literature Search

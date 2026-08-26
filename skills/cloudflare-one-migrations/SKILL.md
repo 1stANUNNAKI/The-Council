@@ -1,6 +1,11 @@
 ---
 name: cloudflare-one-migrations
 description: Plans migrations from Zscaler ZIA/ZPA, Palo Alto, legacy VPN, SWG, or SASE stacks to Cloudflare One. Use for migration assessments, policy mapping, rollout plans, and parity/gap analysis.
+version: 1.0.0
+category: cloudflare
+owner: cicd-automator
+tags: [edge, workers]
+lang: [en, ar]
 ---
 
 # Cloudflare One Migrations

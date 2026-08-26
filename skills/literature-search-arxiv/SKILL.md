@@ -5,6 +5,11 @@ description: >
   metadata, abstracts, and download full-text PDFs or HTML versions of papers.
   Use when the user asks to find research papers, literature, or specific arXiv
   IDs.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # arXiv Search and Retrieval

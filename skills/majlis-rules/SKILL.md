@@ -1,6 +1,11 @@
 ---
 name: majlis-rules
 description: Constitution and operating rules of the Majlis Council: 40-agent routing, security pipeline, verification gates, chronicle logging.
+version: 1.0.0
+category: meta
+owner: hadi-core
+tags: [constitution, gates, routing]
+lang: [en, ar]
 ---
 
 # قوانين وقواعد عمل Majlis (نظام التعليمات العام)
@@ -31,3 +36,7 @@ description: Constitution and operating rules of the Majlis Council: 40-agent ro
 
 ---
 تم اعتماد هذه الإعدادات وتوثيقها للالتزام التام بها.
+
+
+## 📦 Data pack
+- `data/security-red-gate-checklist.md` — Red Gate checklist — the security verdict protocol (EN/AR)

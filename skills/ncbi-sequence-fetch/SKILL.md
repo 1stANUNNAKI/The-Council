@@ -6,6 +6,11 @@ description: >
   search, locus lookup, PubMed-linked sequences, patent protein extraction, and
   organism+length fallback search. Use when you need to fetch biological
   sequences by accession, gene name, locus tag, PubMed ID, or patent number.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # NCBI Sequence Fetch

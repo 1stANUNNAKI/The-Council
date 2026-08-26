@@ -12,7 +12,7 @@
 ![Agents](https://img.shields.io/badge/real_agents-40-3ddc97)
 ![Skills](https://img.shields.io/badge/skills-90_trilingual-e8b64c)
 ![Platforms](https://img.shields.io/badge/platforms-30+-7c9eff)
-![Audit](https://img.shields.io/badge/integrity-774%2F0_pass-brightgreen)
+![Audit](https://img.shields.io/badge/integrity-1702%2F0_pass-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
 **A disciplined council of 40 real agents and 90 curated skills —
@@ -164,7 +164,7 @@ npm publish        # world runs: npx majlis-council --all
 ## ✅ Integrity
 
 Automated reality-check (source + 4 deploy targets + landing references):
-**774 assertions passing — 0 failures.**
+**1702 checks passing — 0 failures.** Rerun anytime: `node eval/run.js`
 
 ---
 

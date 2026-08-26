@@ -7,6 +7,11 @@ description: >
   highlight binding sites or active site residues, color by B-factor/pLDDT,
   or analyze protein-ligand interactions. Do not use for docking,
   molecular dynamics, or sequence-only analysis.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [structural-bio, rendering]
+lang: [en, ar]
 ---
 
 # PyMOL

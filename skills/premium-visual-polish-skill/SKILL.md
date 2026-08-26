@@ -1,6 +1,11 @@
 ---
 name: premium-visual-polish-skill
 description: Apply premium visual polish passes: spacing rhythm, shadows, gradients, micro-interactions, magazine-grade typography.
+version: 1.0.0
+category: creative
+owner: cinematic-director
+tags: [visual, production]
+lang: [en, ar]
 ---
 
 # مهارة اللمسات البصرية الفاخرة (Premium Visual Polish Skill)

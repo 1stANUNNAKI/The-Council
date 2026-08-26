@@ -7,6 +7,11 @@ description: >
   reaction participants (inputs, outputs), pathway hierarchy (including
   top-level pathways), diagram export, cross-reference mapping, or searching the
   knowledgebase.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # Reactome Analysis & Content Service

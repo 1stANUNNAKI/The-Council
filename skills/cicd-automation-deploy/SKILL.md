@@ -2,6 +2,11 @@
 name: cicd-automation-deploy
 description: >
   Automates continuous integration pipelines, build scripts, deployment and environment setup.
+version: 1.0.0
+category: council
+owner: cicd-automator
+tags: [pipelines, deploy]
+lang: [en, ar]
 ---
 
 # 🔄 مُسْتَمِر - مهندس أتمتة البناء والتكامل المستمر CI/CD (Agent 17)
@@ -32,7 +37,7 @@ description: >
 - **[القاعدة 1]:** التشغيل الخفي بدون ظهور شاشات الموجه السوداء المزعجة.
 - **[القاعدة 2]:** استكشاف مسارات المتصفحات المباشرة وتجاوز مشاكل PATH.
 - **[Pre-Flight Check]:** اختبار تشغيل الـ Launchers وتأكيد الاستجابة.
-- **[إنهاء الجلسة]:** تحديث اختصار سطح المكتب أوكسترا أنتيغرافيتي.lnk.
+- **[إنهاء الجلسة]:** تحديث اختصار سطح المكتب المجلس.lnk.
 
 ## Quick Start
 ### Minimal example script (`17_ci_cd_automation_runner.py`)

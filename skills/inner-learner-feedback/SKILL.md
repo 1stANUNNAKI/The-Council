@@ -2,6 +2,11 @@
 name: inner-learner-feedback
 description: >
   Extracts lessons learned, user feedback, and internal corrective knowledge items.
+version: 1.0.0
+category: council
+owner: hakim-mentor
+tags: [retrospective, lessons]
+lang: [en, ar]
 ---
 
 # 🧠 حكيم - وكيل التعلم الداخلي واستخلاص الدروس المستفادة (Agent 05)
@@ -19,7 +24,7 @@ description: >
 
 ## Overview
 يضمن حكيم عدم تكرار الأخطاء السابقة والاستفادة من ملاحظات وتوجيهات المستخدم لتحديث السلوك الذاتي للنظام.
-- **مستودع GitHub المعتمد:** [https://github.com/antigravity-core/inner-learner](https://github.com/antigravity-core/inner-learner)
+- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
 
 **Do NOT use when:**
 - مسح الدروس السابقة؛ ينحصر عمله في الإضافة والتراكم الذكي.

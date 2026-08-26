@@ -4,6 +4,11 @@ description: >
   Use when needing clinical significance, pathogenicity classifications (e.g.,
   Pathogenic, Benign, VUS), clinical evidence rationales, or finding "hard
   positive" benchmark controls for human genomic variants.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # ClinVar Database

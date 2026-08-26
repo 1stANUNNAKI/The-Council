@@ -1,6 +1,11 @@
 ---
 name: nuclei-security-auditor
 description: Security configuration auditing and vulnerability assessment using Nuclei templates. Verifies security headers, Cloudflare edge settings, CORS, and deployment safety.
+version: 1.0.0
+category: security
+owner: sareem-security
+tags: [config-exposure, headers, cors]
+lang: [en, ar]
 ---
 
 # 🎯 Nuclei Security Auditor Skill

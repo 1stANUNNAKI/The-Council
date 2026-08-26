@@ -4,6 +4,11 @@ description: >
   Query Open Targets Platform for target-disease associations, drug target
   discovery, tractability/safety data, genetics/omics evidence, known drugs,
   for therapeutic target identification.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # Open Targets Database Skill

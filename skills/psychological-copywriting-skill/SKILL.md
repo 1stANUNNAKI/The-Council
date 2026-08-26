@@ -1,6 +1,11 @@
 ---
 name: psychological-copywriting-skill
 description: Write psychology-driven marketing copy using persuasion principles (scarcity, social proof, loss aversion).
+version: 1.0.0
+category: creative
+owner: brand-guardian
+tags: [persuasion, copy]
+lang: [en, ar]
 ---
 
 # مهارة النصوص التسويقية النفسية (Psychological Copywriting Skill)

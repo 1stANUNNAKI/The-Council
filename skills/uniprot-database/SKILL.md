@@ -6,6 +6,11 @@ description: >-
   retrieving functional annotations and publications. Don't use for sequence
   alignment, protein folding, or sequence similarity search (use specialized
   skills for those tasks).
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # UniProt Database Access

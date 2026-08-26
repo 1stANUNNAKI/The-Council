@@ -4,6 +4,11 @@ description: >
   Use when you want to retrieve quantitative RNA expression data and variant
   eQTL information from the GTEx (Genotype-Tissue Expression) Project across 54
   non-diseased tissue sites.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # GTEx Database Integration

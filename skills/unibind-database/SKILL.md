@@ -7,6 +7,11 @@ description: >-
   listing available datasets by species, cell line, or TF name. Don't use to
   query specific intervals, locations, genes, motif models or expression
   data.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # UniBind Database Skill

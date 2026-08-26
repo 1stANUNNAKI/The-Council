@@ -2,6 +2,11 @@
 name: vector-print-publisher-pdf
 description: >
   Renders vector PDFs, high-DPI print templates, and document layouts ready for export.
+version: 1.0.0
+category: creative
+owner: print-publisher
+tags: [vector-pdf, print]
+lang: [en, ar]
 ---
 
 # 🖨️ مَطْبُوع - وكيل التصاميم الطباعية والـ PDF المتجهة 300 DPI (Agent 14)

@@ -1,6 +1,11 @@
 ---
 name: owasp-zap-api-shield
 description: Dynamic API security analysis and role-based isolation testing using OWASP ZAP in isolated sandbox environments.
+version: 1.0.0
+category: security
+owner: sareem-security
+tags: [api-defense, authz, zap]
+lang: [en, ar]
 ---
 
 # 🛡️ OWASP ZAP API Shield Skill

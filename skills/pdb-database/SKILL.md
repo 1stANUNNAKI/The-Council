@@ -6,6 +6,11 @@ description: >
   Supports searching by sequence similarity, structure similarity, chemical
   and other attributes. Also use to get metadata about biomolecular structure
   experiments.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # RCSB Protein Data Bank skill

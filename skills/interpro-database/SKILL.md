@@ -7,6 +7,11 @@ description: >
   databases (e.g., Pfam, CDD) into one searchable resource. InterPro-N
   significantly expands annotation and sequence coverage with deep learning.
   Includes domain architecture (IDA) search.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # InterPro Database Access

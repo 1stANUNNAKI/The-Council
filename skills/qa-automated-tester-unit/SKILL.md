@@ -2,6 +2,11 @@
 name: qa-automated-tester-unit
 description: >
   Executes automated test suites, regression assertions, and quality assurance workflows.
+version: 1.0.0
+category: council
+owner: baher-qa
+tags: [test-suite, regression]
+lang: [en, ar]
 ---
 
 # 🎯 باهر - وكيل الاختبارات الأوتوماتيكية وضمان الجودة QA (Agent 19)
@@ -56,3 +61,7 @@ print('🎯 [Agent 19 QA Tester] API Status 200 OK - Test Passed!')
 
 ## Interpreting Output
 - مسارات الحفظ: `وثائق العمل/` (تقرير مخرجات الفحص والاختبار التلقائي).
+
+
+## 📦 Data pack
+- `data/qa-evidence-checklist.md` — Evidence-only QA discipline and evidence block format (EN/AR)

@@ -6,6 +6,11 @@ description: >
   check eligibility/inclusion criteria; count trials across conditions or time
   periods; identify a sponsor's trial portfolio; find recruiting trials for
   patient matching.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # Clinical Trials Database

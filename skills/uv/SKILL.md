@@ -4,6 +4,11 @@ description: >-
   Checks whether the uv Python package manager is installed and installs it if
   missing. Ensures uv is on PATH. Use when another skill requires uv as a
   prerequisite.
+version: 1.0.0
+category: meta
+owner: dep-manager
+tags: [python, toolchain]
+lang: [en, ar]
 ---
 
 # uv (Python Package Manager)

@@ -4,6 +4,11 @@ description: >
   Query the ChEMBL database for bioactive molecules, drug targets, bioactivity
   data, approved drugs, and chemical structures. Use when the user asks about
   compounds, targets, IC50/Ki values, drug mechanisms, or structure searches.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # ChEMBL Database Query

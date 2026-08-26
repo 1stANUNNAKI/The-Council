@@ -2,6 +2,11 @@
 name: chronicle-logger-timestamp
 description: >
   Automates real timestamp logging, work documentation, and update report generation.
+version: 1.0.0
+category: council
+owner: sajeel-logger
+tags: [audit-log, append-only]
+lang: [en, ar]
 ---
 
 # 📝 سجيل - مؤرخ وسجل التوثيق الزمني الفعلي للتعديلات (Agent 04)
@@ -19,7 +24,7 @@ description: >
 
 ## Overview
 أتمتة عملية الأرشفة والتوثيق النصي الدقيق بكافة تفاصيل التعديلات والسبب والتوقيت الفعلي لضمان تتبع تاريخ المشروع.
-- **مستودع GitHub المعتمد:** [https://github.com/antigravity-core/chronicle-logger](https://github.com/antigravity-core/chronicle-logger)
+- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
 
 **Do NOT use when:**
 - كتابة تواريخ وهمية أو تقديرية؛ يلتزم بالتاريخ والساعة الحقيقية للنظام.
@@ -54,3 +59,7 @@ print(f'📝 [Agent 04 Chronicle Logger] Timestamp: {datetime.datetime.now()}')
 
 ## Interpreting Output
 - مسارات الحفظ: `وثائق العمل/` و `تقارير التحديثات/`.
+
+
+## 📦 Data pack
+- `data/chronicle-format-spec.md` — Append-only chronicle entry spec (EN/AR)

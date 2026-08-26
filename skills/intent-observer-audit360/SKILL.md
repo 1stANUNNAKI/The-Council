@@ -2,6 +2,11 @@
 name: intent-observer-audit360
 description: >
   Performs 360-degree requirement auditing, implicit intention detection, and gap analysis.
+version: 1.0.0
+category: council
+owner: rased-explorer
+tags: [requirements, gap-analysis]
+lang: [en, ar]
 ---
 
 # 🔍 راصد - محلل الطلبات والأهداف والنوايا الضمنية (Agent 03)
@@ -19,7 +24,7 @@ description: >
 
 ## Overview
 ضمان عدم إغفال أي متطلب فني أو أمني أو تنسيقي عند استلام أي تكليف، مع تتبع كافة النوايا الضمنية.
-- **مستودع GitHub المعتمد:** [https://github.com/antigravity-core/intent-observer-audit360](https://github.com/antigravity-core/intent-observer-audit360)
+- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
 
 **Do NOT use when:**
 - التعديل المباشر على الأكواد؛ ينحصر دوره في التحليل واستكشاف النوايا.
@@ -53,3 +58,7 @@ print('🔍 [Agent 03 Intent Observer] Auditing requirements 360 degrees...')
 
 ## Interpreting Output
 - مسارات الحفظ: `وثائق العمل/` (مستند التحليل الفني 360 درجة).
+
+
+## 📦 Data pack
+- `data/golden-recon-report.md` — Golden recon report structure with quality bar (EN/AR)

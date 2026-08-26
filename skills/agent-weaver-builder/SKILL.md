@@ -2,6 +2,11 @@
 name: agent-weaver-builder
 description: >
   Recruits and generates specialized custom agents dynamically adhering to the ReferenceStructure.
+version: 1.0.0
+category: council
+owner: agent-weaver
+tags: [agent-design]
+lang: [en, ar]
 ---
 
 # 🐣 مُجَنِّد / نَسَّاج - وكيل تجنيد وصناعة الوكلاء الجدد (Agent 02)
@@ -19,7 +24,7 @@ description: >
 
 ## Overview
 استكشاف المستودعات البرمجية مفتوحة المصدر وبناء هياكل المهارات الجديدة تلقائياً متى ما طلب المستخدم تخصيصاً جديداً.
-- **مستودع GitHub المعتمد:** [https://github.com/antigravity-core/agent-weaver-builder](https://github.com/antigravity-core/agent-weaver-builder)
+- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
 
 **Do NOT use when:**
 - التعديل على الوكلاء الأساسيين دون أمر صريح.

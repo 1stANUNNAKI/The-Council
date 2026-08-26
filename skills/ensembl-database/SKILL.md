@@ -6,6 +6,11 @@ description: >
   get variant consequence and effect predictions (VEP). Use this skill as a
   primary ID translator, genomic sequence database and variant effect prediction
   tool.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # Ensembl Database: ID Mapping and Genomic Features

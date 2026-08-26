@@ -2,6 +2,11 @@
 name: isolated-sandbox-environment
 description: >
   Manages isolated execution contexts, safe script evaluation, and container sandbox testing.
+version: 1.0.0
+category: council
+owner: sandbox-isolator
+tags: [isolation, safe-exec]
+lang: [en, ar]
 ---
 
 # 🧪 مَعْزُول - وكيل البيئات المعزولة والـ Sandbox (Agent 18)
@@ -25,7 +30,7 @@ description: >
 - تعديل أو استخدام ملفات النظام الحساسة خارج مجلد مساحة العمل المسموح بها.
 
 ## Setup (Agent Instructions)
-1. إنشاء مجلد بروفايل مستقل في LOCALAPPDATA/AntigravityAppProfile.
+1. إنشاء مجلد بروفايل مستقل في LOCALAPPDATA/MajlisAppProfile.
 2. إطلاق التطبيق بالمعلمة `--user-data-dir`.
 
 ## Core Rules
@@ -52,4 +57,4 @@ print('🧪 [Agent 18 Isolated Sandbox] Environment isolated successfully in App
 - **[تأمين صلاحيات نظام الملفات]** — منع الكتابة خارج النطاق.
 
 ## Interpreting Output
-- مسارات الحفظ: `<appDataDir>/brain/<id>/scratch/` و `%LOCALAPPDATA%/AntigravityAppProfile`.
+- مسارات الحفظ: `<appDataDir>/brain/<id>/scratch/` و `%LOCALAPPDATA%/MajlisAppProfile`.

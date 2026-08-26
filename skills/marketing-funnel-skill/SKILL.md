@@ -1,6 +1,11 @@
 ---
 name: marketing-funnel-skill
 description: Design marketing funnels and data capture flows: stages, CTAs, tracking events, and conversion analytics wiring.
+version: 1.0.0
+category: creative
+owner: growth-analyst
+tags: [funnels, cta, analytics]
+lang: [en, ar]
 ---
 
 # مهارة القناة التسويقية وجمع البيانات (Marketing Funnel & Data Skill)

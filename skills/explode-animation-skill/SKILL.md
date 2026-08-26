@@ -1,6 +1,11 @@
 ---
 name: explode-animation-skill
 description: Create product explosion/fragment animations: layered disassembly sequences, timing curves, and Remotion/CSS implementations.
+version: 1.0.0
+category: creative
+owner: cinematic-director
+tags: [visual, production]
+lang: [en, ar]
 ---
 
 # مهارة تفكيك وانفجار المنتج (Product Explosion Animation Skill)

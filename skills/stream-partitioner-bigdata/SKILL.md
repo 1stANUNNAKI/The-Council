@@ -2,6 +2,11 @@
 name: stream-partitioner-bigdata
 description: >
   Partitions large data streams, chunking payloads and managing memory efficiency.
+version: 1.0.0
+category: council
+owner: stream-partitioner
+tags: [chunking, memory-safe]
+lang: [en, ar]
 ---
 
 # 🔀 مُقَسِّم - وكيل تجزئة وتقسيم تدفقات البيانات الضخمة (Agent 07)
@@ -19,7 +24,7 @@ description: >
 
 ## Overview
 تجزئة وتقسيم تدفقات البيانات والملفات الكبيرة لتقليل العبء الذهني واستهلاك التوكنز وزيادة سرعة الاستجابة.
-- **مستودع GitHub المعتمد:** [https://github.com/antigravity-core/stream-partitioner](https://github.com/antigravity-core/stream-partitioner)
+- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
 
 **Do NOT use when:**
 - حذف أي بيانات جوهرية أثناء ضغط السياق.

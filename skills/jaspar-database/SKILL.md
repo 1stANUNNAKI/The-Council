@@ -6,6 +6,11 @@ description: >
     Matrices (PWMs) for specific TFs, resolving gene symbols to JASPAR Matrix
     IDs, or getting TF metadata. Supports multiple output formats (MEME,
     TRANSFAC, PFM, JASPAR, YAML).
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # JASPAR Skill

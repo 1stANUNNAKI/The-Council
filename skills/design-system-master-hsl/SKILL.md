@@ -2,6 +2,11 @@
 name: design-system-master-hsl
 description: >
   Maintains design tokens, dark modes, Shadcn/HSL color palettes, and glassmorphism styling.
+version: 1.0.0
+category: creative
+owner: cinematic-director
+tags: [visual, production]
+lang: [en, ar]
 ---
 
 # 🖌️ رَفَل - مسؤول أنظمة التصميم والهوية الرقمية (Agent 12)

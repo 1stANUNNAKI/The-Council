@@ -8,6 +8,11 @@ references:
   - astro
   - sveltekit
   - hugo
+version: 1.0.0
+category: cloudflare
+owner: emad-api-shield
+tags: [captcha, bot-defense]
+lang: [en, ar]
 ---
 
 # Turnstile Spin skill

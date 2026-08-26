@@ -1,6 +1,11 @@
 ---
 name: tech-background-skill
 description: Generate animated technical backgrounds (circuits, grids, particles) as CSS canvas or video assets for hero sections.
+version: 1.0.0
+category: creative
+owner: cinematic-director
+tags: [visual, production]
+lang: [en, ar]
 ---
 
 # مهارة الخلفيات التقنية المتحركة (Tech Background Skill)

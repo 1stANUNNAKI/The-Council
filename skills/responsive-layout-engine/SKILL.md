@@ -2,6 +2,11 @@
 name: responsive-layout-engine
 description: >
   Enforces 100% multi-device responsiveness, CSS Grid/Flexbox stability, and mobile optimizations.
+version: 1.0.0
+category: creative
+owner: cinematic-director
+tags: [visual, production]
+lang: [en, ar]
 ---
 
 # 📱 مرن - وكيل التجاوب وتوافق أجهزة الجوال والشاشات (Agent 13)

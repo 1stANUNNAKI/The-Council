@@ -7,6 +7,11 @@ description: >
   "create a skill from what we just did", "package this workflow" or similar.
   Do not use for creating skills from scratch without an existing workflow
   (use a generic skill-creator for that).
+version: 1.0.0
+category: council
+owner: prompt-smith
+tags: [distill-workflow]
+lang: [en, ar]
 ---
 
 # Workflow-to-Skill Distiller
@@ -270,7 +275,7 @@ Skill paths by agent CLI (local paths relative to project root):
 
 -   **Claude Code**: local `.claude/skills/`, global `~/.claude/skills/`
 -   **Codex**: local `.agents/skills/`, global `~/.agents/skills/`
--   **Antigravity 2.0**: local `.agents/skills/`, global
+-   **Majlis**: local `.agents/skills/`, global
     `~/.gemini/config/skills/`
 -   **Gemini CLI**: local `.gemini/skills/`, global `~/.gemini/skills/`
 -   **OpenCode**: local `.opencode/skills/`, global `~/.config/opencode/skills/`

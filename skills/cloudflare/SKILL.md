@@ -7,6 +7,11 @@ references:
   - d1
   - durable-objects
   - workers-ai
+version: 1.0.0
+category: cloudflare
+owner: emad-api-shield
+tags: [edge, workers]
+lang: [en, ar]
 ---
 
 # Cloudflare Platform Skill

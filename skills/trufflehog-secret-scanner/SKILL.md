@@ -1,6 +1,11 @@
 ---
 name: trufflehog-secret-scanner
 description: Automated secret scanning and credential leakage prevention using TruffleHog. Scans git repositories, commits, environment files, and build artifacts to prevent API key and credential leaks.
+version: 1.0.0
+category: security
+owner: sareem-security
+tags: [secrets, git-history, credentials]
+lang: [en, ar]
 ---
 
 # 🛡️ TruffleHog Secret Scanner Skill

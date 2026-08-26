@@ -1,6 +1,11 @@
 ---
 name: cloudflare-ai-resources
 description: Provides comprehensive guidelines, instructions, billing protection rules, and boilerplate templates to work with Cloudflare Workers AI free models (Text, Image, and Audio) using the official documentation reference.
+version: 1.0.0
+category: cloudflare
+owner: cicd-automator
+tags: [edge, workers]
+lang: [en, ar]
 ---
 
 # Cloudflare AI Resources (موارد كلاودفلير AI)

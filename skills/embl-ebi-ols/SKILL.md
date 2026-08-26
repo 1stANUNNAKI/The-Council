@@ -7,6 +7,11 @@ description: >
   navigate hierarchies (parents, children, ancestors), look up properties and
   individuals, get autocomplete suggestions, or access ontology metadata and
   statistics.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # EMBL-EBI Ontology Lookup Service (OLS)

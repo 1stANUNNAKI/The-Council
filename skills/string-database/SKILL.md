@@ -5,6 +5,11 @@ description: >
   enrichment, and homology. Use when the user asks about interactions between
   specific proteins, interaction evidence, confidence scores, protein
   interaction partners, or pathway enrichments.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # STRING Database Skill

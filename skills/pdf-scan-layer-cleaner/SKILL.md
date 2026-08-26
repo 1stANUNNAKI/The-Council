@@ -2,6 +2,11 @@
 name: pdf-scan-layer-cleaner
 description: >
   مهارات تنظيف مستندات كتب الـ PDF الممسوحة ضوئياً من الطبقات المضللة، الخفيات الرمادية، الصور المزدوجة، ومسارات القص مع الحفاظ على النص الناصع وإمكانية البحث والنسخ دون ظهور مستطيلات سوداء.
+version: 1.0.0
+category: science
+owner: print-publisher
+tags: [ocr-layers, documents]
+lang: [ar, en]
 ---
 
 # مهارة تنظيف المستندات من الطبقات المضللة (PDF Scan Layer Cleaner)

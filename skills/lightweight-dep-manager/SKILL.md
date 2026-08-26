@@ -2,6 +2,11 @@
 name: lightweight-dep-manager
 description: >
   Manages package dependencies, audit trees, pruning unnecessary bloat for minimal overhead.
+version: 1.0.0
+category: council
+owner: dep-manager
+tags: [audit, pruning]
+lang: [en, ar]
 ---
 
 # 📦 جاسر - مدير الحزم والاعتمادات البرمجية الخفيفة (Agent 21)

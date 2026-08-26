@@ -1,6 +1,11 @@
 ---
 name: sandbox-stable
 description: Use when building or changing Cloudflare Sandbox apps on the current stable @cloudflare/sandbox package (default npm tag)—commands, sessions, files, ports, tunnels, terminals, bridge, production, or deprecated-API cleanup while staying on stable. Not for @cloudflare/sandbox@next (use sandbox-next) or for porting to 1.0 (use sandbox-migrate-to-next).
+version: 1.0.0
+category: cloudflare
+owner: emad-api-shield
+tags: [edge, workers]
+lang: [en, ar]
 ---
 
 # Sandbox SDK — stable package

@@ -1,6 +1,11 @@
 ---
 name: advanced-image-slicing-skill
 description: Slice large images into responsive tiles/sprites and animate pan/zoom transitions for web layouts.
+version: 1.0.0
+category: creative
+owner: cinematic-director
+tags: [visual, production]
+lang: [en, ar]
 ---
 
 # مهارة تقطيع وتحريك الصور المتقدمة (Advanced Image Slicing Skill)

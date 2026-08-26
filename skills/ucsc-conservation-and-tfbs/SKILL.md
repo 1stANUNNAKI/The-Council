@@ -6,6 +6,11 @@ description: >
   whether genomic variants or regions are evolutionarily conserved, functionally
   important, or bounded by TF regulators across major projects (ENCODE, JASPAR,
   ReMap).
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # Conservation Scores & TFBS Lookup (UCSC)

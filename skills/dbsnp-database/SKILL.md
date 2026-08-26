@@ -6,6 +6,11 @@ description: >
   coordinates in VCF format, and HGVS strings. For an rsID, returns variant
   type, gene associations, clinical significance, allele frequencies, and
   genomic coordinates (GRCh38).
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 # dbSNP Database Integration

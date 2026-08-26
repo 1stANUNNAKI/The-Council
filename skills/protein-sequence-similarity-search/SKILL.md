@@ -7,6 +7,11 @@ description: >
     matches, or wants to infer protein function based on sequence similarity,
     but not when the user wants to infer protein function based on structural
     similarity.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 ## Prerequisites

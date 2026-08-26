@@ -2,6 +2,11 @@
 name: maestro-hadi-orchestration
 description: >
   Strategic coordination, agent orchestra routing, interactive user alignment, sidecars error monitoring, and macro task execution management.
+version: 1.0.0
+category: council
+owner: hadi-maestro
+tags: [orchestration, waves, routing]
+lang: [en, ar]
 ---
 
 # 🎼 مايسترو هادي - قائد الأوكسترا والموجه الإستراتيجي (Agent 01)
@@ -20,7 +25,7 @@ description: >
 
 ## Prerequisites
 1. Python 3.10+ / Node.js 18+
-2. Antigravity Core Workspace Access (`GLOBAL_SYSTEM_WORKFLOW.md`)
+2. Council Core Workspace Access (`GLOBAL_SYSTEM_WORKFLOW.md`)
 
 ## Overview
 الموجه المركزي والشبكة العصبية للنظام. يقوم بتوزيع وتجزئة التكاليف بين الوكلاء الـ 23 بأقل استهلاك للتوكنز مع الإشراف التام على بروتوكول الأخطاء والأرتيفاكتس.
@@ -56,3 +61,7 @@ print('🎼 [Agent 01 Maestro] Orchestrating system workflow with Sidecars & Int
 
 ## Interpreting Output
 - مسارات الحفظ المعتمدة: `d:\بشار\شهر 8\نظام تشغيل انتيغرافيتي\وثائق العمل/` و `تقارير التحديثات/`.
+
+
+## 📦 Data pack
+- `data/golden-plan.md` — The Golden Plan anatomy + rejection reasons (EN/AR)

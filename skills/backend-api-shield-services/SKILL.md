@@ -2,6 +2,11 @@
 name: backend-api-shield-services
 description: >
   Builds secure backend services, REST/GraphQL APIs, authentication, and endpoint defense.
+version: 1.0.0
+category: council
+owner: emad-api-shield
+tags: [rest, authn, hardening]
+lang: [en, ar]
 ---
 
 # ⚙️ عماد - مطور الخدمات الخلفية وحماية نقاط الـ API (Agent 16)
@@ -54,3 +59,7 @@ print('⚙️ [Agent 16 Backend Shield] Securing HTTP API endpoint /api/dispatch
 
 ## Interpreting Output
 - مسارات الحفظ: `server.py` واستجابات JSON API.
+
+
+## 📦 Data pack
+- `data/api-hardening-patterns.md` — Production-proven API hardening patterns + pre-gate self-test (EN/AR)

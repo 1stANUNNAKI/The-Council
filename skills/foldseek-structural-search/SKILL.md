@@ -6,6 +6,11 @@ description: >
     user provides a physical 3D coordinate file (.cif, .mmcif, or .pdb) and
     wants to find structurally similar proteins. Do NOT use if the user only
     provides a protein sequence, gene name, or UniProt ID.
+version: 1.0.0
+category: science
+owner: data-engineer
+tags: [research, api]
+lang: [en, ar]
 ---
 
 ## Prerequisites

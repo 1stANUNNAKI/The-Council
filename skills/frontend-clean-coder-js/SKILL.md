@@ -2,6 +2,11 @@
 name: frontend-clean-coder-js
 description: >
   Generates modular, accessible, Clean Code frontend components and UI logic.
+version: 1.0.0
+category: council
+owner: code-polisher
+tags: [components, a11y, ui-logic]
+lang: [en, ar]
 ---
 
 # 💻 فارس - مطور تطبيقات الواجهة الأمامية والأكواد النظيفة (Agent 15)

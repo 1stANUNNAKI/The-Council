@@ -1,6 +1,11 @@
 ---
 name: animation-scroll-effects
 description: Animation and scroll effects skill using GSAP, Lenis, and Framer Motion.
+version: 1.0.0
+category: creative
+owner: cinematic-director
+tags: [visual, production]
+lang: [en, ar]
 ---
 
 # دليل موارد وأدوات الأنيميشن وتأثيرات التمرير (Animation & Scroll Effects)
@@ -62,4 +67,4 @@ description: Animation and scroll effects skill using GSAP, Lenis, and Framer Mo
 2. **GSAP (ScrollTrigger)** للحركات المخصصة.
 3. **Framer Motion** إذا كنت تستخدم React.
 
-تم إعداد هذا الملف بواسطة **Antigravity**.
+تم إعداد هذا الملف بواسطة **المجلس (Majlis)**.

@@ -2,6 +2,11 @@
 name: security-clean-code-auditor
 description: >
   Audits code safety, prevents XSS/SQLi vulnerabilities, and enforces Clean Code standards.
+version: 1.0.0
+category: security
+owner: nadif-clean-code
+tags: [xss, sqli, code-hygiene]
+lang: [en, ar]
 ---
 
 # 🛡️ صارم - وكيل الأمان ومراجع الكود النظيف والوقاية من SQLi/XSS (Agent 22)
@@ -53,3 +58,7 @@ print('🛡️ [Agent 22 Security Auditor] Clean Code & OWASP Security Audit: PA
 
 ## Interpreting Output
 - مسارات الحفظ: الأكواد المعدلة النظيفة والمؤمنة بالكامل.
+
+
+## 📦 Data pack
+- `data/clean-code-rubric.md` — Review rubric with anti-sycophancy clauses and 3-cycle law (EN/AR)

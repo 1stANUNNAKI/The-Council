@@ -2,6 +2,11 @@
 name: tool-innovator-skill-fetcher
 description: >
   Searches, fetches, downloads, installs, and configures new skills and GitHub packages automatically.
+version: 1.0.0
+category: council
+owner: mubtakir-tools
+tags: [discovery, install]
+lang: [en, ar]
 ---
 
 # 🧰 مبتكر - مدير الأدوات وجالب المهارات من GitHub (Agent 20)
@@ -19,7 +24,7 @@ description: >
 
 ## Overview
 إدارة وتوسيع الترسانة الذاتية للنظام بجلب وتثبيت وضبط كافة المهارات والأدوات المطلوبة تلقائياً وبشكل مستمر وصامت.
-- **مستودع GitHub المعتمد:** [https://github.com/antigravity-core/tool-innovator-fetcher](https://github.com/antigravity-core/tool-innovator-fetcher)
+- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
 
 **Do NOT use when:**
 - الانتظار حتى يطلب المستخدم تنزيل المهارة يدوياً؛ يلتزم بالتنزيل والتثبيت الذاتي الفوري.
