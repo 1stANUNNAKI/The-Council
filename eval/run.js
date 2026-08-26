@@ -75,6 +75,17 @@ for (const rel of DEPLOYERS) {
   for (const rx of FORBIDDEN) ok(!rx.test(t), 'deployer never references settings/credential files: ' + rel + ' :: /' + rx.source + '/');
 }
 ok(/WRITE-GUARD/.test(fs.readFileSync(path.join(ROOT, 'plugins', 'majlis-bootstrap.js'), 'utf8')), 'bootstrap carries runtime WRITE-GUARD');
+/* ---------- npm distribution readiness ----------
+   Incident class: landing page advertises `npx majlis-council` while the npm/
+   folder shipped an installer with ZERO assets inside (fatal for any user). */
+const npmPkg = path.join(ROOT, 'npm');
+const npmSkills = fs.existsSync(path.join(npmPkg, 'skills'))
+  ? fs.readdirSync(path.join(npmPkg, 'skills')).length : 0;
+ok(npmSkills === skIds.length, 'npm tarball carries all skills (' + npmSkills + '/' + skIds.length + ')');
+const pj = JSON.parse(fs.readFileSync(path.join(npmPkg, 'package.json'), 'utf8'));
+ok(pj.version === fs.readFileSync(path.join(ROOT, 'VERSION.txt'), 'utf8').trim(), 'npm package version == VERSION.txt');
+ok(fs.existsSync(path.join(npmPkg, 'bin', 'install.js')) && fs.existsSync(path.join(npmPkg, 'plugins', 'majlis-bootstrap.js')), 'npm ships installer + self-heal plugin');
+ok(!fs.readFileSync(path.join(npmPkg, 'bin', 'install.js'), 'utf8').includes('antigravity-rules'), 'npm installer free of legacy keys');
 /* ---------- report ---------- */
 const line='─'.repeat(46);
 console.log(line);

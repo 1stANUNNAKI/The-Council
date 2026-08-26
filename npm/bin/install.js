@@ -31,7 +31,6 @@ const scaffoldArgIdx = args.indexOf('--scaffold');
 
 const DESC_FIX = {
   'advanced-image-slicing-skill': 'Slice large images into responsive tiles/sprites and animate pan/zoom transitions for web layouts.',
-  'antigravity-rules': 'Constitution and operating rules of the Majlis Council system: agent council routing, security pipeline, clean-code standards, chronicle logging.',
   'explode-animation-skill': 'Create product explosion/fragment animations: layered disassembly sequences, timing curves, and Remotion/CSS implementations.',
   'marketing-funnel-skill': 'Design marketing funnels and data capture flows: stages, CTAs, tracking events, and conversion analytics wiring.',
   'premium-visual-polish-skill': 'Apply premium visual polish passes: spacing rhythm, shadows, gradients, micro-interactions, magazine-grade typography.',

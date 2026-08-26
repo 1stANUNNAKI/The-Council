@@ -1,0 +1,36 @@
+---
+name: psychological-copywriting-skill
+description: Write psychology-driven marketing copy using persuasion principles (scarcity, social proof, loss aversion).
+version: 1.0.0
+category: creative
+owner: brand-guardian
+tags: [persuasion, copy]
+lang: [en, ar]
+---
+
+# مهارة النصوص التسويقية النفسية (Psychological Copywriting Skill)
+
+إطار عمل لكتابة نصوص تركز على سيكولوجية البيع والتحفيز العاطفي للشراء.
+
+---
+
+## 🧠 أطر العمل (Frameworks):
+### 1. نظام PAS (Problem - Agitate - Solution)
+*   **المشكلة (Problem):** تحديد نقطة الألم العميقة لدى العميل.
+*   **الإثارة (Agitate):** تضخيم العواقب النفسية والعملية لعدم حل المشكلة.
+*   **الحل (Solution):** تقديم المنتج كجسر وحيد للوصول للراحة والنتيجة المطلقة.
+
+### 2. نظام BAB (Before - After - Bridge)
+*   **قبل (Before):** وصف واقع العميل المتعب حالياً.
+*   **بعد (After):** رسم صورة خيالية للحياة بعد استخدام المنتج.
+*   **الجسر (Bridge):** كيف ينقلك المنتج من "قبل" إلى "بعد" بسرعة.
+
+## ✍️ استراتيجيات الكتابة:
+*   **الندرة والاستعجال (Scarcity & Urgency):** استخدام عبارات "عرض محدود" أو "الفرصة الأخيرة".
+*   **الدليل الاجتماعي (Social Proof):** دمج الشهادات والنتائج بالأرقام.
+*   **النتيجة المطلقة (Ultimate Result):** التركيز على الشعور (مثلاً: "امتلك الحرية") بدلاً من الميزات التقنية فقط.
+
+## 📈 معايير الأداء:
+*   العناوين (Headlines) يجب أن تكون قصيرة وقوية.
+*   استخدام لغة "أنت" بدلاً من "نحن".
+*   التنسيق يجب أن يسمح بـ "المسح البصري" (Scanning) السريع.
