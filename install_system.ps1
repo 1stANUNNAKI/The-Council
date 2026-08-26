@@ -1,6 +1,15 @@
-# install_system.ps1 v2 - Multi-platform installer for the Antigravity system.
+# install_system.ps1 v3 - Multi-platform installer for the Majlis Council.
 # ASCII-only by design (PS 5.1 codepage safety); Arabic text lives in templates/*.md.
 # Targets: opencode | claude | codex | universal
+#
+# ═══════════════════ MAJLIS WRITE-SCOPE LAW ═══════════════════
+# Deploys ONLY Majlis assets: skills/, agents/, command workflows,
+# pointer templates, and its own marker/log files. It must NEVER read,
+# write, delete or reconfigure the editor's own settings file, model/
+# provider configuration, or ANY credential store of any tool on this
+# machine. User API keys are untouchable.
+# (Enforced by eval/run.js adoption-safety suite.)
+# ═══════════════════════════════════════════════════════════════
 # Usage:
 #   powershell -File install_system.ps1                                  # all global targets
 #   powershell -File install_system.ps1 -Targets opencode,codex          # subset

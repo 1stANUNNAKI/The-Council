@@ -3,6 +3,13 @@
  * Usage: npx majlis-council --all            (everything)
  *        npx majlis-council --claude         (subset)
  *        npx majlis-council --scaffold C:\my\project
+ *
+ * ═══════════════ MAJLIS WRITE-SCOPE LAW ═══════════════
+ * Deploys ONLY Majlis assets. Never reads/writes/deletes or
+ * reconfigures the editor's settings, model/provider config,
+ * or any credential store. User API keys are untouchable.
+ * (Enforced by eval/run.js adoption-safety suite.)
+ * ══════════════════════════════════════════════════════
  */
 const fs = require('fs');
 const os = require('os');

@@ -64,6 +64,17 @@ const before=fs.readFileSync(catP,'utf8')+fs.readFileSync(couP,'utf8');
 require('child_process').execSync('node tools/generate_catalogs.js',{cwd:ROOT,stdio:'ignore'});
 const after=fs.readFileSync(catP,'utf8')+fs.readFileSync(couP,'utf8');
 ok(before===after,'catalogs are generated-fresh (regeneration idempotent)');
+/* ---------- adoption safety: deployers must NEVER touch editor settings or credentials ----------
+   Law L-2026-08-26-01: a law without a mechanical guard is a suggestion.
+   Incident: user's models + API key vanished after a repair wiped their config while our
+   deploy pipeline was (correctly) innocent. These checks keep that innocence provable. */
+const DEPLOYERS = ['install_system.ps1', 'npm/bin/install.js', 'plugins/majlis-bootstrap.js'];
+const FORBIDDEN = [/opencode\.json/i, /auth\.json/i, /\.local[\/\\]share/i, /auth\s+login/i];
+for (const rel of DEPLOYERS) {
+  const t = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+  for (const rx of FORBIDDEN) ok(!rx.test(t), 'deployer never references settings/credential files: ' + rel + ' :: /' + rx.source + '/');
+}
+ok(/WRITE-GUARD/.test(fs.readFileSync(path.join(ROOT, 'plugins', 'majlis-bootstrap.js'), 'utf8')), 'bootstrap carries runtime WRITE-GUARD');
 /* ---------- report ---------- */
 const line='─'.repeat(46);
 console.log(line);
