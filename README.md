@@ -171,7 +171,7 @@ Automated reality-check (source + 4 deploy targets + landing references):
 
 <div align="center">
 
-**MIT** · 🏛️ Majlis Council · *Hunt first. Ship clean.* · يصطاد أولاً، يسلّم نقيّاً
+**MIT** · 🏛️ Majlis Council · *Hunt first. Ship clean.* · الصيد اولاً، ثم التسليم النظيف
 
 [⭐ Star this repo](https://github.com/1stANUNNAKI/The-Council) if the Council serves you well
 
