@@ -24,7 +24,7 @@ lang: [en, ar]
 
 ## Overview
 يضمن حكيم عدم تكرار الأخطاء السابقة والاستفادة من ملاحظات وتوجيهات المستخدم لتحديث السلوك الذاتي للنظام.
-- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
+- **مستودع GitHub المعتمد:** [https://github.com/1stANUNNAKI/The-Council](https://github.com/1stANUNNAKI/The-Council)
 
 **Do NOT use when:**
 - مسح الدروس السابقة؛ ينحصر عمله في الإضافة والتراكم الذكي.

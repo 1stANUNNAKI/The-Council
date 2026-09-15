@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /* majlis installer - multi-platform, zero dependencies.
- * Usage: npx majlis-council --all            (everything)
- *        npx majlis-council --claude         (subset)
- *        npx majlis-council --scaffold C:\my\project
+ * Usage: pnpm dlx majlis-council --all        (recommended standard)
+ *        npx majlis-council --all            (fallback)
+ *        pnpm dlx majlis-council --claude     (subset)
+ *        pnpm dlx majlis-council --scaffold C:\my\project
  *
  * ═══════════════ MAJLIS WRITE-SCOPE LAW ═══════════════
  * Deploys ONLY Majlis assets. Never reads/writes/deletes or
@@ -99,7 +100,13 @@ function listCommands() {
   return fs.readdirSync(path.join(PKG, 'commands')).filter(f => f.startsWith('majlis-') && f.endsWith('.md'));
 }
 function pointerText() {
-  return fs.readFileSync(path.join(PKG, 'templates', 'pointer.md'), UTF8).replace('{MASTER}', path.join(PKG, 'AGENTS.md'));
+  const master = path.join(PKG, 'AGENTS.md');
+  const coreDoc = path.join(PKG, 'templates', 'MAJLIS_CORE_DIRECTIVES.md');
+  const corePrompt = path.join(PKG, 'templates', 'MAJLIS_CORE_SYSTEM.prompt');
+  return fs.readFileSync(path.join(PKG, 'templates', 'pointer.md'), UTF8)
+    .replace(/\{MASTER\}/g, master)
+    .replace(/\{CORE_DIRECTIVES\}/g, coreDoc)
+    .replace(/\{CORE_SYSTEM_PROMPT\}/g, corePrompt);
 }
 
 const R = [];
@@ -149,7 +156,9 @@ if (all || targets.includes('gemini')) {
 }
 if (scaffoldArgIdx !== -1 && args[scaffoldArgIdx + 1]) {
   const proj = path.resolve(args[scaffoldArgIdx + 1]);
-  const short = fs.readFileSync(path.join(PKG, 'templates', 'project-rules.md'), UTF8).replace('{MASTER}', path.join(PKG, 'AGENTS.md'));
+  const short = fs.readFileSync(path.join(PKG, 'templates', 'project-rules.md'), UTF8)
+    .replace(/\{MASTER\}/g, path.join(PKG, 'AGENTS.md'))
+    .replace(/\{CORE_DIRECTIVES\}/g, path.join(PKG, 'templates', 'MAJLIS_CORE_DIRECTIVES.md'));
   [['AGENTS.md', short], ['CLAUDE.md', 'See AGENTS.md - it is binding.\n\n' + short], ['GEMINI.md', 'See AGENTS.md - it is binding.\n\n' + short], ['.github/copilot-instructions.md', short], ['.cursor/rules/majlis.mdc', '---\ndescription: Majlis Council rules (always apply)\nglobs:\nalwaysApply: true\n---\n\n' + short], ['.agent/rules/majlis-core.md', short], ['.windsurf/rules/majlis.md', short]].forEach(([rel, c]) => wf(path.join(proj, rel), c));
   ok(`scaffold   : 7 rule files -> ${proj}`);
 }

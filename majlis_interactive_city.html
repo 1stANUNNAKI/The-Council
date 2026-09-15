@@ -1,0 +1,2599 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عالم المجلس ثلاثي الأبعاد — خارطة العراق الكبرى والوكلاء الأربعون</title>
+  <meta name="description" content="تمثيل بصري تفاعلي ثلاثي الأبعاد لمدينة المجلس فوق خارطة العراق الكبرى: 6 قارات متباينة، 40 شخصية 3D حركية، و91 مهارة مع محاكي سير المهام الحركي الكامل.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Three.js and Animation Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Live Dynamic Dataset (40 Agents, 91 Skills, 6 Continents) -->
+  <script src="majlis_interactive_data.js"></script>
+
+  <style>
+    :root {
+      --bg-space: #060913;
+      --surface-glass: rgba(13, 20, 36, 0.82);
+      --surface-card: rgba(18, 27, 49, 0.94);
+      --border-glass: rgba(255, 255, 255, 0.14);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --gold: #f59e0b;
+      --cyan: #06b6d4;
+      --emerald: #10b981;
+      --crimson: #ef4444;
+      --purple: #a855f7;
+      --blue: #3b82f6;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    [data-theme="light"] {
+      --bg-space: #e2e8f0;
+      --surface-glass: rgba(255, 255, 255, 0.90);
+      --surface-card: rgba(248, 250, 252, 0.97);
+      --border-glass: rgba(0, 0, 0, 0.12);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-space);
+      color: var(--text-main);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      user-select: none;
+      transition: background 0.4s var(--ease-out);
+      cursor: none; /* custom kinetic cursor */
+    }
+    body.lang-en {
+      font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
+      direction: ltr;
+    }
+
+    /* CUSTOM KINETIC CURSOR */
+    #cursor-dot {
+      position: fixed;
+      top: 0; left: 0;
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+      box-shadow: 0 0 12px var(--gold);
+    }
+    #cursor-ring {
+      position: fixed;
+      top: 0; left: 0;
+      width: 36px; height: 36px;
+      border: 2px solid rgba(245, 158, 11, 0.7);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.25s var(--ease-out), height 0.25s var(--ease-out), border-color 0.25s, background 0.25s;
+    }
+    body.cursor-hover #cursor-ring {
+      width: 58px; height: 58px;
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+    }
+    body.cursor-hover #cursor-dot {
+      background: #38bdf8;
+      box-shadow: 0 0 16px #38bdf8;
+    }
+
+    /* 3D FLOATING HUD HOVER BADGE */
+    #island-hover-badge {
+      position: fixed;
+      display: none;
+      pointer-events: none;
+      z-index: 9990;
+      background: rgba(13, 20, 36, 0.92);
+      border: 1px solid var(--gold);
+      backdrop-filter: blur(14px);
+      padding: 8px 16px;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 800;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.6);
+      transform: translate(-50%, -130%);
+      white-space: nowrap;
+    }
+
+    #canvas-container {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 1;
+    }
+
+    /* TOP BAR NAVIGATION */
+    .top-bar {
+      position: absolute;
+      top: 16px; left: 20px; right: 20px;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+    }
+    .brand-cluster {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--surface-glass);
+      backdrop-filter: blur(20px);
+      padding: 10px 22px;
+      border-radius: 18px;
+      border: 1px solid var(--border-glass);
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+    }
+    .brand-icon {
+      font-size: 28px;
+      animation: floatBadge 3s ease-in-out infinite alternate;
+    }
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: var(--gold);
+    }
+    .brand-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .top-actions {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-action {
+      background: var(--surface-glass);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-glass);
+      color: var(--text-main);
+      padding: 10px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 0.86rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s var(--ease-out), background 0.2s, border-color 0.2s;
+    }
+    .btn-action:hover {
+      transform: translateY(-2px);
+      border-color: var(--gold);
+      background: var(--surface-card);
+    }
+    .btn-action:active { transform: scale(0.96); }
+
+    /* LAYERS NAVIGATION BAR */
+    .layers-nav {
+      position: absolute;
+      top: 85px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+      background: var(--surface-glass);
+      backdrop-filter: blur(20px);
+      padding: 6px;
+      border-radius: 18px;
+      border: 1px solid var(--border-glass);
+      box-shadow: 0 15px 35px -10px rgba(0,0,0,0.4);
+    }
+    .layer-chip {
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      transition: all 0.22s var(--ease-out);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .layer-chip:hover {
+      color: var(--text-main);
+      background: rgba(255,255,255,0.06);
+    }
+    .layer-chip.active {
+      color: #fff;
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      box-shadow: 0 4px 16px rgba(37,99,235,0.45);
+    }
+
+    /* MISSION SIMULATOR PANEL (DRAWER) */
+    .sim-panel {
+      position: absolute;
+      top: 155px;
+      left: 20px;
+      bottom: 25px;
+      width: 400px;
+      background: var(--surface-glass);
+      backdrop-filter: blur(26px);
+      border-radius: 22px;
+      border: 1px solid var(--border-glass);
+      box-shadow: 0 25px 60px -15px rgba(0,0,0,0.6);
+      z-index: 25;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.45s var(--ease-drawer);
+    }
+    body.lang-en .sim-panel { left: auto; right: 20px; }
+    .sim-panel.collapsed {
+      transform: translateX(calc(-100% - 30px));
+    }
+    body.lang-en .sim-panel.collapsed {
+      transform: translateX(calc(100% + 30px));
+    }
+    .sim-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-glass);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.03);
+    }
+    .sim-title {
+      font-size: 1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sim-body {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .sim-preset-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .sim-presets {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .preset-btn {
+      text-align: right;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-glass);
+      color: var(--text-main);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      line-height: 1.5;
+      transition: all 0.2s var(--ease-out);
+    }
+    body.lang-en .preset-btn { text-align: left; }
+    .preset-btn:hover {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: var(--gold);
+      transform: translateX(-3px);
+    }
+    body.lang-en .preset-btn:hover { transform: translateX(3px); }
+    .preset-btn.active {
+      border-color: var(--gold);
+      background: rgba(245, 158, 11, 0.18);
+    }
+
+    .terminal-box {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.65);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 170px;
+      line-height: 1.6;
+    }
+    .log-line {
+      display: flex;
+      gap: 6px;
+      opacity: 0;
+      transform: translateY(6px);
+      animation: logFadeIn 0.3s forwards var(--ease-out);
+    }
+    .log-time { color: #64748b; }
+    .log-agent { font-weight: 700; }
+    .log-msg { color: #f1f5f9; }
+
+    .sim-footer {
+      padding: 14px 16px;
+      border-top: 1px solid var(--border-glass);
+      display: flex;
+      gap: 8px;
+    }
+    .btn-run-sim {
+      flex: 1;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: none;
+      color: #fff;
+      padding: 12px;
+      border-radius: 14px;
+      font-weight: 900;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(16,185,129,0.35);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-run-sim:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-run-sim:active { transform: scale(0.98); }
+
+    .btn-toggle-sim {
+      position: absolute;
+      top: 155px;
+      left: 430px;
+      z-index: 25;
+      background: var(--surface-glass);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-glass);
+      color: var(--text-main);
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transition: left 0.45s var(--ease-drawer);
+    }
+    body.lang-en .btn-toggle-sim { left: auto; right: 430px; }
+    .sim-panel.collapsed ~ .btn-toggle-sim {
+      left: 20px;
+    }
+    body.lang-en .sim-panel.collapsed ~ .btn-toggle-sim {
+      left: auto; right: 20px;
+    }
+
+    /* RIGHT DRAWER: INSPECTOR DETAILS */
+    .inspector-drawer {
+      position: absolute;
+      top: 85px;
+      right: 20px;
+      bottom: 25px;
+      width: 450px;
+      background: var(--surface-glass);
+      backdrop-filter: blur(28px);
+      border-radius: 22px;
+      border: 1px solid var(--border-glass);
+      box-shadow: 0 25px 70px -15px rgba(0,0,0,0.65);
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: translateX(calc(100% + 40px));
+      transition: transform 0.45s var(--ease-drawer);
+    }
+    body.lang-en .inspector-drawer { right: auto; left: 20px; transform: translateX(calc(-100% - 40px)); }
+    .inspector-drawer.open {
+      transform: translateX(0);
+    }
+    .inspector-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border-glass);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      background: rgba(255,255,255,0.03);
+    }
+    .ins-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .ins-avatar {
+      font-size: 36px;
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border-glass);
+    }
+    .ins-title-wrap h3 {
+      font-size: 1.2rem;
+      font-weight: 900;
+      margin-bottom: 2px;
+    }
+    .ins-tagline {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+    .btn-close-ins {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 24px;
+      cursor: pointer;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+    .btn-close-ins:hover { color: var(--text-main); }
+
+    .inspector-content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .ins-section {
+      background: rgba(255,255,255,0.03);
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .ins-section-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--gold);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ins-p {
+      font-size: 0.86rem;
+      line-height: 1.7;
+      color: var(--text-main);
+    }
+    .workflow-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .workflow-step {
+      font-size: 0.82rem;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .workflow-num {
+      background: rgba(255,255,255,0.1);
+      color: var(--gold);
+      font-weight: 900;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .skills-cluster {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .skill-badge {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-glass);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .skill-badge:hover {
+      background: rgba(59, 130, 246, 0.25);
+      border-color: var(--blue);
+      transform: translateY(-2px);
+    }
+
+    /* FULL OVERLAY MODAL */
+    .full-modal {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(6, 9, 19, 0.92);
+      backdrop-filter: blur(28px);
+      z-index: 50;
+      display: none;
+      flex-direction: column;
+      padding: 40px clamp(20px, 6vw, 80px);
+      overflow-y: auto;
+      opacity: 0;
+      transition: opacity 0.3s var(--ease-out);
+    }
+    .full-modal.open {
+      display: flex;
+      opacity: 1;
+    }
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-glass);
+      padding-bottom: 16px;
+    }
+    .modal-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+    }
+    .modal-close {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid var(--border-glass);
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      font-size: 22px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: rgba(239, 68, 68, 0.6); }
+
+    /* SKILLS DIRECTORY GRID (91 SKILLS) */
+    .skills-filter-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .filter-chip {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-glass);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-chip.active, .filter-chip:hover {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 18px;
+    }
+    .skill-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.2s var(--ease-out), border-color 0.2s;
+    }
+    .skill-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--gold);
+    }
+    .skill-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .skill-card-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--gold);
+    }
+    .skill-card-owner {
+      font-size: 0.75rem;
+      background: rgba(255,255,255,0.08);
+      padding: 3px 8px;
+      border-radius: 6px;
+      color: var(--text-muted);
+    }
+    .skill-card-desc {
+      font-size: 0.84rem;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* CAMERA PRESETS STRIP */
+    .cam-presets-bar {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+      background: var(--surface-glass);
+      backdrop-filter: blur(20px);
+      padding: 6px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--border-glass);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .btn-cam {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-cam:hover {
+      color: var(--text-main);
+      background: rgba(255,255,255,0.08);
+    }
+
+    @keyframes floatBadge {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+    @keyframes logFadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+<body>
+
+  <!-- Kinetic Custom Cursor Elements -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+  <div id="island-hover-badge"></div>
+
+  <!-- 3D Canvas Mount Point -->
+  <div id="canvas-container"></div>
+
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <div class="brand-cluster">
+      <div class="brand-icon">🏛️</div>
+      <div>
+        <div class="brand-title" id="lbl-brand-title">المجلس — خارطة العراق الكبرى 3D</div>
+        <div class="brand-subtitle" id="lbl-brand-sub">40 وكيلاً حركياً · 91 مهارة · 6 قارات متباينة</div>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <button class="btn-action" id="btn-theme-toggle">
+        <span id="icon-theme">🌙</span>
+        <span id="lbl-theme">الوضع النهاري</span>
+      </button>
+      <button class="btn-action" id="btn-lang-toggle">
+        <span>🌐</span>
+        <span id="lbl-lang">English</span>
+      </button>
+      <a href="index.html" class="btn-action" style="text-decoration: none;">
+        <span>🏠</span>
+        <span id="lbl-back-home">الرئيسية</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Layers Navigation Strip -->
+  <nav class="layers-nav">
+    <button class="layer-chip active" data-layer="world">
+      <span>🌐</span> <span id="lbl-lay-world">عالم المجلس 3D</span>
+    </button>
+    <button class="layer-chip" data-layer="system">
+      <span>📜</span> <span id="lbl-lay-sys">1. النظام والدستور</span>
+    </button>
+    <button class="layer-chip" data-layer="controllers">
+      <span>👑</span> <span id="lbl-lay-ctrl">2. المتحكمين</span>
+    </button>
+    <button class="layer-chip" data-layer="divisions">
+      <span>🚩</span> <span id="lbl-lay-div">3. القارات والكتائب (6)</span>
+    </button>
+    <button class="layer-chip" data-layer="agents">
+      <span>⚔️</span> <span id="lbl-lay-agents">4. الوكلاء الـ 40</span>
+    </button>
+    <button class="layer-chip" data-layer="suites">
+      <span>🗃️</span> <span id="lbl-lay-suites">5. مكاتب المهارات</span>
+    </button>
+    <button class="layer-chip" data-layer="skills">
+      <span>🧩</span> <span id="lbl-lay-skills">6. جميع المهارات (91)</span>
+    </button>
+  </nav>
+
+  <!-- Live Mission Simulator Panel (Left Drawer) -->
+  <aside class="sim-panel" id="sim-panel">
+    <div class="sim-header">
+      <div class="sim-title">
+        <span>⚡</span> <span id="lbl-sim-title">محاكي سير العمل الحركي</span>
+      </div>
+      <span style="font-size: 0.75rem; color: var(--emerald); font-weight: 800;">● جاهز للتشغيل</span>
+    </div>
+    <div class="sim-body">
+      <div class="sim-preset-label" id="lbl-sim-presets">سيناريوهات المهام الحية:</div>
+      <div class="sim-presets">
+        <button class="preset-btn active" data-mission="0" id="mbtn-0">
+          🚀 <b>بناء تطبيق ويب فائق السرعة</b>: pnpm + حركيات كوفالسكي
+        </button>
+        <button class="preset-btn" data-mission="1" id="mbtn-1">
+          🛡️ <b>تدقيق أمني عاجل</b>: كشف تسريبات الأسرار و OWASP ZAP
+        </button>
+        <button class="preset-btn" data-mission="2" id="mbtn-2">
+          🧬 <b>أبحاث الجينوم</b>: ربط AlphaFold و PubMed وتجزئة التدفقات
+        </button>
+        <button class="preset-btn" data-mission="3" id="mbtn-3">
+          🔄 <b>أتمتة CI/CD ونشر الحافة</b>: Cloudflare Workers + تراجع آمن
+        </button>
+      </div>
+
+      <div class="sim-preset-label" id="lbl-sim-terminal">سجل التوجيه والتفاعل الفوري:</div>
+      <div class="terminal-box" id="terminal-box">
+        <div class="log-line">
+          <span class="log-time">[00:00]</span>
+          <span class="log-agent" style="color:var(--gold);">[نظام المجلس]</span>
+          <span class="log-msg" id="lbl-sim-idle">الشخصيات الـ 40 في مواقعها فوق خارطة العراق؛ اختر مهمة واضغط "إطلاق المحاكاة" لترى الوكلاء يتحركون ويطيرون عبر القارات!</span>
+        </div>
+      </div>
+    </div>
+    <div class="sim-footer">
+      <button class="btn-run-sim" id="btn-run-sim">
+        <span>▶</span> <span id="lbl-sim-run">إطلاق المحاكاة الحركية</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Toggle Simulator Button -->
+  <button class="btn-toggle-sim" id="btn-toggle-sim">
+    <span>◀</span> <span id="lbl-toggle-sim">المحاكي</span>
+  </button>
+
+  <!-- Agent Details Inspector Drawer (Right) -->
+  <aside class="inspector-drawer" id="inspector-drawer">
+    <div class="inspector-header">
+      <div class="ins-meta">
+        <div class="ins-avatar" id="ins-avatar">👤</div>
+        <div class="ins-title-wrap">
+          <h3 id="ins-name">اسم الوكيل</h3>
+          <div class="ins-tagline" id="ins-title">المسمى الوظيفي</div>
+        </div>
+      </div>
+      <button class="btn-close-ins" id="btn-close-ins">✕</button>
+    </div>
+
+    <div class="inspector-content">
+      <div class="ins-section">
+        <div class="ins-section-title" id="lbl-ins-sec1">🎯 الوظيفة والمسؤولية الرئيسية</div>
+        <p class="ins-p" id="ins-mission">الوصف...</p>
+      </div>
+
+      <div class="ins-section">
+        <div class="ins-section-title" id="lbl-ins-sec2">🧩 المهارات المعتمدة التابعة له</div>
+        <div class="skills-cluster" id="ins-skills-list"></div>
+      </div>
+
+      <div class="ins-section">
+        <div class="ins-section-title" id="lbl-ins-sec3">🔄 خطوات سير العمل واتخاذ القرار</div>
+        <ul class="workflow-list" id="ins-workflow-list"></ul>
+      </div>
+
+      <div class="ins-section">
+        <div class="ins-section-title" id="lbl-ins-sec4">⛔ الصلاحيات والحدود الدستورية</div>
+        <p class="ins-p" id="ins-boundaries" style="font-size: 0.82rem; color: #cbd5e1;"></p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Floating Camera Preset Controls -->
+  <div class="cam-presets-bar">
+    <button class="btn-cam" data-cam="overview" id="btn-cam-ov">🌐 خارطة العراق كاملة</button>
+    <button class="btn-cam" data-cam="citadel" id="btn-cam-cit">👑 بغداد (القلعة)</button>
+    <button class="btn-cam" data-cam="eng" id="btn-cam-eng">⚙️ بابل (البناء)</button>
+    <button class="btn-cam" data-cam="gate" id="btn-cam-gate">🛡️ الأنبار (الأمان)</button>
+    <button class="btn-cam" data-cam="exp" id="btn-cam-exp">🎨 البصرة (الفنون)</button>
+    <button class="btn-cam" data-cam="know" id="btn-cam-know">📚 نينوى (المعرفة)</button>
+    <button class="btn-cam" data-cam="recon" id="btn-cam-recon">🔍 الشمال (الرصد)</button>
+  </div>
+
+  <!-- Full Overlay Modal (System, Controllers, Continents, 91 Skills) -->
+  <div class="full-modal" id="full-modal">
+    <div class="modal-head">
+      <h2 class="modal-title" id="modal-title">عنوان النافذة</h2>
+      <button class="modal-close" id="btn-modal-close">✕</button>
+    </div>
+    <div id="modal-dynamic-content"></div>
+  </div>
+
+  <!-- MAIN JAVASCRIPT APPLICATION -->
+  <script>
+    const state = {
+      lang: 'ar',
+      theme: 'dark',
+      activeLayer: 'world',
+      selectedAgent: null,
+      isSimulating: false,
+      activeMissionIndex: 0
+    };
+
+    const DATA = window.MAJLIS_UNIVERSE_DATA;
+
+    // 100% Comprehensive Translations Dictionary
+    const I18N = {
+      ar: {
+        brandTitle: 'المجلس — خارطة العراق الكبرى 3D',
+        brandSub: '40 وكيلاً حركياً · 91 مهارة · 6 قارات متباينة',
+        themeLight: 'الوضع النهاري',
+        themeDark: 'الوضع المظلم',
+        simTitle: 'محاكي سير العمل الحركي',
+        simPresets: 'سيناريوهات المهام الحية:',
+        simTerminal: 'سجل التوجيه والتفاعل الفوري:',
+        simRun: 'إطلاق المحاكاة الحركية',
+        simRunning: 'جاري تحرك الشخصيات وتنفيذ المهمة...',
+        toggleSim: 'المحاكي',
+        backHome: 'الرئيسية',
+        layWorld: 'عالم المجلس 3D',
+        laySys: '1. النظام والدستور',
+        layCtrl: '2. المتحكمين',
+        layDiv: '3. القارات والكتائب (6)',
+        layAgents: '4. الوكلاء الـ 40',
+        laySuites: '5. مكاتب المهارات',
+        laySkills: '6. جميع المهارات (91)',
+        insSec1: '🎯 الوظيفة والمسؤولية الرئيسية',
+        insSec2: '🧩 المهارات المعتمدة التابعة له',
+        insSec3: '🔄 خطوات سير العمل واتخاذ القرار',
+        insSec4: '⛔ الصلاحيات والحدود الدستورية',
+        noSkills: 'لا توجد مهارات مسندة له مباشرة؛ يعتمد على التوجيه المعماري.',
+        simIdle: 'الشخصيات الـ 40 في مواقعها فوق خارطة العراق؛ اختر مهمة واضغط "إطلاق المحاكاة" لترى الوكلاء يتحركون ويطيرون عبر القارات!',
+        simDone: '🎉 اكتملت المهمة بنجاح 100% وتم التحقق من كافة البوابات!',
+        camOv: '🌐 خارطة العراق كاملة',
+        camCit: '👑 بغداد (القلعة)',
+        camEng: '⚙️ بابل (البناء)',
+        camGate: '🛡️ الأنبار (الأمان)',
+        camExp: '🎨 البصرة (الفنون)',
+        camKnow: '📚 نينوى (المعرفة)',
+        camRecon: '🔍 الشمال (الرصد)',
+        m0: '🚀 <b>بناء تطبيق ويب فائق السرعة</b>: pnpm + حركيات كوفالسكي',
+        m1: '🛡️ <b>تدقيق أمني عاجل</b>: كشف تسريبات الأسرار و OWASP ZAP',
+        m2: '🧬 <b>أبحاث الجينوم</b>: ربط AlphaFold و PubMed وتجزئة التدفقات',
+        m3: '🔄 <b>أتمتة CI/CD ونشر الحافة</b>: Cloudflare Workers + تراجع آمن'
+      },
+      en: {
+        brandTitle: 'MAJLIS — Grand Iraq 3D Metropolis',
+        brandSub: '40 Kinetic Agents · 91 Skills · 6 Diverse Continents',
+        themeLight: 'Light Mode',
+        themeDark: 'Dark Mode',
+        simTitle: 'Kinetic Workflow Simulator',
+        simPresets: 'Live Mission Scenarios:',
+        simTerminal: 'Live Orchestration Feed:',
+        simRun: 'Launch Kinetic Simulation',
+        simRunning: 'Characters moving & executing mission...',
+        toggleSim: 'Simulator',
+        backHome: 'Home',
+        layWorld: '3D World',
+        laySys: '1. System Constitution',
+        layCtrl: '2. Supreme Controllers',
+        layDiv: '3. Continents & Divisions (6)',
+        layAgents: '4. The 40 Agents',
+        laySuites: '5. Skill Suites',
+        laySkills: '6. All Skills (91)',
+        insSec1: '🎯 Primary Function & Mission',
+        insSec2: '🧩 Assigned Certified Skills',
+        insSec3: '🔄 Operating Workflow & Decisions',
+        insSec4: '⛔ Constitutional Boundaries',
+        noSkills: 'No direct skills assigned; operates through constitutional directives.',
+        simIdle: 'The 40 agents stand on the Grand Map of Iraq. Select a scenario and click "Launch Simulation" to watch agents fly and interact in real-time!',
+        simDone: '🎉 Mission completed 100% and verified across all constitutional gates!',
+        camOv: '🌐 Full Map of Iraq',
+        camCit: '👑 Baghdad (Citadel)',
+        camEng: '⚙️ Babylon (Builders)',
+        camGate: '🛡️ Anbar (Security)',
+        camExp: '🎨 Basra (Arts)',
+        camKnow: '📚 Nineveh (Wisdom)',
+        camRecon: '🔍 Kurdistan (Recon)',
+        m0: '🚀 <b>High-Speed Web App</b>: pnpm CAS + Kowalski Motion',
+        m1: '🛡️ <b>Emergency Security Audit</b>: Secret Scanning + OWASP ZAP',
+        m2: '🧬 <b>Biomedical Discovery</b>: AlphaFold DB + Stream Partitioner',
+        m3: '🔄 <b>Edge CI/CD Automation</b>: Cloudflare Workers + Rollback Drill'
+      }
+    };
+
+    // Predefined Mission Simulation Scenarios
+    const MISSIONS = [
+      {
+        title_ar: 'بناء تطبيق ويب فائق السرعة بـ pnpm وحركيات كوفالسكي',
+        title_en: 'Build High-Performance Web App with pnpm & Kowalski Motion',
+        steps: [
+          { agent: 'hadi-core', text_ar: 'رصد المتطلبات والموافقة على البدء ببروتوكول pnpm الأول.', text_en: 'Evaluating requirements and approving pnpm-first architecture.' },
+          { agent: 'hadi-maestro', text_ar: 'تفكيك الطلب إلى موجتين تنفيذيتين بعقد فحص verify: pnpm build.', text_en: 'Decomposing task into two waves with verify: pnpm build contract.' },
+          { agent: 'rased-explorer', text_ar: 'مسح المستودع والتأكد من خلوه من التعارضات وعدم افتراض مكتبات وهمية.', text_en: 'Scanning repo to prevent phantom library assumptions.' },
+          { agent: 'dep-manager', text_ar: 'تثبيت الاعتمادات الخفيفة عبر pnpm add وتفعيل التخزين المعنون بالمحتوى.', text_en: 'Installing lightweight dependencies via pnpm add with CAS.' },
+          { agent: 'emad-api-shield', text_ar: 'بناء نقاط الـ API الخلفية وحماية المسارات وتطهير المدخلات.', text_en: 'Crafting backend endpoints with rate-limiting & input sanitization.' },
+          { agent: 'motion-coder', text_ar: 'تطبيق منحنيات كوفالسكي الكنسية (--ease-out) وحصر الحركة في الـ GPU.', text_en: 'Applying Kowalski canonical curves and restricting motion to GPU.' },
+          { agent: 'nadif-clean-code', text_ar: 'مراجعة نظافة الكود: تطبيق قاعدة الـ 20 سطراً وحظر التكرار DRY.', text_en: 'Clean code audit: 20-line rule & DRY enforcement passed.' },
+          { agent: 'sareem-security', text_ar: 'الفحص الأمني الثنائي: مسح الأسرار TruffleHog (الحكم: SECURITY PASS).', text_en: 'Binary security audit: TruffleHog secrets scan (SECURITY: PASS).' },
+          { agent: 'baher-qa', text_ar: 'تشغيل الاختبارات البرمجية وإثبات النجاح 100% (أدلة حية لا مشاعر).', text_en: 'Executing test suites with raw execution proof (100% PASS).' },
+          { agent: 'sajeel-logger', text_ar: 'أرشفة الإنجاز في CHRONICLE.md وسجلات التحديث بالوقت الفعلي.', text_en: 'Archiving milestone into CHRONICLE.md with exact timestamp.' }
+        ]
+      },
+      {
+        title_ar: 'تدقيق أمني عاجل لكشف تسريبات الأسرار و OWASP ZAP',
+        title_en: 'Emergency Security Audit & Secret Leakage Prevention',
+        steps: [
+          { agent: 'sareem-security', text_ar: 'استدعاء المسار الأحمر الأمني وفحص مستودع Git لكشف أي مفاتيح API مسربة.', text_en: 'Activating Red Pipeline: Scanning Git repo for leaked API keys.' },
+          { agent: 'sandbox-isolator', text_ar: 'عزل مسار الاختبار في حاوية آمنة لمنع تسريب بيانات الإنتاج.', text_en: 'Isolating execution environment inside safe sandbox container.' },
+          { agent: 'emad-api-shield', text_ar: 'تشغيل OWASP ZAP ضد نقاط الـ API لكشف ثغرات الحقن و CSRF.', text_en: 'Running OWASP ZAP dynamic testing against API routes.' },
+          { agent: 'sareem-security', text_ar: 'الحكم الأمني النهائي: خلو المشروع من الثغرات الحرجة (SECURITY: PASS).', text_en: 'Final verdict: Zero critical/high vulnerabilities (SECURITY: PASS).' },
+          { agent: 'sajeel-logger', text_ar: 'توثيق شهادة الأمان في CHRONICLE.md والتقارير.', text_en: 'Recording security clearance to CHRONICLE.md.' }
+        ]
+      },
+      {
+        title_ar: 'أبحاث الجينوم والبيانات الحيوية عبر AlphaFold و PubMed',
+        title_en: 'Biomedical & Genomic Discovery via AlphaFold & PubMed',
+        steps: [
+          { agent: 'data-engineer', text_ar: 'استعلام قاعدة بيانات UniProt لاستخراج المعرفات وتسلسل البروتين.', text_en: 'Querying UniProt to resolve accession IDs & sequence data.' },
+          { agent: 'data-engineer', text_ar: 'جلب التنبؤات ثلاثية الأبعاد للتركيب البروتيني عبر AlphaFold DB.', text_en: 'Fetching 3D structural predictions from AlphaFold database.' },
+          { agent: 'stream-partitioner', text_ar: 'تجزئة التدفقات الضخمة لمنع استهلاك الرام ومعالجة ملايين القراءات.', text_en: 'Partitioning high-volume streams to prevent OOM memory leaks.' },
+          { agent: 'bayan-diagrams', text_ar: 'توليد مخططات Mermaid بصرية للعلاقات الجزيئية ومسارات التأثير.', text_en: 'Rendering visual Mermaid diagrams of molecular interactions.' }
+        ]
+      },
+      {
+        title_ar: 'أتمتة CI/CD ونشر الحافة عبر Cloudflare مع تراجع آمن',
+        title_en: 'CI/CD Edge Deployment with Automated Tested Rollback',
+        steps: [
+          { agent: 'cicd-automator', text_ar: 'تشغيل خط أنابيب البناء واختبارات الوحدة في بيئة GitHub Actions.', text_en: 'Running build pipelines and unit assertions in CI environment.' },
+          { agent: 'perf-auditor', text_ar: 'فحص مقاييس الأداء p95 وزمن الاستجابة عبر k6 load testing.', text_en: 'Auditing p95 latency and Core Web Vitals via k6 load testing.' },
+          { agent: 'release-manager', text_ar: 'توليد رقم الإصدار SemVer وتوثيق خطة التراجع التلقائي المجربة.', text_en: 'Tagging SemVer release and verifying automated rollback drill.' },
+          { agent: 'sajeel-logger', text_ar: 'تسجيل تاريخ وساعة النشر في CHRONICLE.md.', text_en: 'Logging deploy timestamp in CHRONICLE.md.' }
+        ]
+      }
+    ];
+
+    /* =========================================================================
+       THREE.JS 3D SCENE: THE GRAND IRAQ MAP & MULTI-KINETIC AGENTS
+       ========================================================================= */
+    let scene, camera, renderer, controls, raycaster, mouse;
+    let characterAvatars = [];
+    let continentObjects = [];
+    let riverLines = [];
+    let kineticPulseTrail;
+    let particleSystem;
+    let dirLight, ambientLight;
+
+    function init3D() {
+      const container = document.getElementById('canvas-container');
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      scene = new THREE.Scene();
+      updateSceneAtmosphere();
+
+      // Camera positioned for grand panoramic perspective over Iraq
+      camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 2000);
+      camera.position.set(0, 240, 260);
+
+      // Renderer
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      container.appendChild(renderer.domElement);
+
+      // Controls
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxPolarAngle = Math.PI / 2.06;
+      controls.minDistance = 35;
+      controls.maxDistance = 450;
+      controls.target.set(0, 4, 10);
+
+      // Vibrant Lighting
+      setupVibrantLighting();
+
+      // 1. Build Grand Iraq Map Terrain
+      buildGrandIraqMap();
+
+      // 2. Build The Two Rivers: Tigris & Euphrates (دجلة والفرات)
+      buildTwoRiversOfMesopotamia();
+
+      // 3. Build Diverse Continents (Varied shapes, heights, and scales)
+      buildDiverseContinents();
+
+      // 4. Build 3D Articulated Character Avatars for the 40 Agents
+      buildArticulatedAgentCharacters();
+
+      // 5. Build Dynamic Particle Field and Energy Grid
+      buildCosmicParticleField();
+
+      raycaster = new THREE.Raycaster();
+      mouse = new THREE.Vector2();
+
+      window.addEventListener('resize', onWindowResize);
+      window.addEventListener('pointermove', onPointerMove);
+      renderer.domElement.addEventListener('pointerdown', onPointerDown);
+
+      // Animation Loop
+      animate();
+    }
+
+    /* -------------------------------------------------------------------------
+       CUSTOM KINETIC CURSOR & 3D HOVER RAYCASTING
+       ------------------------------------------------------------------------- */
+    let hoveredIsland = null;
+    function onPointerMove(event) {
+      const dot = document.getElementById('cursor-dot');
+      const ring = document.getElementById('cursor-ring');
+      const badge = document.getElementById('island-hover-badge');
+
+      if (dot && ring) {
+        dot.style.transform = `translate(${event.clientX}px, ${event.clientY}px) translate(-50%, -50%)`;
+        gsap.to(ring, {
+          x: event.clientX,
+          y: event.clientY,
+          duration: 0.15,
+          ease: 'power2.out'
+        });
+      }
+
+      const rect = renderer.domElement.getBoundingClientRect();
+      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+
+      const targetMeshes = [];
+      characterAvatars.forEach(c => {
+        c.traverse(child => {
+          if (child.isMesh) {
+            child.userData.charRoot = c;
+            targetMeshes.push(child);
+          }
+        });
+      });
+      continentObjects.forEach(cont => {
+        cont.traverse(child => {
+          if (child.isMesh) {
+            child.userData.islandRoot = cont;
+            targetMeshes.push(child);
+          }
+        });
+      });
+
+      const intersects = raycaster.intersectObjects(targetMeshes);
+      let isHoveringInteractive = false;
+      hoveredIsland = null;
+
+      if (intersects.length > 0) {
+        const hitObj = intersects[0].object;
+        if (hitObj.userData.charRoot) {
+          isHoveringInteractive = true;
+          const char = hitObj.userData.charRoot;
+          const ag = DATA.agents.find(a => a.id === char.userData.agentId);
+          if (ag && badge) {
+            badge.style.display = 'block';
+            badge.style.left = `${event.clientX}px`;
+            badge.style.top = `${event.clientY}px`;
+            badge.innerHTML = `${ag.emoji} <b>${state.lang === 'ar' ? ag.name_ar : ag.name_en}</b> — ${state.lang === 'ar' ? ag.title_ar : ag.title_en}`;
+          }
+        } else if (hitObj.userData.islandRoot) {
+          isHoveringInteractive = true;
+          const island = hitObj.userData.islandRoot;
+          hoveredIsland = island;
+          const div = DATA.divisions.find(d => d.id === island.userData.divId);
+          if (div && badge) {
+            badge.style.display = 'block';
+            badge.style.left = `${event.clientX}px`;
+            badge.style.top = `${event.clientY}px`;
+            badge.innerHTML = `${div.icon} <b>${state.lang === 'ar' ? div.name_ar : div.name_en}</b>`;
+          }
+        }
+      }
+
+      if (!isHoveringInteractive && badge) {
+        badge.style.display = 'none';
+      }
+      document.body.classList.toggle('cursor-hover', isHoveringInteractive);
+    }
+
+    function onPointerDown(event) {
+      const rect = renderer.domElement.getBoundingClientRect();
+      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+
+      const charMeshes = [];
+      characterAvatars.forEach(c => {
+        c.traverse(child => {
+          if (child.isMesh) {
+            child.userData.charRoot = c;
+            charMeshes.push(child);
+          }
+        });
+      });
+
+      const islandMeshes = [];
+      continentObjects.forEach(cont => {
+        cont.traverse(child => {
+          if (child.isMesh) {
+            child.userData.islandRoot = cont;
+            islandMeshes.push(child);
+          }
+        });
+      });
+
+      const charHits = raycaster.intersectObjects(charMeshes);
+      if (charHits.length > 0) {
+        const hit = charHits[0].object.userData.charRoot;
+        if (hit && hit.userData.agentId) {
+          selectAgent(hit.userData.agentId, true);
+          return;
+        }
+      }
+
+      const islandHits = raycaster.intersectObjects(islandMeshes);
+      if (islandHits.length > 0) {
+        const hit = islandHits[0].object.userData.islandRoot;
+        if (hit && hit.userData.divId) {
+          flyToContinent(hit.userData.divId);
+          openContinentInfo(hit.userData.divId);
+        }
+      }
+    }
+
+    function openContinentInfo(divId) {
+      const div = DATA.divisions.find(d => d.id === divId);
+      if (!div) return;
+      openLayerModal('divisions');
+    }
+
+    function updateSceneAtmosphere() {
+      const isDark = state.theme === 'dark';
+      const bgColor = isDark ? 0x070b16 : 0xecf3f9;
+      scene.background = new THREE.Color(bgColor);
+      scene.fog = new THREE.FogExp2(bgColor, 0.0035);
+    }
+
+    function setupVibrantLighting() {
+      ambientLight = new THREE.AmbientLight(0xffffff, state.theme === 'dark' ? 1.1 : 1.5);
+      scene.add(ambientLight);
+
+      dirLight = new THREE.DirectionalLight(0xfff5e6, state.theme === 'dark' ? 1.6 : 1.8);
+      dirLight.position.set(120, 220, 140);
+      dirLight.castShadow = true;
+      dirLight.shadow.mapSize.width = 2048;
+      dirLight.shadow.mapSize.height = 2048;
+      dirLight.shadow.bias = -0.0004;
+      scene.add(dirLight);
+
+      const pLight1 = new THREE.PointLight(0x06b6d4, 1.8, 350);
+      pLight1.position.set(-90, 60, -60);
+      scene.add(pLight1);
+
+      const pLight2 = new THREE.PointLight(0xf59e0b, 1.8, 350);
+      pLight2.position.set(90, 60, 60);
+      scene.add(pLight2);
+    }
+
+    /* -------------------------------------------------------------------------
+       1. GRAND TERRAIN: AUTHENTIC 3D CRADLE OF IRAQ (خارطة العراق الكبرى الثلاثية الأبعاد)
+       ------------------------------------------------------------------------- */
+    const IRAQ_GEO_COORDS = [[-159.98, -4.62], [-150.91, 22.46], [-154.02, 23.21], [-152.21, 28.65], [-145.49, 27.05], [-144.23, 30.9], [-147.31, 33.27], [-109.66, 39.67], [-77.76, 57.52], [-57.73, 65.64], [24.28, 125.26], [78.65, 129.0], [84.31, 125.09], [90.71, 117.63], [99.18, 100.57], [106.38, 96.94], [116.06, 96.95], [124.34, 100.41], [128.27, 99.25], [131.63, 99.71], [140.03, 105.37], [143.84, 111.35], [142.64, 113.37], [145.95, 116.51], [146.76, 119.9], [151.42, 119.32], [155.55, 117.32], [159.56, 112.29], [159.98, 106.18], [153.26, 105.88], [140.26, 100.4], [139.68, 98.14], [137.78, 96.4], [138.56, 93.88], [134.37, 89.77], [132.19, 90.19], [130.96, 86.89], [126.69, 85.33], [126.98, 69.17], [116.21, 69.08], [116.14, 56.85], [121.74, 44.78], [119.86, 42.95], [120.0, 41.74], [117.58, 39.94], [116.98, 37.47], [111.29, 33.66], [112.57, 31.41], [110.38, 29.43], [110.99, 28.6], [108.37, 27.13], [109.31, 25.91], [106.64, 23.37], [103.73, 22.65], [100.09, 23.86], [91.36, 18.44], [86.18, 13.65], [77.7, 9.08], [66.8, 7.58], [66.89, 6.39], [68.92, 4.85], [65.06, 4.07], [65.46, 3.03], [67.7, 3.37], [70.4, 0.89], [69.41, 0.6], [69.7, -1.19], [66.32, -3.91], [64.03, -8.76], [59.55, -8.3], [62.6, -10.42], [60.92, -12.8], [56.14, -11.4], [56.72, -12.77], [52.69, -15.78], [52.75, -16.96], [48.64, -22.35], [46.16, -22.35], [45.42, -23.33], [47.25, -24.35], [47.46, -26.39], [50.82, -28.58], [49.99, -30.1], [50.88, -33.44], [49.46, -34.97], [48.16, -34.5], [46.41, -38.13], [48.94, -38.98], [49.18, -42.67], [51.22, -41.12], [55.83, -40.75], [54.57, -45.58], [53.04, -46.49], [54.45, -47.95], [54.18, -49.37], [57.35, -50.53], [57.24, -52.37], [59.62, -51.87], [60.62, -53.85], [59.97, -56.07], [61.66, -56.5], [61.38, -58.06], [65.64, -56.27], [66.05, -57.68], [69.75, -58.54], [68.61, -60.03], [70.08, -61.33], [67.41, -62.65], [68.73, -63.92], [68.32, -64.81], [65.91, -66.54], [63.35, -70.49], [64.37, -71.26], [62.98, -73.25], [64.74, -73.01], [63.59, -74.79], [64.09, -76.16], [65.13, -77.03], [68.93, -76.48], [72.41, -77.72], [74.55, -79.96], [72.95, -81.04], [69.0, -79.93], [66.25, -81.75], [62.39, -80.64], [60.58, -81.1], [59.92, -80.28], [57.61, -80.77], [56.47, -79.9], [53.42, -83.87], [49.85, -86.19], [43.61, -85.44], [44.6, -88.75], [42.91, -90.48], [43.02, -92.79], [41.01, -94.0], [42.21, -94.64], [40.86, -95.5], [41.22, -98.36], [40.1, -99.62], [36.29, -98.74], [34.43, -101.87], [33.0, -102.42], [33.96, -103.68], [33.6, -104.88], [34.95, -105.71], [34.79, -107.55], [30.9, -110.54], [27.94, -110.32], [27.74, -111.47], [29.77, -112.89], [30.04, -114.61], [29.11, -115.77], [29.82, -117.49], [26.6, -118.69], [24.98, -120.7], [26.06, -121.66], [25.59, -122.27], [21.03, -123.02], [16.17, -119.49], [12.84, -118.81], [13.11, -117.96], [11.32, -116.04], [9.5, -116.66], [7.44, -120.42], [8.62, -122.13], [10.34, -122.38], [10.04, -124.78], [5.61, -127.22], [2.29, -127.37], [0.3, -126.26], [-0.8, -124.17], [-2.82, -124.16], [-3.55, -123.17], [-4.82, -124.3], [-13.86, -124.72], [-18.13, -127.36], [-19.98, -126.62], [-24.78, -128.77], [-28.64, -128.24], [-30.61, -126.89], [-35.89, -129.0], [-39.03, -126.76], [-42.45, -121.71], [-49.54, -120.69], [-48.95, -119.08], [-66.07, -104.39], [-78.98, -102.4], [-82.32, -97.47], [-83.5, -88.0], [-79.97, -81.29], [-79.58, -74.51], [-83.12, -70.15], [-84.62, -63.13], [-84.38, -48.21], [-92.13, -36.4], [-102.62, -33.83], [-159.98, -4.62]];
+
+        function createAuthenticIraqTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 2048;
+      canvas.height = 1650;
+      const ctx = canvas.getContext('2d');
+      const isDark = state.theme === 'dark';
+
+      // 1. Sleek metallic architectural background
+      const bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      if (isDark) {
+        bgGrad.addColorStop(0, '#1a273e');
+        bgGrad.addColorStop(0.35, '#121d2f');
+        bgGrad.addColorStop(0.7, '#0d1522');
+        bgGrad.addColorStop(1, '#070b13');
+      } else {
+        bgGrad.addColorStop(0, '#ffffff');
+        bgGrad.addColorStop(0.4, '#f1f5f9');
+        bgGrad.addColorStop(0.8, '#e2e8f0');
+        bgGrad.addColorStop(1, '#cbd5e1');
+      }
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // 2. High-contrast horizontal laser scanline relief grooves matching iraqmapimg.webp
+      const lineSpacing = 5;
+      const totalLines = Math.floor(canvas.height / lineSpacing);
+      for (let l = 0; l < totalLines; l++) {
+        const y = l * lineSpacing;
+        const reliefNoise = Math.sin(y * 0.022) * Math.cos(y * 0.048);
+        const isMountainZone = y < 520;
+        
+        // Dynamic contrasting alpha
+        const alpha = isMountainZone 
+          ? (0.55 + Math.abs(reliefNoise) * 0.42) 
+          : (0.35 + Math.abs(reliefNoise) * 0.35);
+
+        if (isDark) {
+          ctx.strokeStyle = isMountainZone ? `rgba(56, 189, 248, ${alpha})` : `rgba(148, 163, 184, ${alpha * 0.75})`;
+        } else {
+          ctx.strokeStyle = isMountainZone ? `rgba(15, 23, 42, ${alpha * 1.1})` : `rgba(51, 65, 85, ${alpha * 0.85})`;
+        }
+        ctx.lineWidth = isMountainZone ? (2.4 + Math.abs(reliefNoise) * 2.2) : (1.4 + Math.abs(reliefNoise) * 1.6);
+
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        for (let x = 0; x <= canvas.width; x += 48) {
+          const wave = Math.sin(x * 0.01 + y * 0.018) * 2.8;
+          ctx.lineTo(x, y + wave);
+        }
+        ctx.stroke();
+      }
+
+      // 3. Topographical relief contour rings
+      for (let r = 120; r < 950; r += 110) {
+        ctx.strokeStyle = isDark ? 'rgba(245, 158, 11, 0.22)' : 'rgba(37, 99, 235, 0.25)';
+        ctx.lineWidth = 2.0;
+        ctx.beginPath();
+        ctx.ellipse(1080, 720, r * 1.25, r * 0.85, -0.12, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      // 4. Subtle holographic coordinate grid
+      ctx.strokeStyle = isDark ? 'rgba(56, 189, 248, 0.08)' : 'rgba(0, 0, 0, 0.08)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 128) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+
+      const tex = new THREE.CanvasTexture(canvas);
+      tex.wrapS = THREE.ClampToEdgeWrapping;
+      tex.wrapT = THREE.ClampToEdgeWrapping;
+      tex.anisotropy = 16;
+      return tex;
+    }
+
+    function buildGrandIraqMap() {
+      const iraqShape = new THREE.Shape();
+      iraqShape.moveTo(IRAQ_GEO_COORDS[0][0], IRAQ_GEO_COORDS[0][1]);
+      for (let i = 1; i < IRAQ_GEO_COORDS.length; i++) {
+        iraqShape.lineTo(IRAQ_GEO_COORDS[i][0], IRAQ_GEO_COORDS[i][1]);
+      }
+
+      // Massive 3D sovereign base with precision bevel
+      const extrudeSettings = {
+        depth: 22,
+        bevelEnabled: true,
+        bevelSegments: 6,
+        steps: 3,
+        bevelSize: 6.0,
+        bevelThickness: 6.0
+      };
+
+      const iraqGeom = new THREE.ExtrudeGeometry(iraqShape, extrudeSettings);
+      iraqGeom.rotateX(Math.PI / 2); // Lay flat on XZ plane
+
+      // Custom Planar UV Mapping across the 320x260 bounding box
+      const posAttr = iraqGeom.attributes.position;
+      const uvAttr = iraqGeom.attributes.uv;
+      const minX = -160, width = 320;
+      const minZ = -129, depth = 258;
+
+      for (let i = 0; i < posAttr.count; i++) {
+        const x = posAttr.getX(i);
+        const y = posAttr.getY(i);
+        const z = posAttr.getZ(i);
+        if (y > -2) {
+          const u = (x - minX) / width;
+          const v = (z - minZ) / depth;
+          uvAttr.setXY(i, u, 1 - v);
+        } else {
+          uvAttr.setXY(i, (x + 160) / 45, (y + 22) / 22);
+        }
+      }
+      uvAttr.needsUpdate = true;
+
+      const isDark = state.theme === 'dark';
+      const reliefTex = createAuthenticIraqTexture();
+
+      const iraqMat = new THREE.MeshStandardMaterial({
+        color: isDark ? 0x22324e : 0xffffff,
+        map: reliefTex,
+        emissive: isDark ? 0x091424 : 0x000000,
+        roughness: 0.32,
+        metalness: 0.45
+      });
+
+      const iraqBaseMesh = new THREE.Mesh(iraqGeom, iraqMat);
+      iraqBaseMesh.position.y = -11;
+      iraqBaseMesh.receiveShadow = true;
+      scene.add(iraqBaseMesh);
+
+      // Top surface architectural facet wireframe lines
+      const wireGeom = new THREE.WireframeGeometry(iraqGeom);
+      const wireMat = new THREE.LineBasicMaterial({
+        color: isDark ? 0x243b5e : 0x94a3b8,
+        transparent: true,
+        opacity: 0.38
+      });
+      const wireMesh = new THREE.LineSegments(wireGeom, wireMat);
+      wireMesh.position.y = -10.9;
+      scene.add(wireMesh);
+
+      // Glowing Sovereign Boundary Parapet Wall (198 border points)
+      const borderPoints = IRAQ_GEO_COORDS.map(pt => new THREE.Vector3(pt[0], 0.9, pt[1]));
+      const borderCurve = new THREE.CatmullRomCurve3(borderPoints, true);
+      const borderWallGeom = new THREE.TubeGeometry(borderCurve, 320, 1.8, 8, true);
+      const borderWallMat = new THREE.MeshStandardMaterial({
+        color: isDark ? 0xf59e0b : 0x2563eb,
+        roughness: 0.25,
+        metalness: 0.85,
+        emissive: isDark ? 0xb45309 : 0x1d4ed8,
+        emissiveIntensity: 0.45
+      });
+      const borderWall = new THREE.Mesh(borderWallGeom, borderWallMat);
+      borderWall.position.y = 0.5;
+      scene.add(borderWall);
+
+      // Neon Sovereign Crest Line
+      const neonBorderGeom = new THREE.BufferGeometry().setFromPoints(borderPoints);
+      const neonBorderMat = new THREE.LineBasicMaterial({
+        color: 0x38bdf8,
+        linewidth: 3
+      });
+      const neonLine = new THREE.Line(neonBorderGeom, neonBorderMat);
+      neonLine.position.y = 2.6;
+      scene.add(neonLine);
+
+      // Northern Mountain Arc (كردستان وجبال الشمال) - Outside all islands
+      const mountainGroup = new THREE.Group();
+      for (let i = 0; i < 30; i++) {
+        const h = 22 + Math.random() * 26;
+        const mGeom = new THREE.ConeGeometry(8 + Math.random() * 7, h, 5);
+        const mMat = new THREE.MeshStandardMaterial({
+          color: isDark ? 0x1e293b : 0x94a3b8,
+          roughness: 0.85,
+          flatShading: true
+        });
+        const mMesh = new THREE.Mesh(mGeom, mMat);
+        // Strictly placed in northern mountain ridge (x: 18 to 78, z: -126 to -106)
+        mMesh.position.set(
+          18 + Math.random() * 60,
+          h / 2,
+          -126 + Math.random() * 20
+        );
+        mMesh.castShadow = true;
+        mountainGroup.add(mMesh);
+      }
+      scene.add(mountainGroup);
+    }
+
+    /* -------------------------------------------------------------------------
+       2. THE TWO RIVERS: TIGRIS & EUPHRATES (نهر دجلة والفرات وشط العرب)
+       ------------------------------------------------------------------------- */
+    function buildTwoRiversOfMesopotamia() {
+      // 1. Tigris River (دجلة) flowing naturally between islands
+      const tigrisPts = [
+        new THREE.Vector3(-49, 0.8, -120),  // Faysh Khabur entry
+        new THREE.Vector3(-30, 0.8, -102),
+        new THREE.Vector3(-22, 0.8, -92),   // Mosul / East of Nineveh
+        new THREE.Vector3(-8, 0.8, -50),    // Tikrit
+        new THREE.Vector3(-2, 0.8, -30),    // Samarra
+        new THREE.Vector3(14, 0.8, -3),     // Baghdad (Ground level beneath sky island)
+        new THREE.Vector3(40, 0.8, 12),
+        new THREE.Vector3(58, 0.8, 24),     // Kut
+        new THREE.Vector3(95, 0.8, 45),     // Amarah
+        new THREE.Vector3(108, 0.8, 68)     // Qurna (Confluence)
+      ];
+      const tigrisCurve = new THREE.CatmullRomCurve3(tigrisPts);
+      const tigrisGeom = new THREE.TubeGeometry(tigrisCurve, 120, 2.0, 8, false);
+
+      // 2. Euphrates River (الفرات) flowing through western plateau & central basin
+      const euphratesPts = [
+        new THREE.Vector3(-91, 0.8, -35),   // Al-Qaim border entry
+        new THREE.Vector3(-63, 0.8, -38),   // Rawa / Anah
+        new THREE.Vector3(-49, 0.8, -28),   // Haditha
+        new THREE.Vector3(-35, 0.8, -13),   // Hit
+        new THREE.Vector3(-20, 0.8, -6),    // Ramadi
+        new THREE.Vector3(-5, 0.8, -4),     // Fallujah
+        new THREE.Vector3(12, 0.8, 18),
+        new THREE.Vector3(18, 0.8, 30),     // Babylon / Hillah
+        new THREE.Vector3(42, 0.8, 55),     // Samawa
+        new THREE.Vector3(72, 0.8, 66),     // Nasiriyah
+        new THREE.Vector3(108, 0.8, 68)     // Qurna (Confluence)
+      ];
+      const euphratesCurve = new THREE.CatmullRomCurve3(euphratesPts);
+      const euphratesGeom = new THREE.TubeGeometry(euphratesCurve, 120, 2.0, 8, false);
+
+      // 3. Shatt al-Arab (شط العرب) to Al-Faw & Arabian Gulf
+      const shattPts = [
+        new THREE.Vector3(108, 0.8, 68),    // Qurna
+        new THREE.Vector3(121, 0.8, 84),    // Basra
+        new THREE.Vector3(128, 0.8, 88),    // Abu al-Khasib
+        new THREE.Vector3(142, 0.8, 102)    // Al-Faw / Gulf
+      ];
+      const shattCurve = new THREE.CatmullRomCurve3(shattPts);
+      const shattGeom = new THREE.TubeGeometry(shattCurve, 50, 3.2, 8, false);
+
+      const riverMat = new THREE.MeshBasicMaterial({
+        color: 0x06b6d4,
+        transparent: true,
+        opacity: 0.92
+      });
+
+      const tigrisMesh = new THREE.Mesh(tigrisGeom, riverMat);
+      const euphratesMesh = new THREE.Mesh(euphratesGeom, riverMat);
+      const shattMesh = new THREE.Mesh(shattGeom, riverMat);
+
+      scene.add(tigrisMesh);
+      scene.add(euphratesMesh);
+      scene.add(shattMesh);
+
+      riverLines.push(tigrisMesh, euphratesMesh, shattMesh);
+    }
+
+            /* -------------------------------------------------------------------------
+       3. SCULPTED 3D FLOATING ISLANDS (مجسمات جزر طافية حقيقية غنية وغير متداخلة)
+       ------------------------------------------------------------------------- */
+    function createSculptedIslandMesh(w, h, d, colorHex, isSkyIsland = false) {
+      const islandGroup = new THREE.Group();
+      const isDark = state.theme === 'dark';
+
+      // 1. Lush Architectural Plateau Top (السطح المعماري الرئيسي للجزيرة)
+      const topGeom = new THREE.CylinderGeometry(w / 2, (w / 2) * 1.08, h * 0.45, 24);
+      const topMat = new THREE.MeshStandardMaterial({
+        color: isSkyIsland ? 0x1e293b : (isDark ? 0x152238 : 0xdce7f3),
+        roughness: 0.35,
+        metalness: 0.38
+      });
+      const topMesh = new THREE.Mesh(topGeom, topMat);
+      topMesh.position.y = h * 0.22;
+      topMesh.receiveShadow = true;
+      islandGroup.add(topMesh);
+
+      // Inner decorative terraced sub-plateau (طبقة معمارية داخلية متدرجة تزيد فخامة الجزيرة)
+      const subGeom = new THREE.CylinderGeometry(w * 0.4, w * 0.44, h * 0.22, 20);
+      const subMat = new THREE.MeshStandardMaterial({
+        color: isDark ? 0x0f172a : 0xf1f5f9,
+        roughness: 0.45,
+        metalness: 0.25
+      });
+      const subMesh = new THREE.Mesh(subGeom, subMat);
+      subMesh.position.y = h * 0.52;
+      subMesh.receiveShadow = true;
+      islandGroup.add(subMesh);
+
+      // 2. Natural Rugged Inverted Rocky Underbelly (قاع صخري مجسم متدرج للأسفل بطبقتين)
+      const underGeom = new THREE.ConeGeometry((w / 2) * 1.06, h * 1.35, 14);
+      underGeom.rotateX(Math.PI);
+      const underMat = new THREE.MeshStandardMaterial({
+        color: isDark ? 0x0a101d : 0x64748b,
+        roughness: 0.9,
+        metalness: 0.15,
+        flatShading: true
+      });
+      const underMesh = new THREE.Mesh(underGeom, underMat);
+      underMesh.position.y = -h * 0.68;
+      underMesh.castShadow = true;
+      islandGroup.add(underMesh);
+
+      // Secondary jagged rock stalactites hanging from the underbelly
+      for (let r = 0; r < 6; r++) {
+        const angle = (r / 6) * Math.PI * 2;
+        const rad = (w / 2) * 0.68;
+        const stGeom = new THREE.ConeGeometry(w * 0.08, h * 0.8, 6);
+        stGeom.rotateX(Math.PI);
+        const stMesh = new THREE.Mesh(stGeom, underMat);
+        stMesh.position.set(Math.cos(angle) * rad, -h * 0.4, Math.sin(angle) * rad);
+        islandGroup.add(stMesh);
+      }
+
+      // 3. Glowing Energy Geode / Levitation Crystal Cluster at bottom tip
+      const crystalGeom = new THREE.OctahedronGeometry(w * 0.18, 0);
+      const crystalMat = new THREE.MeshBasicMaterial({ color: colorHex });
+      const crystal = new THREE.Mesh(crystalGeom, crystalMat);
+      crystal.position.y = -h * 1.35;
+      islandGroup.add(crystal);
+
+      // Orbiting energy ring around crystal
+      const cRingGeom = new THREE.TorusGeometry(w * 0.25, 0.45, 6, 20);
+      cRingGeom.rotateX(Math.PI / 2.3);
+      const cRing = new THREE.Mesh(cRingGeom, new THREE.MeshBasicMaterial({ color: colorHex, wireframe: true }));
+      cRing.position.y = -h * 1.35;
+      islandGroup.add(cRing);
+
+      // 4. Luminous Double Island Boundary Rings
+      const rimGeom = new THREE.TorusGeometry((w / 2) * 1.05, 0.6, 6, 36);
+      rimGeom.rotateX(Math.PI / 2);
+      const rim = new THREE.Mesh(rimGeom, new THREE.MeshBasicMaterial({ color: colorHex }));
+      rim.position.y = h * 0.45;
+      islandGroup.add(rim);
+
+      const rimGeom2 = new THREE.TorusGeometry(w * 0.4, 0.4, 6, 28);
+      rimGeom2.rotateX(Math.PI / 2);
+      const rim2 = new THREE.Mesh(rimGeom2, new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.65 }));
+      rim2.position.y = h * 0.62;
+      islandGroup.add(rim2);
+
+      return islandGroup;
+    }
+
+    function buildDiverseContinents() {
+      // Expanded scale factor (1.8x) to make all islands expansive and magnificent
+      const scaleMultiplier = 1.8;
+
+      DATA.divisions.forEach(div => {
+        const group = new THREE.Group();
+        const isSkyIsland = div.id === 'lead';
+        const posY = isSkyIsland ? 38 : div.coords.y;
+        group.position.set(div.coords.x, posY, div.coords.z);
+
+        const color = new THREE.Color(div.color);
+        const isDark = state.theme === 'dark';
+
+        const scaledW = div.scale.x * scaleMultiplier;
+        const scaledH = div.scale.y * 1.3;
+        const scaledD = div.scale.z * scaleMultiplier;
+
+        // 1. Build Natural Sculpted 3D Floating Island Body
+        const islandBody = createSculptedIslandMesh(scaledW, scaledH, scaledD, color, isSkyIsland);
+        group.add(islandBody);
+
+        // 2. Rich Distinct Architectural Centerpieces on Top Plateau
+        if (div.shape === 'citadel') {
+          // Baghdad Golden Sky Citadel (سماء بغداد - الجزيرة العائمة الكبرى)
+          const zigguratMat = new THREE.MeshStandardMaterial({
+            color: color.clone().multiplyScalar(isDark ? 0.95 : 1.15),
+            roughness: 0.2,
+            metalness: 0.88
+          });
+          // 5-tier grand ziggurat
+          for (let s = 0; s < 5; s++) {
+            const w = 28 - (s * 5);
+            const box = new THREE.Mesh(new THREE.CylinderGeometry(w / 2, w / 2 + 1.2, 3.8, 8), zigguratMat);
+            box.position.y = scaledH * 0.45 + (s * 3.8) + 1.9;
+            box.castShadow = true;
+            group.add(box);
+          }
+          const spire = new THREE.Mesh(new THREE.ConeGeometry(4.0, 22, 8), zigguratMat);
+          spire.position.y = scaledH * 0.45 + 28;
+          group.add(spire);
+
+          // Rotating celestial octahedron prism atop spire
+          const apexPrism = new THREE.Mesh(new THREE.OctahedronGeometry(2.5, 0), new THREE.MeshBasicMaterial({ color: 0xfef08a }));
+          apexPrism.position.y = scaledH * 0.45 + 40;
+          group.add(apexPrism);
+
+          // 6 Perimeter Celestial Pylons
+          for (let c = 0; c < 6; c++) {
+            const ang = (c / 6) * Math.PI * 2;
+            const rPylon = scaledW * 0.35;
+            const pylon = new THREE.Mesh(new THREE.CylinderGeometry(1.0, 1.5, 14, 6), zigguratMat);
+            pylon.position.set(Math.cos(ang) * rPylon, scaledH * 0.45 + 7, Math.sin(ang) * rPylon);
+            pylon.castShadow = true;
+            group.add(pylon);
+
+            // Floating crystal atop each pylon
+            const pCrystal = new THREE.Mesh(new THREE.OctahedronGeometry(1.4, 0), new THREE.MeshBasicMaterial({ color: 0xf59e0b }));
+            pCrystal.position.set(Math.cos(ang) * rPylon, scaledH * 0.45 + 16, Math.sin(ang) * rPylon);
+            group.add(pCrystal);
+          }
+
+          // Vertical Golden Energy Cascade connecting Sky Island to Baghdad Ground
+          const beamGeom = new THREE.CylinderGeometry(2.2, 2.2, 42, 16, 1, true);
+          const beamMat = new THREE.MeshBasicMaterial({
+            color: 0xf59e0b,
+            transparent: true,
+            opacity: 0.72,
+            side: THREE.DoubleSide
+          });
+          const beam = new THREE.Mesh(beamGeom, beamMat);
+          beam.position.y = -21;
+          group.add(beam);
+
+        } else if (div.shape === 'forge') {
+          // Babylon Foundry & Engineering (مسبك ومفاعلات بابل العملاقة)
+          const forgeMat = new THREE.MeshStandardMaterial({
+            color: 0x10b981,
+            roughness: 0.25,
+            metalness: 0.8
+          });
+          // 8 Industrial Cyber Smokestacks & Foundry Reactors
+          for (let t = 0; t < 8; t++) {
+            const towerH = 14 + (t % 4) * 3.5;
+            const tower = new THREE.Mesh(new THREE.CylinderGeometry(2.6, 4.0, towerH, 8), forgeMat);
+            const ang = (t / 8) * Math.PI * 2;
+            const r = scaledW * 0.28;
+            tower.position.set(Math.cos(ang) * r, scaledH * 0.45 + (towerH / 2), Math.sin(ang) * r);
+            tower.castShadow = true;
+            group.add(tower);
+
+            // Glowing reactor cap
+            const cap = new THREE.Mesh(new THREE.CylinderGeometry(2.8, 2.8, 1.2, 8), new THREE.MeshBasicMaterial({ color: 0x34d399 }));
+            cap.position.set(Math.cos(ang) * r, scaledH * 0.45 + towerH + 0.6, Math.sin(ang) * r);
+            group.add(cap);
+          }
+          // Central Turbine Dome
+          const dome = new THREE.Mesh(
+            new THREE.SphereGeometry(9, 20, 14, 0, Math.PI * 2, 0, Math.PI / 2),
+            new THREE.MeshStandardMaterial({ color: 0x059669, metalness: 0.9, roughness: 0.2 })
+          );
+          dome.position.set(0, scaledH * 0.45 + 1, 0);
+          group.add(dome);
+
+        } else if (div.shape === 'fortress') {
+          // Western Frontier Security Bastion (حصن الأنبار الأمني المصفح)
+          const fortMat = new THREE.MeshStandardMaterial({
+            color: 0xef4444,
+            roughness: 0.35,
+            metalness: 0.65
+          });
+          const bastion = new THREE.Mesh(new THREE.CylinderGeometry(18, 22, 14, 6), fortMat);
+          bastion.position.y = scaledH * 0.45 + 7;
+          bastion.castShadow = true;
+          group.add(bastion);
+
+          // 6 Sentry Laser Turrets around Bastion
+          for (let st = 0; st < 6; st++) {
+            const sAng = (st / 6) * Math.PI * 2;
+            const sRad = scaledW * 0.34;
+            const sentry = new THREE.Mesh(new THREE.CylinderGeometry(2.4, 3.4, 11, 6), fortMat);
+            sentry.position.set(Math.cos(sAng) * sRad, scaledH * 0.45 + 5.5, Math.sin(sAng) * sRad);
+            group.add(sentry);
+            const redLaser = new THREE.Mesh(new THREE.ConeGeometry(1.0, 5, 4), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
+            redLaser.position.set(Math.cos(sAng) * sRad, scaledH * 0.45 + 13.5, Math.sin(sAng) * sRad);
+            group.add(redLaser);
+          }
+
+          // Holographic Hexagonal Forcefield Shield Dome
+          const shieldDome = new THREE.Mesh(
+            new THREE.SphereGeometry(scaledW * 0.42, 16, 12, 0, Math.PI * 2, 0, Math.PI / 2),
+            new THREE.MeshBasicMaterial({ color: 0xef4444, wireframe: true, transparent: true, opacity: 0.55 })
+          );
+          shieldDome.position.y = scaledH * 0.45 + 2;
+          group.add(shieldDome);
+
+        } else if (div.shape === 'palace') {
+          // Basra Kinetic Arts & Floating Water Terraces (قصور وأهوار البصرة الحركية)
+          const palaceMat = new THREE.MeshStandardMaterial({
+            color: 0xa855f7,
+            roughness: 0.2,
+            metalness: 0.68
+          });
+          // 6 Stepped Lotus Water Pavilions
+          for (let p = 0; p < 6; p++) {
+            const lotus = new THREE.Mesh(new THREE.CylinderGeometry(9 - p * 1.3, 10 - p * 1.3, 3.5, 16), palaceMat);
+            lotus.position.set((p - 2.5) * 10, scaledH * 0.45 + (p * 2.8) + 1.75, ((p % 2) - 0.5) * 8);
+            lotus.castShadow = true;
+            group.add(lotus);
+          }
+          // Translucent Lotus Fountain & Kinetic Rings
+          const fountainGeom = new THREE.CylinderGeometry(4.5, 4.5, 10, 20);
+          const fountainMat = new THREE.MeshStandardMaterial({ color: 0xc084fc, transparent: true, opacity: 0.8, roughness: 0.1 });
+          const fountain = new THREE.Mesh(fountainGeom, fountainMat);
+          fountain.position.set(0, scaledH * 0.45 + 6, 0);
+          group.add(fountain);
+
+          // Crystalline Lotus Bloom atop Fountain
+          const bloom = new THREE.Mesh(new THREE.OctahedronGeometry(3.0, 0), new THREE.MeshBasicMaterial({ color: 0xf472b6 }));
+          bloom.position.set(0, scaledH * 0.45 + 13, 0);
+          group.add(bloom);
+
+        } else if (div.shape === 'observatory') {
+          // Northern Mountain Observatory (مراصد وقباب جبال كردستان الفضائية)
+          const obsMat = new THREE.MeshStandardMaterial({ color: 0x06b6d4, metalness: 0.78, roughness: 0.25 });
+          const needle = new THREE.Mesh(new THREE.ConeGeometry(5.5, 30, 8), obsMat);
+          needle.position.y = scaledH * 0.45 + 15;
+          needle.castShadow = true;
+          group.add(needle);
+
+          // 3 Giant Rotating Radio Telescope Dishes
+          for (let d = 0; d < 3; d++) {
+            const dAng = (d / 3) * Math.PI * 2;
+            const dRad = scaledW * 0.28;
+            const dish = new THREE.Mesh(
+              new THREE.SphereGeometry(7.5, 20, 10, 0, Math.PI * 2, 0, Math.PI / 2),
+              new THREE.MeshStandardMaterial({ color: 0x38bdf8, metalness: 0.9, side: THREE.DoubleSide })
+            );
+            dish.position.set(Math.cos(dAng) * dRad, scaledH * 0.45 + 14, Math.sin(dAng) * dRad);
+            dish.rotateX(Math.PI * 0.65);
+            dish.rotateZ(dAng);
+            group.add(dish);
+          }
+
+        } else {
+          // Nineveh Archives & Wisdom Library (مكتبة نينوى الإمبراطورية العظمى)
+          const libMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6, metalness: 0.68, roughness: 0.3 });
+          // 12-Column Colonnade Pantheon
+          for (let c = 0; c < 12; c++) {
+            const col = new THREE.Mesh(new THREE.CylinderGeometry(1.4, 1.4, 14, 14), libMat);
+            col.position.set(-25 + c * 4.5, scaledH * 0.45 + 7, -10);
+            col.castShadow = true;
+            group.add(col);
+          }
+          const arch = new THREE.Mesh(new THREE.BoxGeometry(54, 3.5, 14), libMat);
+          arch.position.set(0, scaledH * 0.45 + 15.75, -10);
+          group.add(arch);
+
+          // 2 Soaring Obelisks of Knowledge flanking the front plaza
+          [-16, 16].forEach(ox => {
+            const obelisk = new THREE.Mesh(new THREE.BoxGeometry(3.0, 20, 3.0), new THREE.MeshStandardMaterial({ color: 0x60a5fa, metalness: 0.85 }));
+            obelisk.position.set(ox, scaledH * 0.45 + 10, 12);
+            group.add(obelisk);
+          });
+
+          // 4 Floating Holographic Codex Scrolls
+          for (let sc = 0; sc < 4; sc++) {
+            const sAng = (sc / 4) * Math.PI * 2;
+            const scroll = new THREE.Mesh(
+              new THREE.PlaneGeometry(3, 4.5),
+              new THREE.MeshBasicMaterial({ color: 0x93c5fd, side: THREE.DoubleSide, transparent: true, opacity: 0.75 })
+            );
+            scroll.position.set(Math.cos(sAng) * 16, scaledH * 0.45 + 18, Math.sin(sAng) * 16);
+            group.add(scroll);
+          }
+        }
+
+        group.userData = { divId: div.id, isIsland: true, divData: div, scaledW, scaledH, scaledD };
+        group.traverse(child => {
+          if (child.isMesh) {
+            child.userData.islandRoot = group;
+          }
+        });
+
+        scene.add(group);
+        continentObjects.push(group);
+      });
+    }
+
+    /* -------------------------------------------------------------------------
+       4. ARTICULATED 3D CHARACTERS (شخصيات 3D حقيقية تتحرك وتتفاعل)
+       ------------------------------------------------------------------------- */
+        function buildArticulatedAgentCharacters() {
+      const divAgents = {};
+      DATA.agents.forEach(agent => {
+        const d = agent.division || 'lead';
+        if (!divAgents[d]) divAgents[d] = [];
+        divAgents[d].push(agent);
+      });
+
+      const scaleMultiplier = 1.8;
+
+      DATA.divisions.forEach(div => {
+        const list = divAgents[div.id] || [];
+        const isSkyIsland = div.id === 'lead';
+        const scaledH = div.scale.y * 1.3;
+        const scaledW = div.scale.x * scaleMultiplier;
+        const scaledD = div.scale.z * scaleMultiplier;
+
+        const islandTopY = (isSkyIsland ? 38 : div.coords.y) + (scaledH * 0.45);
+        const radius = Math.min(scaledW, scaledD) * 0.44;
+
+        list.forEach((agent, idx) => {
+          const charGroup = new THREE.Group();
+
+          // Non-colliding circular plaza positions around the perimeter
+          const angle = (idx / list.length) * Math.PI * 2;
+          const posX = div.coords.x + Math.cos(angle) * radius;
+          const posZ = div.coords.z + Math.sin(angle) * radius;
+          const posY = islandTopY + 0.1;
+
+          charGroup.position.set(posX, posY, posZ);
+          charGroup.lookAt(div.coords.x, posY, div.coords.z);
+
+          const color = new THREE.Color(div.color);
+
+          // 1. Anti-Gravity Propulsion Disk (Podium)
+          const diskGeom = new THREE.CylinderGeometry(2.8, 3.6, 1.2, 16);
+          const diskMat = new THREE.MeshStandardMaterial({
+            color: 0x1e293b,
+            metalness: 0.8,
+            roughness: 0.2
+          });
+          const disk = new THREE.Mesh(diskGeom, diskMat);
+          disk.position.y = 0.6;
+          charGroup.add(disk);
+
+          // Glowing Thruster Ring
+          const ringGeom = new THREE.TorusGeometry(2.9, 0.3, 8, 24);
+          ringGeom.rotateX(Math.PI / 2);
+          const ringMat = new THREE.MeshBasicMaterial({ color: color });
+          const ring = new THREE.Mesh(ringGeom, ringMat);
+          ring.position.y = 1.25;
+          charGroup.add(ring);
+
+          // 2. Character Body Assembly
+          const bodyAssembly = new THREE.Group();
+          bodyAssembly.position.y = 1.4;
+
+          // Torso / Armor
+          const torsoGeom = new THREE.BoxGeometry(2.4, 3.2, 1.8);
+          const torsoMat = new THREE.MeshStandardMaterial({
+            color: color,
+            roughness: 0.35,
+            metalness: 0.65
+          });
+          const torso = new THREE.Mesh(torsoGeom, torsoMat);
+          torso.position.y = 1.6;
+          torso.castShadow = true;
+          bodyAssembly.add(torso);
+
+          // Glowing Core Reactor Arc on Chest
+          const reactorGeom = new THREE.CylinderGeometry(0.55, 0.55, 0.25, 12);
+          reactorGeom.rotateX(Math.PI / 2);
+          const reactorMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+          const reactor = new THREE.Mesh(reactorGeom, reactorMat);
+          reactor.position.set(0, 1.8, 1.0);
+          bodyAssembly.add(reactor);
+
+          // Cybernetic Head
+          const headGeom = new THREE.BoxGeometry(1.6, 1.6, 1.6);
+          const headMat = new THREE.MeshStandardMaterial({
+            color: 0xf1f5f9,
+            metalness: 0.9,
+            roughness: 0.15
+          });
+          const head = new THREE.Mesh(headGeom, headMat);
+          head.position.y = 3.8;
+          head.castShadow = true;
+          bodyAssembly.add(head);
+
+          // Glowing Visor
+          const visorGeom = new THREE.BoxGeometry(1.3, 0.45, 0.3);
+          const visorMat = new THREE.MeshBasicMaterial({ color: 0x00f3ff });
+          const visor = new THREE.Mesh(visorGeom, visorMat);
+          visor.position.set(0, 3.8, 0.85);
+          bodyAssembly.add(visor);
+
+          // Shoulders
+          [-1.6, 1.6].forEach(sx => {
+            const shoulder = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.8), torsoMat);
+            shoulder.position.set(sx, 2.6, 0);
+            bodyAssembly.add(shoulder);
+
+            const arm = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 2.2, 8), headMat);
+            arm.position.set(sx, 1.3, 0);
+            bodyAssembly.add(arm);
+          });
+
+          // Special Tool/Accessory for Iconic Agents
+          let itemMesh = null;
+          if (agent.id === 'hadi-core') {
+            itemMesh = new THREE.Mesh(new THREE.OctahedronGeometry(1.4, 0), new THREE.MeshBasicMaterial({ color: 0xf59e0b }));
+            itemMesh.position.set(0, 5.4, 0);
+            bodyAssembly.add(itemMesh);
+          } else if (agent.id === 'hadi-maestro') {
+            itemMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 3.6, 8), new THREE.MeshBasicMaterial({ color: 0x38bdf8 }));
+            itemMesh.position.set(1.8, 2.6, 0.6);
+            itemMesh.rotateZ(-Math.PI / 4);
+            bodyAssembly.add(itemMesh);
+          } else if (agent.id === 'sareem-security') {
+            itemMesh = new THREE.Mesh(new THREE.BoxGeometry(0.3, 2.6, 1.8), new THREE.MeshStandardMaterial({ color: 0xef4444, metalness: 0.8 }));
+            itemMesh.position.set(1.8, 2.8, 0.8);
+            bodyAssembly.add(itemMesh);
+          } else if (agent.id === 'sajeel-logger') {
+            itemMesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 3), new THREE.MeshBasicMaterial({ color: 0x60a5fa, side: THREE.DoubleSide, transparent: true, opacity: 0.8 }));
+            itemMesh.position.set(1.8, 3.2, 1.2);
+            itemMesh.rotateY(-Math.PI / 4);
+            bodyAssembly.add(itemMesh);
+          }
+
+          charGroup.add(bodyAssembly);
+
+          // Floating Title Sprite Label
+          const sprite = createCharacterBillboardSprite(agent.emoji + ' ' + agent.name_ar, agent.emoji + ' ' + agent.name_en);
+          sprite.position.y = 9.0;
+          charGroup.add(sprite);
+
+          charGroup.userData = {
+            agentId: agent.id,
+            agent: agent,
+            division: div.id,
+            bodyAssembly: bodyAssembly,
+            torso: torso,
+            head: head,
+            ring: ring,
+            homePosition: charGroup.position.clone(),
+            sprite: sprite
+          };
+
+          scene.add(charGroup);
+          characterAvatars.push(charGroup);
+        });
+      });
+    }
+
+    function createCharacterBillboardSprite(textAr, textEn) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 280;
+      canvas.height = 70;
+      const ctx = canvas.getContext('2d');
+      ctx.font = 'bold 26px Cairo, sans-serif';
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.shadowColor = 'rgba(0,0,0,0.9)';
+      ctx.shadowBlur = 10;
+      ctx.fillText(state.lang === 'ar' ? textAr : textEn, 140, 44);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      const mat = new THREE.SpriteMaterial({ map: texture, depthTest: false });
+      const sprite = new THREE.Sprite(mat);
+      sprite.scale.set(14, 3.5, 1);
+      sprite.userData = { canvas, ctx, textAr, textEn };
+      return sprite;
+    }
+
+    function updateAllSpritesLanguage() {
+      characterAvatars.forEach(char => {
+        const sprite = char.userData.sprite;
+        if (sprite && sprite.userData) {
+          const { canvas, ctx, textAr, textEn } = sprite.userData;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.font = state.lang === 'ar' ? 'bold 26px Cairo, sans-serif' : 'bold 24px Plus Jakarta Sans, sans-serif';
+          ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'center';
+          ctx.shadowColor = 'rgba(0,0,0,0.9)';
+          ctx.shadowBlur = 10;
+          ctx.fillText(state.lang === 'ar' ? textAr : textEn, 140, 44);
+          sprite.material.map.needsUpdate = true;
+        }
+      });
+    }
+
+    function buildCosmicParticleField() {
+      const count = 450;
+      const geom = new THREE.BufferGeometry();
+      const pos = new Float32Array(count * 3);
+      for (let i = 0; i < count * 3; i += 3) {
+        pos[i] = (Math.random() - 0.5) * 350;
+        pos[i + 1] = 10 + Math.random() * 120;
+        pos[i + 2] = (Math.random() - 0.5) * 350;
+      }
+      geom.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      const mat = new THREE.PointsMaterial({
+        color: 0x38bdf8,
+        size: 1.6,
+        transparent: true,
+        opacity: 0.7
+      });
+      particleSystem = new THREE.Points(geom, mat);
+      scene.add(particleSystem);
+    }
+
+    /* -------------------------------------------------------------------------
+       PHYSICAL CHARACTER FLIGHT & MISSION KINETIC MOTION
+       ------------------------------------------------------------------------- */
+    function animateCharacterToTarget(char, targetVec3, duration = 1.4) {
+      return new Promise(resolve => {
+        const start = char.position.clone();
+        const midPoint = new THREE.Vector3(
+          (start.x + targetVec3.x) / 2,
+          Math.max(start.y, targetVec3.y) + 16,
+          (start.z + targetVec3.z) / 2
+        );
+
+        const curve = new THREE.QuadraticBezierCurve3(start, midPoint, targetVec3);
+        const obj = { t: 0 };
+
+        // Lean character forward in flight
+        gsap.to(char.userData.bodyAssembly.rotation, {
+          x: Math.PI / 4,
+          duration: 0.3
+        });
+
+        gsap.to(obj, {
+          t: 1,
+          duration: duration,
+          ease: 'power2.inOut',
+          onUpdate: () => {
+            const p = curve.getPoint(obj.t);
+            char.position.copy(p);
+          },
+          onComplete: () => {
+            // Stand upright & work animation
+            gsap.to(char.userData.bodyAssembly.rotation, { x: 0, duration: 0.3 });
+            // Action pulse
+            gsap.fromTo(char.userData.torso.scale, { x: 1.4, y: 1.4, z: 1.4 }, { x: 1, y: 1, z: 1, duration: 0.4 });
+            resolve();
+          }
+        });
+      });
+    }
+
+    // Camera Flight helper
+    function flyCameraTo(targetPos, lookAtPos, duration = 1.5) {
+      gsap.to(camera.position, {
+        x: targetPos.x,
+        y: targetPos.y,
+        z: targetPos.z,
+        duration: duration,
+        ease: 'power3.inOut'
+      });
+      gsap.to(controls.target, {
+        x: lookAtPos.x,
+        y: lookAtPos.y,
+        z: lookAtPos.z,
+        duration: duration,
+        ease: 'power3.inOut'
+      });
+    }
+
+
+
+    function onWindowResize() {
+      const container = document.getElementById('canvas-container');
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+
+    // Main 60FPS Render Loop
+    function animate() {
+      requestAnimationFrame(animate);
+
+      controls.update();
+
+      // Gentle floating hover bob for all characters
+      const time = Date.now() * 0.003;
+      characterAvatars.forEach((char, i) => {
+        if (!state.isSimulating) {
+          char.userData.bodyAssembly.position.y = 1.2 + 0.3 * Math.sin(time + i);
+        }
+      });
+
+      // Flow pulse in the rivers
+      riverLines.forEach((river, idx) => {
+        river.material.opacity = 0.75 + 0.25 * Math.sin(time * 2 + idx);
+      });
+
+      if (particleSystem) {
+        particleSystem.rotation.y += 0.0004;
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    /* =========================================================================
+       UI LOGIC, DRAWER, 100% BILINGUAL TRANSLATION & INSPECTOR
+       ========================================================================= */
+
+    function selectAgent(agentId, flyCamera = true) {
+      const agent = DATA.agents.find(a => a.id === agentId);
+      if (!agent) return;
+
+      state.selectedAgent = agent;
+      const isAr = state.lang === 'ar';
+
+      document.getElementById('ins-avatar').innerText = agent.emoji;
+      document.getElementById('ins-name').innerText = isAr ? agent.name_ar : agent.name_en;
+      document.getElementById('ins-title').innerText = isAr ? agent.title_ar : agent.title_en;
+      document.getElementById('ins-mission').innerText = isAr ? agent.mission_ar : agent.mission_en;
+      document.getElementById('ins-boundaries').innerText = isAr ? (agent.boundaries_en ? 'حدود دستورية: ' + agent.boundaries_en : 'حسب دستور المجلس.') : (agent.boundaries_en || 'Constitutional limits.');
+
+      // Workflow
+      const wfList = document.getElementById('ins-workflow-list');
+      wfList.innerHTML = '';
+      const wf = agent.workflow_en || [];
+      if (wf.length > 0) {
+        wf.forEach((step, idx) => {
+          const li = document.createElement('li');
+          li.className = 'workflow-step';
+          li.innerHTML = `<span class="workflow-num">${idx + 1}</span> <span>${step}</span>`;
+          wfList.appendChild(li);
+        });
+      } else {
+        wfList.innerHTML = `<li class="workflow-step">${isAr ? 'يتبع أوامر المايسترو والتوجيه المركزي.' : 'Follows Maestro orchestration directives.'}</li>`;
+      }
+
+      // Skills
+      const skList = document.getElementById('ins-skills-list');
+      skList.innerHTML = '';
+      if (agent.skills && agent.skills.length > 0) {
+        agent.skills.forEach(skillId => {
+          const skillObj = DATA.skills.find(s => s.id === skillId);
+          const badge = document.createElement('span');
+          badge.className = 'skill-badge';
+          badge.innerHTML = `🧩 <b>${skillId}</b>`;
+          badge.addEventListener('click', () => openSkillDetail(skillObj || { id: skillId, description_en: 'Verified skill' }));
+          skList.appendChild(badge);
+        });
+      } else {
+        skList.innerHTML = `<span style="font-size:0.75rem; color:var(--text-muted)">${I18N[state.lang].noSkills}</span>`;
+      }
+
+      document.getElementById('inspector-drawer').classList.add('open');
+
+      // Camera flight to character
+      if (flyCamera) {
+        const char = characterAvatars.find(c => c.userData.agentId === agent.id);
+        if (char) {
+          const p = char.position;
+          flyCameraTo({ x: p.x + 16, y: p.y + 14, z: p.z + 20 }, { x: p.x, y: p.y + 4, z: p.z });
+        }
+      }
+    }
+
+    function openSkillDetail(skill) {
+      const isAr = state.lang === 'ar';
+      alert(`🧩 ${isAr ? 'المهارة:' : 'Skill:'} ${skill.id}\n${isAr ? 'المالك:' : 'Owner:'} @${skill.owner}\n${isAr ? 'التصنيف:' : 'Suite:'} ${skill.category}\n\n${isAr ? 'الوصف:' : 'Description:'}\n${isAr ? skill.description_ar : skill.description_en}`);
+    }
+
+    // Modal Overlays for System, Controllers, Continents, 91 Skills
+    function openLayerModal(layerKey) {
+      const modal = document.getElementById('full-modal');
+      const title = document.getElementById('modal-title');
+      const content = document.getElementById('modal-dynamic-content');
+      const isAr = state.lang === 'ar';
+
+      if (layerKey === 'system') {
+        title.innerHTML = `📜 ${DATA.system.name} (${DATA.system.version})`;
+        content.innerHTML = `
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            <div style="background:var(--surface-card); padding:24px; border-radius:18px; border:1px solid var(--border-glass)">
+              <h3 style="color:var(--gold); margin-bottom:8px; font-size:1.2rem;">${isAr ? 'الرؤية وفلسفة بلاد الرافدين' : 'Core Philosophy & Mesopotamia Foundation'}</h3>
+              <p style="line-height:1.8; font-size:1rem; color:#e2e8f0;">${isAr ? DATA.system.philosophy_ar : DATA.system.philosophy_en}</p>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
+              <div style="background:rgba(255,255,255,0.05); padding:18px; border-radius:14px; text-align:center;">
+                <div style="font-size:2.4rem; font-weight:900; color:var(--gold)">40</div>
+                <div style="font-weight:700; font-size:0.9rem;">${isAr ? 'مقعداً وكيلياً متخصصاً' : 'Specialist Agent Seats'}</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.05); padding:18px; border-radius:14px; text-align:center;">
+                <div style="font-size:2.4rem; font-weight:900; color:var(--emerald)">91</div>
+                <div style="font-weight:700; font-size:0.9rem;">${isAr ? 'مهارة تشغيلية منشورة' : 'Battle-Tested Skills'}</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.05); padding:18px; border-radius:14px; text-align:center;">
+                <div style="font-size:2.4rem; font-weight:900; color:var(--cyan)">6</div>
+                <div style="font-weight:700; font-size:0.9rem;">${isAr ? 'قارات متباينة فوق خارطة العراق' : 'Continents atop Iraq Map'}</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.05); padding:18px; border-radius:14px; text-align:center;">
+                <div style="font-size:2.4rem; font-weight:900; color:var(--purple)">6</div>
+                <div style="font-weight:700; font-size:0.9rem;">${isAr ? 'مكاتب مهارات كبرى' : 'Major Skill Suites'}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (layerKey === 'controllers') {
+        title.innerHTML = `👑 ${isAr ? 'طبقة المتحكمين العليا' : 'Supreme Controllers Layer'}`;
+        content.innerHTML = `
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(360px, 1fr)); gap:20px;">
+            ${DATA.controllers.map(c => `
+              <div style="background:var(--surface-card); padding:24px; border-radius:18px; border:2px solid var(--gold);">
+                <div style="display:flex; align-items:center; gap:14px; margin-bottom:14px;">
+                  <span style="font-size:42px;">${c.emoji}</span>
+                  <div>
+                    <h3 style="font-size:1.3rem; font-weight:900;">${isAr ? c.name_ar : c.name_en}</h3>
+                    <span style="font-size:0.85rem; color:var(--gold); font-weight:800;">${isAr ? c.title_ar : c.title_en}</span>
+                  </div>
+                </div>
+                <p style="line-height:1.7; font-size:0.92rem; color:#cbd5e1; margin-bottom:16px;">${isAr ? c.mission_ar : c.mission_en}</p>
+                <button class="btn-action" onclick="document.getElementById('full-modal').classList.remove('open'); selectAgent('${c.id}', true);">
+                  🔍 ${isAr ? 'تحليق الكاميرا نحو الوكيل' : 'Fly Camera to Agent'}
+                </button>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else if (layerKey === 'divisions') {
+        title.innerHTML = `🚩 ${isAr ? 'القارات الست المتنوعة فوق خارطة العراق' : 'The 6 Continents Across Iraq'}`;
+        content.innerHTML = `
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:20px;">
+            ${DATA.divisions.map(d => `
+              <div style="background:var(--surface-card); padding:22px; border-radius:18px; border:1px solid var(--border-glass); border-top:5px solid ${d.color};">
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                  <span style="font-size:32px;">${d.icon}</span>
+                  <h3 style="font-size:1.2rem; font-weight:900;">${isAr ? d.name_ar : d.name_en}</h3>
+                </div>
+                <p style="font-size:0.88rem; line-height:1.7; color:#cbd5e1; margin-bottom:14px;">
+                  ${isAr ? d.description_ar : d.description_en}
+                </p>
+                <button class="btn-action" style="width:100%; justify-content:center;" onclick="document.getElementById('full-modal').classList.remove('open'); flyToContinent('${d.id}');">
+                  🚀 ${isAr ? 'تحليق الكاميرا للقارة' : 'Fly to Continent'}
+                </button>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else if (layerKey === 'suites') {
+        title.innerHTML = `🗃️ ${isAr ? 'مكاتب المهارات الست الكبرى' : 'The 6 Major Skill Suites'}`;
+        content.innerHTML = `
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:20px;">
+            ${DATA.suites.map(s => {
+              const count = DATA.skills.filter(sk => sk.category === s.id).length;
+              return `
+                <div style="background:var(--surface-card); padding:22px; border-radius:18px; border:1px solid var(--border-glass); border-right:4px solid ${s.color};">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <span style="font-size:32px;">${s.icon}</span>
+                      <h3 style="font-size:1.15rem; font-weight:900;">${isAr ? s.name_ar : s.name_en}</h3>
+                    </div>
+                    <span style="font-size:0.8rem; font-weight:800; background:rgba(255,255,255,0.08); padding:3px 10px; border-radius:8px;">${count} ${isAr ? 'مهارة' : 'skills'}</span>
+                  </div>
+                  <p style="font-size:0.86rem; line-height:1.6; color:#94a3b8; margin-bottom:14px;">
+                    ${isAr ? s.description_ar : s.description_en}
+                  </p>
+                  <button class="btn-action" onclick="openFilteredSkills('${s.id}')">
+                    ${isAr ? 'عرض المهارات' : 'View Skills'} (${count}) ◄
+                  </button>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      } else if (layerKey === 'skills' || layerKey === 'agents') {
+        renderFullSkillsDirectory(content);
+      }
+
+      modal.classList.add('open');
+    }
+
+    function renderFullSkillsDirectory(container) {
+      const isAr = state.lang === 'ar';
+      document.getElementById('modal-title').innerHTML = `🧩 ${isAr ? 'موسوعة المهارات الـ 91 الكاملة' : 'Complete 91 Skills Directory'}`;
+
+      container.innerHTML = `
+        <div class="skills-filter-bar" id="skills-filter-bar">
+          <button class="filter-chip active" data-cat="all">${isAr ? 'الكل (91)' : 'All (91)'}</button>
+          ${DATA.suites.map(s => `
+            <button class="filter-chip" data-cat="${s.id}">${s.icon} ${isAr ? s.name_ar : s.name_en} (${DATA.skills.filter(x => x.category === s.id).length})</button>
+          `).join('')}
+        </div>
+        <div class="skills-grid" id="skills-grid-mount"></div>
+      `;
+
+      renderSkillsCards('all');
+
+      container.querySelectorAll('.filter-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+          container.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderSkillsCards(btn.dataset.cat);
+        });
+      });
+    }
+
+    function renderSkillsCards(cat) {
+      const mount = document.getElementById('skills-grid-mount');
+      if (!mount) return;
+      const isAr = state.lang === 'ar';
+      const list = cat === 'all' ? DATA.skills : DATA.skills.filter(s => s.category === cat);
+      mount.innerHTML = list.map(s => `
+        <div class="skill-card">
+          <div class="skill-card-head">
+            <span class="skill-card-name">${s.id}</span>
+            <span class="skill-card-owner">@${s.owner}</span>
+          </div>
+          <div class="skill-card-desc">${isAr ? s.description_ar : s.description_en}</div>
+          <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">#${s.category}</div>
+        </div>
+      `).join('');
+    }
+
+    function openFilteredSkills(catId) {
+      openLayerModal('skills');
+      setTimeout(() => {
+        const btn = document.querySelector(`.filter-chip[data-cat="${catId}"]`);
+        if (btn) btn.click();
+      }, 50);
+    }
+
+    function flyToContinent(divId) {
+      const div = DATA.divisions.find(d => d.id === divId);
+      if (!div) return;
+      flyCameraTo(
+        { x: div.coords.x, y: div.coords.y + 45, z: div.coords.z + 55 },
+        { x: div.coords.x, y: div.coords.y + 3, z: div.coords.z }
+      );
+    }
+
+    /* =========================================================================
+       PHYSICAL SIMULATION: CHARACTERS FLY & WORK IN REAL-TIME
+       ========================================================================= */
+
+        async function runKineticMissionSimulation() {
+      if (state.isSimulating) return;
+      state.isSimulating = true;
+
+      const isAr = state.lang === 'ar';
+      const btn = document.getElementById('btn-run-sim');
+      btn.disabled = true;
+      btn.innerHTML = `<span>⏳</span> <span>${I18N[state.lang].simRunning}</span>`;
+
+      const terminal = document.getElementById('terminal-box');
+      terminal.innerHTML = '';
+
+      const mission = MISSIONS[state.activeMissionIndex];
+
+      function addLog(agentId, msg) {
+        const ag = DATA.agents.find(a => a.id === agentId) || { emoji: '🤖', name_ar: agentId, name_en: agentId };
+        const now = new Date();
+        const timeStr = `${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+        const div = document.createElement('div');
+        div.className = 'log-line';
+        div.innerHTML = `
+          <span class="log-time">[${timeStr}]</span>
+          <span class="log-agent" style="color:var(--gold);">${ag.emoji} [${isAr ? ag.name_ar : ag.name_en}]:</span>
+          <span class="log-msg">${msg}</span>
+        `;
+        terminal.appendChild(div);
+        terminal.scrollTop = terminal.scrollHeight;
+      }
+
+      // Execute each step with synchronized multi-agent team squadron movement!
+      for (let i = 0; i < mission.steps.length; i++) {
+        const step = mission.steps[i];
+        const agent = DATA.agents.find(a => a.id === step.agent);
+        const char = characterAvatars.find(c => c.userData.agentId === step.agent);
+
+        if (agent && char) {
+          selectAgent(agent.id, false);
+
+          const divId = char.userData.division || agent.division;
+          const div = DATA.divisions.find(d => d.id === divId);
+
+          // Fly camera to a panoramic view framing the whole island and its agents
+          if (div) {
+            const isSky = div.id === 'lead';
+            const baseY = isSky ? 38 : div.coords.y;
+            flyCameraTo(
+              { x: div.coords.x + 48, y: baseY + 45, z: div.coords.z + 62 },
+              { x: div.coords.x, y: baseY + 6, z: div.coords.z },
+              1.3
+            );
+          }
+
+          // COLLECT ALL AGENTS STATIONED ON THIS ACTIVE ISLAND (ALL TEAMMATES MOVE TOGETHER!)
+          const islandTeammates = characterAvatars.filter(c => c.userData.division === divId);
+          const isSky = div && div.id === 'lead';
+          const islandTopY = (isSky ? 38 : (div ? div.coords.y : 6)) + ((div ? div.scale.y : 10) * 1.3 * 0.45);
+          const centerX = div ? div.coords.x : char.userData.homePosition.x;
+          const centerZ = div ? div.coords.z : char.userData.homePosition.z;
+
+          // Lead agent flies to central command focus
+          const leadTarget = new THREE.Vector3(centerX, islandTopY + 8.0, centerZ);
+
+          // ALL teammates simultaneously launch into airborne tactical formation!
+          const teamCount = islandTeammates.length;
+          const formationRadius = 22;
+
+          const teamLaunchAnimations = islandTeammates.map((teammate, tIdx) => {
+            if (teammate === char) {
+              return animateCharacterToTarget(char, leadTarget, 1.2);
+            } else {
+              const ang = (tIdx / teamCount) * Math.PI * 2;
+              const teamTarget = new THREE.Vector3(
+                centerX + Math.cos(ang) * formationRadius,
+                islandTopY + 6.0 + ((tIdx % 3) * 1.8),
+                centerZ + Math.sin(ang) * formationRadius
+              );
+              return animateCharacterToTarget(teammate, teamTarget, 1.1 + (tIdx * 0.06));
+            }
+          });
+
+          await Promise.all(teamLaunchAnimations);
+
+          // Coordinated collaborative excitation & full rotation
+          islandTeammates.forEach((tm, idx) => {
+            gsap.to(tm.userData.bodyAssembly.rotation, {
+              y: Math.PI * 2,
+              duration: 1.1,
+              ease: 'power1.inOut'
+            });
+            gsap.to(tm.userData.torso.scale, {
+              x: 1.35, y: 1.35, z: 1.35,
+              yoyo: true,
+              repeat: 1,
+              duration: 0.55
+            });
+          });
+
+          addLog(step.agent, isAr ? step.text_ar : step.text_en);
+          await new Promise(r => setTimeout(r, 1600));
+
+          // Return ENTIRE team smoothly back to their circular pedestals
+          const teamReturns = islandTeammates.map(teammate => {
+            return animateCharacterToTarget(teammate, teammate.userData.homePosition, 0.95);
+          });
+          await Promise.all(teamReturns);
+          await new Promise(r => setTimeout(r, 350));
+        } else {
+          addLog(step.agent, isAr ? step.text_ar : step.text_en);
+          await new Promise(r => setTimeout(r, 1200));
+        }
+      }
+
+      addLog('hadi-core', I18N[state.lang].simDone);
+
+      state.isSimulating = false;
+      btn.disabled = false;
+      btn.innerHTML = `<span>▶</span> <span>${I18N[state.lang].simRun}</span>`;
+    }
+
+    /* =========================================================================
+       DOM LISTENERS & INITIALIZATION
+       ========================================================================= */
+
+    document.addEventListener('DOMContentLoaded', () => {
+      init3D();
+
+      // Theme toggle
+      document.getElementById('btn-theme-toggle').addEventListener('click', () => {
+        state.theme = state.theme === 'dark' ? 'light' : 'dark';
+        document.body.setAttribute('data-theme', state.theme);
+        document.getElementById('lbl-theme').innerText = state.theme === 'dark' ? I18N[state.lang].themeLight : I18N[state.lang].themeDark;
+        document.getElementById('icon-theme').innerText = state.theme === 'dark' ? '🌙' : '☀️';
+
+        updateSceneAtmosphere();
+        ambientLight.intensity = state.theme === 'dark' ? 1.1 : 1.5;
+        dirLight.intensity = state.theme === 'dark' ? 1.6 : 1.8;
+      });
+
+      // 100% Comprehensive Language Toggle (AR <-> EN)
+      document.getElementById('btn-lang-toggle').addEventListener('click', () => {
+        state.lang = state.lang === 'ar' ? 'en' : 'ar';
+        const isAr = state.lang === 'ar';
+
+        document.body.classList.toggle('lang-en', !isAr);
+        document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+        document.getElementById('lbl-lang').innerText = isAr ? 'English' : 'العربية';
+
+        const t = I18N[state.lang];
+        document.getElementById('lbl-brand-title').innerText = t.brandTitle;
+        document.getElementById('lbl-brand-sub').innerText = t.brandSub;
+        document.getElementById('lbl-theme').innerText = state.theme === 'dark' ? t.themeLight : t.themeDark;
+        document.getElementById('lbl-sim-title').innerText = t.simTitle;
+        document.getElementById('lbl-sim-presets').innerText = t.simPresets;
+        document.getElementById('lbl-sim-terminal').innerText = t.simTerminal;
+        document.getElementById('lbl-sim-run').innerText = t.simRun;
+        document.getElementById('lbl-toggle-sim').innerText = t.toggleSim;
+        document.getElementById('lbl-back-home').innerText = t.backHome;
+        document.getElementById('lbl-lay-world').innerText = t.layWorld;
+        document.getElementById('lbl-lay-sys').innerText = t.laySys;
+        document.getElementById('lbl-lay-ctrl').innerText = t.layCtrl;
+        document.getElementById('lbl-lay-div').innerText = t.layDiv;
+        document.getElementById('lbl-lay-agents').innerText = t.layAgents;
+        document.getElementById('lbl-lay-suites').innerText = t.laySuites;
+        document.getElementById('lbl-lay-skills').innerText = t.laySkills;
+        document.getElementById('lbl-ins-sec1').innerText = t.insSec1;
+        document.getElementById('lbl-ins-sec2').innerText = t.insSec2;
+        document.getElementById('lbl-ins-sec3').innerText = t.insSec3;
+        document.getElementById('lbl-ins-sec4').innerText = t.insSec4;
+        document.getElementById('lbl-sim-idle').innerText = t.simIdle;
+
+        document.getElementById('btn-cam-ov').innerText = t.camOv;
+        document.getElementById('btn-cam-cit').innerText = t.camCit;
+        document.getElementById('btn-cam-eng').innerText = t.camEng;
+        document.getElementById('btn-cam-gate').innerText = t.camGate;
+        document.getElementById('btn-cam-exp').innerText = t.camExp;
+        document.getElementById('btn-cam-know').innerText = t.camKnow;
+        document.getElementById('btn-cam-recon').innerText = t.camRecon;
+
+        document.getElementById('mbtn-0').innerHTML = t.m0;
+        document.getElementById('mbtn-1').innerHTML = t.m1;
+        document.getElementById('mbtn-2').innerHTML = t.m2;
+        document.getElementById('mbtn-3').innerHTML = t.m3;
+
+        updateAllSpritesLanguage();
+
+        if (state.selectedAgent) {
+          selectAgent(state.selectedAgent.id, false);
+        }
+      });
+
+      // Layer Chips
+      document.querySelectorAll('.layer-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.layer-chip').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const lay = btn.dataset.layer;
+          if (lay === 'world') {
+            document.getElementById('full-modal').classList.remove('open');
+            flyCameraTo({ x: 0, y: 240, z: 260 }, { x: 0, y: 4, z: 10 });
+          } else {
+            openLayerModal(lay);
+          }
+        });
+      });
+
+      // Toggle Simulator Drawer
+      const simPanel = document.getElementById('sim-panel');
+      const toggleSimBtn = document.getElementById('btn-toggle-sim');
+      toggleSimBtn.addEventListener('click', () => {
+        simPanel.classList.toggle('collapsed');
+        toggleSimBtn.querySelector('span:first-child').innerText = simPanel.classList.contains('collapsed') ? '▶' : '◀';
+      });
+
+      // Preset mission buttons
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.activeMissionIndex = parseInt(btn.dataset.mission);
+          document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+
+      // Run Mission Simulation
+      document.getElementById('btn-run-sim').addEventListener('click', runKineticMissionSimulation);
+
+      // Close Inspector Drawer
+      document.getElementById('btn-close-ins').addEventListener('click', () => {
+        document.getElementById('inspector-drawer').classList.remove('open');
+      });
+
+      // Close Modal
+      document.getElementById('btn-modal-close').addEventListener('click', () => {
+        document.getElementById('full-modal').classList.remove('open');
+      });
+
+      // Camera Presets Buttons
+      document.querySelectorAll('.btn-cam').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cam = btn.dataset.cam;
+          if (cam === 'overview') flyCameraTo({ x: 0, y: 240, z: 260 }, { x: 0, y: 4, z: 10 });
+          else if (cam === 'citadel') flyToContinent('lead');
+          else flyToContinent(cam);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

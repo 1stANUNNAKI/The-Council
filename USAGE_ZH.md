@@ -16,9 +16,10 @@ Majlis **不是**编辑器，也不是 Claude Code 或 OpenCode 的替代品。�
 
 | 方式 | 命令 |
 |---|---|
-| **npm（推荐）** | `npx majlis-council --all` |
-| 单一平台 | `npx majlis-council --claude`（也可 `--codex` `--opencode` `--gemini` `--universal`） |
-| 为单个项目搭建脚手架 | `npx majlis-council --scaffold C:\path\project` |
+| **pnpm（推荐标准）** | `pnpm dlx majlis-council --all` |
+| npm 备用 | `npx majlis-council --all` |
+| 单一平台 | `pnpm dlx majlis-council --claude`（也可 `--codex` `--opencode` `--gemini` `--universal`） |
+| 为单个项目搭建脚手架 | `pnpm dlx majlis-council --scaffold C:\path\project` |
 | 从源码（Windows） | `powershell -File install_system.ps1` |
 
 安装后在您的工具中打开任意会话——智能体、命令和技能即刻可用。
@@ -106,7 +107,7 @@ flowchart LR
 ## 7) 自我更新
 - 修改包文件 → 提升 `VERSION.txt` 版本号 → 下次 OpenCode 启动时静默重新部署到所有平台（约0.5秒）
 - 日志：`~/.config/opencode/.majlis_bootstrap.log`
-- npm 用户：`npx majlis-council@latest --all`
+- npm/pnpm 用户：`pnpm dlx majlis-council@latest --all`（或 `npx majlis-council@latest --all`）
 
 ## 8) 包结构
 ```

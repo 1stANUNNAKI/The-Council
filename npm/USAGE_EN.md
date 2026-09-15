@@ -16,9 +16,10 @@ Majlis is **not** an editor or a Claude Code/OpenCode replacement. It is a **dis
 
 | Method | Command |
 |---|---|
-| **npm (recommended)** | `npx majlis-council --all` |
-| Single platform | `npx majlis-council --claude` (also `--codex` `--opencode` `--gemini` `--universal`) |
-| Scaffold one project | `npx majlis-council --scaffold C:\path\project` |
+| **pnpm (recommended standard)** | `pnpm dlx majlis-council --all` |
+| Fallback (npx) | `npx majlis-council --all` |
+| Single platform | `pnpm dlx majlis-council --claude` (also `--codex` `--opencode` `--gemini` `--universal`) |
+| Scaffold one project | `pnpm dlx majlis-council --scaffold C:\path\project` |
 | From source (Windows) | `powershell -File install_system.ps1` |
 
 Then open any session in your tool — agents, commands and skills are live.
@@ -106,7 +107,7 @@ Invoke: OpenCode/Claude auto-discover via the skill tool · Codex via `$skill-na
 ## 7) Self-Updating
 - Edit the package → bump `VERSION.txt` → first OpenCode launch redeploys everywhere (~0.5s, silently)
 - Log: `~/.config/opencode/.majlis_bootstrap.log`
-- npm users: `npx majlis-council@latest --all`
+- npm/pnpm users: `pnpm dlx majlis-council@latest --all` (or `npx majlis-council@latest --all`)
 
 ## 8) Package Layout
 ```

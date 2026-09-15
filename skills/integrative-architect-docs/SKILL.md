@@ -24,7 +24,7 @@ lang: [en, ar]
 
 ## Overview
 بناء المخطط المعماري الكامل وتفادي الديون الفنية قبل كتابة أي خط كود تشغيلي.
-- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
+- **مستودع GitHub المعتمد:** [https://github.com/1stANUNNAKI/The-Council](https://github.com/1stANUNNAKI/The-Council)
 
 **Do NOT use when:**
 - كتابة الأكواد التشغيلية التفصيلية؛ مهمته صياغة المخطط وإعطاؤه لفارس وعماد.

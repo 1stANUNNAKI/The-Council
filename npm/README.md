@@ -19,7 +19,7 @@
 installed with one command into OpenCode, Claude Code, Codex, Gemini CLI and 26+ more platforms.
 Nothing ships without test evidence and a green security gate.**
 
-`npx majlis-council --all`
+`pnpm dlx majlis-council --all`  *(or: `npx majlis-council --all`)*
 
 </div>
 
@@ -34,9 +34,10 @@ Nothing ships without test evidence and a green security gate.**
 
 | Goal | Command |
 |---|---|
-| **Everything** | `npx majlis-council --all` |
-| Single platform | `npx majlis-council --claude` · `--codex` · `--opencode` · `--gemini` · `--universal` |
-| Project scaffold (Cursor/Windsurf/Copilot…) | `npx majlis-council --scaffold <project-path>` |
+| **Everything (pnpm standard)** | `pnpm dlx majlis-council --all` |
+| Fallback (npx) | `npx majlis-council --all` |
+| Single platform | `pnpm dlx majlis-council --claude` · `--codex` · `--opencode` · `--gemini` · `--universal` |
+| Project scaffold (Cursor/Windsurf/Copilot…) | `pnpm dlx majlis-council --scaffold <project-path>` |
 | From source (Windows) | `powershell -File install_system.ps1` |
 
 ---
@@ -156,7 +157,7 @@ Damaged installs repair themselves. Log: `~/.config/opencode/.majlis_bootstrap.l
 ```bash
 cd npm
 # edit package.json name/scope once
-npm publish        # world runs: npx majlis-council --all
+pnpm publish       # (or: npm publish) -> world runs: pnpm dlx majlis-council --all
 ```
 
 ---
@@ -172,6 +173,6 @@ Automated reality-check (source + 4 deploy targets + landing references):
 
 **MIT** · 🏛️ Majlis Council · *Hunt first. Ship clean.* · يصطاد أولاً، يسلّم نقيّاً
 
-[⭐ Star this repo](https://github.com/basharalameed/The-Council) if the Council serves you well
+[⭐ Star this repo](https://github.com/1stANUNNAKI/The-Council) if the Council serves you well
 
 </div>

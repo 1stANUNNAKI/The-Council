@@ -24,7 +24,7 @@ lang: [en, ar]
 
 ## Overview
 تأطير العلاقات وتصميم الجداول والمخططات المنطقية لقواعد البيانات ومجموعات البيانات في النظام.
-- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
+- **مستودع GitHub المعتمد:** [https://github.com/1stANUNNAKI/The-Council](https://github.com/1stANUNNAKI/The-Council)
 
 **Do NOT use when:**
 - إنشاء مخططات بيانات معقدة غير مبررة للأنظمة البسيطة.

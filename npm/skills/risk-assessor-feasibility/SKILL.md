@@ -24,7 +24,7 @@ lang: [en, ar]
 
 ## Overview
 فحص وتقييم كافة المخاطر البرمجية والأمنية والتأكد من جدوى واستقرار النظام قبل الاعتماد النهائي.
-- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
+- **مستودع GitHub المعتمد:** [https://github.com/1stANUNNAKI/The-Council](https://github.com/1stANUNNAKI/The-Council)
 
 **Do NOT use when:**
 - التثبيط أو منع الميزات؛ ينحصر دوره في تقديم التقييم والحلول الوقائية البديلة.

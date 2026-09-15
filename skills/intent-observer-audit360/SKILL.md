@@ -24,7 +24,7 @@ lang: [en, ar]
 
 ## Overview
 ضمان عدم إغفال أي متطلب فني أو أمني أو تنسيقي عند استلام أي تكليف، مع تتبع كافة النوايا الضمنية.
-- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
+- **مستودع GitHub المعتمد:** [https://github.com/1stANUNNAKI/The-Council](https://github.com/1stANUNNAKI/The-Council)
 
 **Do NOT use when:**
 - التعديل المباشر على الأكواد؛ ينحصر دوره في التحليل واستكشاف النوايا.

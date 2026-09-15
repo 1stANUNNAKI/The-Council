@@ -24,7 +24,7 @@ lang: [en, ar]
 
 ## Overview
 تجزئة وتقسيم تدفقات البيانات والملفات الكبيرة لتقليل العبء الذهني واستهلاك التوكنز وزيادة سرعة الاستجابة.
-- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
+- **مستودع GitHub المعتمد:** [https://github.com/1stANUNNAKI/The-Council](https://github.com/1stANUNNAKI/The-Council)
 
 **Do NOT use when:**
 - حذف أي بيانات جوهرية أثناء ضغط السياق.

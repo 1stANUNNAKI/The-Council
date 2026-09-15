@@ -1,0 +1,21 @@
+[
+  {
+    "id": "L-1789296107896",
+    "timestamp": "2026-09-13T10:41:47.896Z",
+    "agentId": "@web-marshal",
+    "errorPattern": "Click handler frozen",
+    "rootCause": "Missing debounce",
+    "successfulFix": "Added debounce and loading state",
+    "repetitionCount": 1
+  },
+  {
+    "id": "L-1789296159486",
+    "timestamp": "2026-09-13T10:42:39.486Z",
+    "agentId": "@web-marshal",
+    "errorPattern": "Stripe connection timeout",
+    "rootCause": "Missing retry-after header",
+    "successfulFix": "Added exponential backoff 500ms",
+    "repetitionCount": 5,
+    "lastSeen": "2026-09-14T06:10:26.051Z"
+  }
+]

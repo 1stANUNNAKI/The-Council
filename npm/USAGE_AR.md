@@ -16,9 +16,10 @@
 
 | الطريقة | الأمر |
 |---|---|
-| **عبر npm (موصى بها)** | `npx majlis-council --all` |
-| اختيار منصة واحدة | `npx majlis-council --claude` (أو `--codex` / `--opencode` / `--gemini` / `--universal`) |
-| سقالة مشروع محدد | `npx majlis-council --scaffold C:\path\project` |
+| **عبر pnpm (الأساس الموصى به)** | `pnpm dlx majlis-council --all` |
+| عبر npx (بديل احتياطي) | `npx majlis-council --all` |
+| اختيار منصة واحدة | `pnpm dlx majlis-council --claude` (أو `--codex` / `--opencode` / `--gemini` / `--universal`) |
+| سقالة مشروع محدد | `pnpm dlx majlis-council --scaffold C:\path\project` |
 | من الحزمة مباشرة (Windows) | `powershell -File install_system.ps1` |
 
 بعد التثبيت افتح أي جلسة في أداتك — الوكلاء والأوامر والمهارات كلها جاهزة.
@@ -106,7 +107,7 @@ flowchart LR
 ## 7) التحديث الذاتي
 - عدّل الحزمة → ارفع رقم `VERSION.txt` → أول إقلاع OpenCode ينشر تلقائياً لكل المنصات (~نصف ثانية، بصمت)
 - السجل: `~/.config/opencode/.majlis_bootstrap.log`
-- إن نُشرت الحزمة npm: المستخدمون يحدثون بـ `npx majlis-council@latest --all`
+- إن نُشرت الحزمة: المستخدمون يحدثون بـ `pnpm dlx majlis-council@latest --all` (أو `npx majlis-council@latest --all`)
 
 ## 8) هيكل الحزمة
 ```

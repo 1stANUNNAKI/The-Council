@@ -18,7 +18,7 @@ for(const f of agFiles){
   ok(DIVS.includes(m.division),id+': division');
   ok(typeof m.temperature==='number'||parseFloat(m.temperature)>0,id+': temperature');
   ok(Array.isArray(m.tools)&&m.tools.length>0,id+': tools list');
-  ok(/permission:\n/.test(t)&&/(edit: (deny|ask|allow))/.test(t),id+': permission block');
+  ok(/permission:\r?\n/.test(t)&&/(edit: (deny|ask|allow))/.test(t),id+': permission block');
   ok((m.description||'').length>80,id+': description depth');
   ['## Mission','## When to summon me','## Operating workflow','## Output contract','## Handoff','## Boundaries'].every(s=>{ok(t.includes(s),id+': section '+s);return true});
   ok(/\*\*بالعربية:\*\* \S/.test(t),id+': arabic role line');
@@ -29,7 +29,7 @@ for(const f of agFiles){
 const CATS=['security','council','science','creative','cloudflare','meta'];
 const skDir=path.join(ROOT,'skills');
 const skIds=fs.readdirSync(skDir,{withFileTypes:true}).filter(d=>d.isDirectory()&&d.name!=='science_skills_common').map(d=>d.name);
-ok(skIds.length===90,'skills count = '+skIds.length+' (want 90)');
+ok(skIds.length===91,'skills count = '+skIds.length+' (want 91)');
 for(const id of skIds){
   const t=fs.readFileSync(path.join(skDir,id,'SKILL.md'),'utf8');const m=fm(t);
   ok(m.name===id,id+': name==folder');

@@ -4,8 +4,8 @@ const fs=require('fs');const path=require('path');
 const ROOT=path.join(__dirname,'..');
 
 const P_RO={edit:'deny',bash:{'"*"':'ask','"git log*"':'allow','"git status*"':'allow','"git diff*"':'allow','"rg*"':'allow','"ls*"':'allow','"cat*"':'allow'}};
-const P_GATE={edit:'deny',bash:{'"*"':'ask','"npm test*"':'allow','"npm run lint*"':'allow','"npx tsc*"':'allow','"pytest*"':'allow','"k6 run*"':'allow','"trufflehog*"':'allow','"nuclei*"':'allow'}};
-const P_BUILD={edit:'ask',bash:{'"*"':'ask','"npm *"':'allow','"node *"':'allow','"git add*"':'allow','"git commit*"':'allow','"mkdir*"':'allow'}};
+const P_GATE={edit:'deny',bash:{'"*"':'ask','"pnpm test*"':'allow','"pnpm run lint*"':'allow','"pnpm run *"':'allow','"npm test*"':'allow','"npm run lint*"':'allow','"npx tsc*"':'allow','"pytest*"':'allow','"k6 run*"':'allow','"trufflehog*"':'allow','"nuclei*"':'allow'}};
+const P_BUILD={edit:'ask',bash:{'"*"':'ask','"pnpm *"':'allow','"npm *"':'allow','"node *"':'allow','"git add*"':'allow','"git commit*"':'allow','"mkdir*"':'allow'}};
 const P_LEAD={edit:'deny',bash:{'"*"':'ask','"git log*"':'allow','"git status*"':'allow','"git diff*"':'allow'}};
 
 /* id, emoji, ar, en, div, temp, perm, tools, skills, mission, summon[], flow[], contract, handoff, refuse */
@@ -73,7 +73,7 @@ const S=[
 ['dep-manager','📦','مدير الاعتمادات','Dependency Manager','eng',0.2,'P_BUILD',
 ['read','edit','bash'],['lightweight-dep-manager','uv'],'Audits, prunes and pins project dependencies. Kills vulnerable packages before CVEs do.',
 ['Audit trees, license reviews, removing bloat','Version pinning and reproducible installs','Toolchain prerequisites (uv etc.)'],
-['Map dependency tree + direct vs transitive bloat','Run audit; rank vulns by reachability, not just severity','Prune unused; pin versions; lockfiles committed','Verify app still passes tests after each surgical change','Record policy: update cadence, owner, exceptions'],
+  ['Map dependency tree + direct vs transitive bloat; prefer pnpm-first for ultra-fast, content-addressable storage','Run audit; rank vulns by reachability, not just severity','Prune unused; pin versions; lockfiles committed (pnpm-lock.yaml as standard, package-lock.json fallback)','Verify app still passes tests after each surgical change','Record policy: update cadence, owner, exceptions'],
 'Diff of dependency manifests + audit summary + green test output.','Breaking upgrades go through @hadi-maestro planning; security flags to @sareem-security.','Never force-pushes lockfiles without tests; never adds a dep a stdlib call could replace.'],
 
 ['cicd-automator','🔄','آلي الإنتاج','CI/CD Automator','eng',0.2,'P_BUILD',

@@ -3,466 +3,1091 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Majlis — Give your AI coder a boss.</title>
-<meta name="description" content="40 specialist AI agents with real permissions, runnable proofs, and a security gate that can veto any release. Installs into OpenCode, Claude Code, Codex, Gemini, Cursor and 26+ tools with one command. Free, MIT.">
-<meta property="og:title" content="Majlis — Give your AI coder a boss.">
-<meta property="og:description" content="Testers who demand proof. Scouts who can't touch your code. A security gate that freezes bad releases. One command. Free.">
-<meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
+<title>Majlis · The Council — give your AI coder a boss.</title>
+<meta name="description" content="Forty specialist agents with real permissions, runnable proofs, and a security gate with the power to veto an entire release. One command. Free, MIT.">
+<meta name="theme-color" content="#faf7f0">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231b1f2a'/><circle cx='50' cy='38' r='12' fill='none' stroke='%23b08932' stroke-width='6'/><path d='M28 74c3-16 14-24 22-24s19 8 22 24' fill='none' stroke='%23e7e0d0' stroke-width='5' stroke-linecap='round'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#060a12;--bg2:#0b1322;--card:#0f1930;--line:#1c2a47;--gold:#e8b64c;--em:#3ddc97;--red:#ff5d73;--blue:#7c9eff;--txt:#e9eef8;--dim:#92a2bf}
+:root{
+  --bg:#faf7f0; --bg2:#f2ecdf; --card:#ffffff;
+  --ink:#201c14; --dim:#5f5a4e; --soft:#a59f90;
+  --line:#e9e1cf; --line2:#dcd2b9;
+  --gold:#b08932; --gold-soft:#e6d8ae; --gold-ink:#8a6a1c;
+  --em:#2f7d5c; --red:#c1474b; --blue:#4a6bae;
+  --shadow:0 24px 60px -26px rgba(40,33,12,.30);
+  --shadow-sm:0 10px 30px -16px rgba(40,33,12,.24);
+}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:radial-gradient(1100px 500px at 75% -10%,#13233f 0%,var(--bg) 55%);color:var(--txt);font-family:'Inter',system-ui,sans-serif;line-height:1.65}
-body[dir=rtl]{font-family:'Cairo',system-ui,sans-serif}
-.wrap{max-width:1100px;margin:auto;padding:0 22px}
-a{color:var(--gold)}
-h2{font-size:1.85rem;margin:74px 0 6px}
-h2 .n{color:var(--gold);font-family:ui-monospace,monospace;margin-inline-end:.45rem}
-.sub{color:var(--dim);margin-bottom:26px;max-width:760px}
-nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(6,10,18,.78);border-bottom:1px solid var(--line)}
-nav .in{display:flex;justify-content:space-between;align-items:center;padding:13px 0}
-.brand{font-weight:800;font-size:1.1rem}.brand b{color:var(--gold)}
-.navlinks{display:flex;gap:16px;align-items:center}
-.navlinks a{color:var(--dim);text-decoration:none;font-size:.88rem}
-.navlinks a:hover{color:var(--txt)}
-.gh{background:var(--card);border:1px solid var(--line);padding:7px 14px;border-radius:10px;font-weight:600;color:var(--txt)!important}
-#langBtn{background:linear-gradient(135deg,var(--gold),#c9962f);color:#141414;border:none;padding:8px 15px;border-radius:10px;cursor:pointer;font-weight:800;font-family:inherit}
-.hero{text-align:center;padding:80px 0 24px}
-.kick{letter-spacing:3px;color:var(--gold);font-size:.82rem;font-weight:600;text-transform:uppercase}
-.logo{font-size:4.4rem;margin-top:18px;filter:drop-shadow(0 0 34px rgba(232,182,76,.45))}
-h1{font-size:clamp(2.5rem,7vw,4.2rem);font-weight:800;line-height:1.12;margin:10px 0 14px}
-h1 span{color:var(--gold)}
-.tag{max-width:680px;margin:auto;color:var(--dim);font-size:1.12rem}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.85;font-size:18px;-webkit-font-smoothing:antialiased}
+body[dir=rtl]{font-family:'Tajawal','Inter',sans-serif}
+.wrap{max-width:1720px;margin:auto;padding:0 clamp(16px,2.5vw,48px)}
+a{color:var(--gold-ink);text-decoration:none}
+h2{font-size:clamp(2rem,4.4vw,2.7rem);font-weight:800;letter-spacing:-.025em;margin:0 0 14px;line-height:1.24;font-family:'Sora',sans-serif}
+body[dir=rtl] h2{font-family:'Amiri',serif;font-weight:700;letter-spacing:0;line-height:1.4}
+h2 .n{color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:.62em;vertical-align:.3em;margin-inline-end:.5em;letter-spacing:0}
+.sub{color:var(--dim);margin-bottom:38px;max-width:980px;font-size:1.15rem;line-height:1.9}
+.sub b{color:var(--ink)}
+section{max-width:1440px;margin:0 auto;padding:clamp(40px,6vw,90px) 0}
+sec-pad{x:0}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:70;backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);background:rgba(250,247,240,.72);border-bottom:1px solid rgba(233,225,207,.85);transition:box-shadow .3s,background .3s;padding:6px 0}
+nav.scrolled{background:rgba(250,247,240,.92);box-shadow:0 14px 40px -20px rgba(40,33,12,.35)}
+nav .in{display:flex;justify-content:space-between;align-items:center;padding:18px 0;gap:24px}
+.brand{display:flex;gap:14px;align-items:center;font-weight:800;font-size:1.24rem;letter-spacing:-.01em;font-family:'Sora',sans-serif}
+body[dir=rtl] .brand{font-family:'Amiri',serif;font-weight:700}
+.brandmark{width:44px;height:44px;border-radius:12px;background:var(--ink);display:grid;place-items:center;color:var(--gold);box-shadow:inset 0 0 0 2px var(--gold-soft)}
+.brand b{color:var(--gold-ink)}
+.navlinks{display:flex;gap:6px;align-items:center}
+.navlinks a{color:var(--dim);font-size:1.02rem;font-weight:600;padding:11px 18px;border-radius:12px}
+.navlinks a:hover{color:var(--ink);background:var(--bg2)}
+.gh{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line2);padding:10px 18px;border-radius:12px;font-weight:600;color:var(--ink)!important;font-size:1.0rem}
+.gh:hover{background:var(--bg2);transform:translateY(-1px)}
+.actions{display:flex;gap:12px;align-items:center}
+#langBtn{display:inline-flex;gap:10px;align-items:center;background:var(--bg2);border:1px solid var(--line2);color:var(--ink);padding:11px 18px;border-radius:12px;cursor:pointer;font-weight:600;font-family:inherit;font-size:1.0rem;transition:.18s}
+#langBtn:hover{border-color:var(--gold)}
+#langBtn .dot-lg{width:9px;height:9px;border-radius:50%;background:var(--gold);display:inline-block}
+.cta-nav{display:inline-flex;gap:10px;align-items:center;background:var(--ink);color:var(--bg);padding:12px 24px;border-radius:12px;font-weight:700;font-size:1.02rem;font-family:inherit;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.cta-nav:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.cta-nav i{color:var(--gold-soft)}
+
+/* HERO */
+.hero{min-height:calc(100vh - 84px);display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;padding:clamp(16px,2.5vh,40px) 0 clamp(14px,2vh,28px);position:relative;overflow:hidden;box-sizing:border-box}
+.hero::before{content:'';position:absolute;inset:-15% -20% auto;height:125%;background:radial-gradient(1100px 620px at 50% -8%,rgba(241,230,200,0.85) 0%,transparent 68%);z-index:-1;animation:drift 16s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translateY(0) scale(1)}to{transform:translateY(-14px) scale(1.04)}}
+.hero-top{flex:1;width:100%;max-width:1700px;margin:0 auto;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:clamp(12px,2vh,36px) 0}
+.hero-bottom{width:100%;max-width:1300px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:16px;padding-bottom:clamp(6px,1.2vh,18px)}
+.kick{display:inline-flex;gap:10px;align-items:center;letter-spacing:.26em;color:var(--gold-ink);font-size:.84rem;font-weight:700;text-transform:uppercase;background:var(--card);border:1px solid var(--line2);border-radius:99px;padding:11px 24px;box-shadow:var(--shadow-sm);opacity:0;transform:translateY(14px);transition:.7s}
+.kick.in{opacity:1;transform:none}
+h1{font-size:clamp(3.4rem,6.8vw,6.8rem);font-weight:800;line-height:1.24;margin:clamp(16px,2.4vh,36px) auto 0;max-width:1680px;letter-spacing:-.03em;font-family:'Sora',sans-serif;opacity:0;transform:translateY(20px);transition:.9s .1s}
+body[dir=rtl] h1{font-family:'Amiri',serif;letter-spacing:0;font-weight:700;line-height:1.34}
+h1.in{opacity:1;transform:none}
+h1 .kick2{position:relative;color:var(--gold-ink);white-space:nowrap}
+h1 .kick2::after{content:'';position:absolute;left:0;right:0;bottom:.06em;height:.16em;background:linear-gradient(90deg,var(--gold-soft),var(--gold));border-radius:3px;z-index:-1}
+h1 .rotline{display:inline-block;min-width:3.2ch;transition:opacity .24s cubic-bezier(0.16,1,0.3,1),transform .24s cubic-bezier(0.16,1,0.3,1);will-change:transform,opacity}
+.tag{max-width:1120px;margin:0 auto;color:var(--dim);font-size:clamp(1.1rem,1.4vw,1.3rem);line-height:1.95;opacity:0;transform:translateY(18px);transition:.9s .2s}
+.tag.in{opacity:1;transform:none}
 .tag b{color:var(--em);font-weight:600}
-.cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
-.btn{padding:13px 28px;border-radius:12px;font-weight:700;text-decoration:none;font-size:1rem;border:1px solid var(--line);background:var(--card);color:var(--txt)}
-.btn.primary{background:linear-gradient(135deg,var(--gold),#d09c2e);color:#151515;border:none;box-shadow:0 8px 32px rgba(232,182,76,.25)}
-.btn:hover{transform:translateY(-2px);transition:.2s}
-.install{display:inline-flex;align-items:center;gap:12px;background:#0a0f1c;border:1px solid var(--line);padding:14px 20px;border-radius:14px;margin-top:22px;font-family:ui-monospace,Consolas,monospace}
-.install code{color:var(--em)}.install button{background:none;border:none;color:var(--dim);cursor:pointer;font-size:1rem}
-.stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:46px 0 6px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 24px;min-width:118px}
-.stat b{font-size:1.65rem;color:var(--gold);display:block;text-align:center}
-.stat span{color:var(--dim);font-size:.8rem}
-.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-.fcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
-.fcard .e{font-size:2rem}.fcard h3{margin:12px 0 6px;font-size:1.08rem}
-.fcard p{color:var(--dim);font-size:.89rem}
-.cmp{width:100%;border-collapse:collapse;background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--line)}
-.cmp th{background:var(--bg2);padding:13px 16px;text-align:start;color:var(--dim);font-size:.83rem;font-weight:600}
-.cmp th:last-child{color:var(--gold)}
-.cmp td{padding:12px 16px;border-top:1px solid var(--line);font-size:.9rem}
-.yes{color:var(--em);font-weight:600}.no{color:var(--red)}.mid{color:var(--gold)}
-.cmp td:first-child{color:var(--txt);font-weight:600}
+.cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:4px;opacity:0;transform:translateY(18px);transition:.9s .3s}
+.cta.in{opacity:1;transform:none}
+.btn{display:inline-flex;gap:10px;align-items:center;padding:15px 30px;border-radius:14px;font-weight:700;text-decoration:none;font-size:1.05rem;border:1px solid var(--line2);background:var(--card);color:var(--ink);font-family:inherit;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm)}
+.btn.primary{background:linear-gradient(135deg,var(--ink),#332c1a);color:var(--bg);border:none;box-shadow:var(--shadow)}
+.btn.primary:hover{box-shadow:0 22px 48px -20px rgba(32,28,20,.6)}
+.btn i{color:var(--gold-soft)}
+.install{display:inline-flex;align-items:center;gap:14px;background:var(--ink);color:var(--bg);border-radius:15px;padding:12px 22px;margin-top:2px;font-family:'JetBrains Mono',monospace;font-size:.95rem;box-shadow:var(--shadow);opacity:0;transform:translateY(18px);transition:.9s .4s}
+.install.in{opacity:1;transform:none}
+.install code{color:#e6cf8e;white-space:nowrap}
+.install button{background:none;border:none;color:#9aa0b0;cursor:pointer;display:grid;place-items:center;transition:color .2s}
+.install button:hover{color:var(--gold-soft)}
+.stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:6px 0 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 28px;min-width:126px;box-shadow:var(--shadow-sm);opacity:0;transform:translateY(16px);transition:.8s}
+.stat.in{opacity:1;transform:none}
+.stat b{font-size:1.85rem;color:var(--gold-ink);display:block;text-align:center;font-family:'Sora',sans-serif;letter-spacing:-.02em}
+body[dir=rtl] .stat b{font-family:'Amiri',serif}
+.stat span{color:var(--dim);font-size:.84rem;display:block;text-align:center;margin-top:2px}
+
+/* reveal-on-scroll (generic) */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+body[dir=rtl] .reveal{transform:translateY(18px)}
+
+/* section shells */
+.h{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.h .n{font-size:1rem;color:var(--gold);font-family:'JetBrains Mono',monospace;align-self:center}
+
+/* FEATURES */
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px}
+.fcard{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:32px 28px;transition:transform .28s,box-shadow .28s,border-color .28s;position:relative;overflow:hidden}
+.fcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-soft));opacity:0;transition:.25s}
+.fcard:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.fcard:hover::before{opacity:1}
+.fcard:hover .fic{transform:scale(1.08) rotate(-3deg)}
+.fic{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--bg2),var(--bg));display:grid;place-items:center;color:var(--gold-ink);border:1px solid var(--line2);transition:transform .25s}
+.fcard h3{margin:22px 0 10px;font-size:1.22rem;font-weight:700;font-family:'Sora',sans-serif;letter-spacing:-.01em}
+body[dir=rtl] .fcard h3{font-family:'Tajawal',sans-serif}
+.fcard p{color:var(--dim);font-size:1.02rem;line-height:1.85}
+
+/* COMPARISON */
+.cmp{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border-radius:22px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.cmp th{background:var(--bg2);padding:17px 20px;text-align:start;color:var(--dim);font-size:.9rem;font-weight:700;letter-spacing:.02em;line-height:1.5}
+.cmp th:last-child{color:var(--gold-ink)}
+.cmp td{padding:16px 20px;border-top:1px solid var(--line);font-size:.98rem;vertical-align:top;line-height:1.7}
+.yes{color:var(--em);font-weight:600}.no{color:var(--red)}.mid{color:var(--gold-ink)}
+.cmp td:first-child{color:var(--ink);font-weight:700;white-space:nowrap}
+.cmp tr:hover td{background:#fdfbf5}
+
 /* TERMINAL */
-.termwrap{position:relative}
-.term{background:#05080f;border:1px solid var(--line);border-radius:16px;overflow:hidden;font-family:ui-monospace,Consolas,'Courier New',monospace;font-size:.86rem}
-.term .bar{display:flex;gap:6px;padding:12px 16px;background:var(--bg2);border-bottom:1px solid var(--line);align-items:center}
+.termwrap{position:relative;opacity:1;transform:none;transition:opacity .6s ease,transform .6s ease}
+.termwrap.in{opacity:1;transform:none}
+.term{background:#110e08;border:1px solid #382e1b;border-radius:24px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.94rem;color:#ddd9cd;box-shadow:0 24px 60px -20px rgba(0,0,0,.45)}
+.term .bar{display:flex;gap:8px;padding:16px 24px;background:#1b160d;border-bottom:1px solid #382e1b;align-items:center}
 .dot{width:12px;height:12px;border-radius:50%}
-.term .bar span.ttl{margin-inline-start:10px;color:var(--dim);font-family:'Inter',sans-serif;font-size:.75rem}
-.tbody{padding:18px 20px;line-height:1.85;min-height:330px;direction:ltr;text-align:left}
-.tbody div{white-space:pre-wrap;word-break:break-word}
-.g{color:var(--em)}.y{color:var(--gold)}.r{color:var(--red)}.d{color:var(--dim)}.b{color:var(--blue)}
-.pass{display:inline-block;background:rgba(61,220,151,.12);border:1px solid #14503a;color:var(--em);padding:4px 14px;border-radius:8px;font-weight:700;margin-top:4px}
-.fail{display:inline-block;background:rgba(255,93,115,.12);border:1px solid #7a2e3c;color:var(--red);padding:4px 14px;border-radius:8px;font-weight:700;margin-top:4px}
-.caret{display:inline-block;width:8px;height:15px;background:var(--em);vertical-align:-2px;animation:bl 1s steps(1) infinite}
+.term .bar span.ttl{margin-inline-start:16px;color:#a89d87;font-family:'JetBrains Mono',monospace;font-size:.86rem;letter-spacing:.02em}
+.tbody{padding:26px 28px;line-height:2.0;min-height:340px;max-height:460px;overflow-y:auto;overflow-x:hidden;direction:ltr;text-align:left;font-size:.94rem;scroll-behavior:smooth}
+.tbody .row{white-space:pre-wrap;word-break:break-word;animation:rowin .28s ease both}
+@keyframes rowin{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+.g{color:#5fd3a0}.y{color:#ecd28f}.r{color:#ff8589}.d{color:#8f8877}.b{color:#96b4ec}.w{color:#e9e6d8}
+.pass{display:inline-block;background:rgba(95,211,160,.13);border:1px solid #1f5c42;color:#5fd3a0;padding:6px 16px;border-radius:10px;font-weight:700;margin-top:6px}
+.fail{display:inline-block;background:rgba(255,133,137,.13);border:1px solid #6e3538;color:#ff8589;padding:6px 16px;border-radius:10px;font-weight:700;margin-top:6px}
+.caret{display:inline-block;width:9px;height:18px;background:#5fd3a0;vertical-align:-3px;animation:bl 1s steps(1) infinite;margin-inline-start:2px}
 @keyframes bl{50%{opacity:0}}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.chip{background:var(--bg2);border:1px solid var(--line);color:var(--dim);padding:8px 16px;border-radius:99px;cursor:pointer;font-family:ui-monospace,monospace;font-size:.83rem}
-.chip:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
-.chip:disabled{opacity:.45;cursor:wait}
-.chip.done{border-color:#14503a;color:var(--em)}
-.hint{color:var(--dim);font-size:.8rem;margin-top:10px;font-style:italic}
+.promptline{display:flex;align-items:center;gap:0}
+.promp{color:var(--gold);font-weight:600;margin-inline-end:8px}.cmdtxt{color:#ecd28f}
+.inputline{display:flex;align-items:center;gap:0;padding:14px 0 0}
+.inputline .promp{flex-shrink:0}
+.inputline input{flex:1;background:transparent;border:none;outline:none;color:#ecd28f;font-family:'JetBrains Mono',monospace;font-size:.92rem;padding:4px 0}
+.inputline input::placeholder{color:#5c564a;font-style:italic}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.chip{background:var(--card);border:1px solid var(--line2);color:var(--dim);padding:10px 18px;border-radius:99px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.85rem;transition:.15s}
+.chip:hover:not(:disabled):not(.done){border-color:var(--gold);color:var(--gold-ink);transform:translateY(-1px)}
+.chip:disabled{opacity:.5;cursor:wait}
+.chip.done{border-color:var(--em);color:var(--em);background:rgba(47,125,92,.07)}
+.hint{color:var(--dim);font-size:.95rem;margin-top:14px;font-style:italic}
+
+/* COMMAND PALETTE DRAWER UNDER TERMINAL */
+.cmd-palette-box{margin-top:22px;background:var(--card);border:1px solid var(--line2);border-radius:20px;padding:16px 22px;box-shadow:var(--shadow-sm);transition:all .3s ease;}
+.cmd-toggle-btn{display:flex;align-items:center;justify-content:space-between;width:100%;background:transparent;border:none;outline:none;cursor:pointer;padding:8px 4px;color:var(--ink);font-family:inherit;font-weight:700;font-size:1.02rem;transition:.2s}
+.cmd-toggle-btn:hover{color:var(--gold-ink)}
+.cmd-toggle-left{display:flex;align-items:center;gap:12px}
+.cmd-toggle-icon{width:36px;height:36px;border-radius:10px;background:var(--bg2);display:grid;place-items:center;font-size:1.15rem;color:var(--gold-ink);border:1px solid var(--line)}
+.cmd-toggle-count{display:inline-block;background:var(--ink);color:var(--bg);font-size:0.75rem;font-weight:800;padding:2px 9px;border-radius:99px;font-family:'JetBrains Mono',monospace;letter-spacing:.02em}
+.cmd-chevron{transition:transform .3s ease;color:var(--dim)}
+.cmd-toggle-btn.open .cmd-chevron{transform:rotate(180deg)}
+.cmd-grid{display:none;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-top:18px;padding-top:18px;border-top:1px dashed var(--line)}
+.cmd-grid.open{display:grid;animation:cmdFadeDown .3s cubic-bezier(0.16,1,0.3,1) forwards}
+@keyframes cmdFadeDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+
+.cmd-card{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;transition:all .2s ease;cursor:pointer;position:relative}
+.cmd-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 20px -6px rgba(0,0,0,.08);background:var(--card)}
+.cmd-card-header{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cmd-tag{display:inline-flex;align-items:center;gap:6px;background:#18130a;color:#f0d799;padding:4px 10px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:700;border:1px solid #3d301b}
+.cmd-actions{display:flex;align-items:center;gap:6px}
+.cmd-action-btn{background:var(--card);border:1px solid var(--line2);color:var(--dim);border-radius:8px;width:32px;height:32px;display:grid;place-items:center;cursor:pointer;transition:.15s;padding:0}
+.cmd-action-btn:hover{color:var(--ink);border-color:var(--gold);transform:scale(1.05)}
+.cmd-action-btn.copied{background:#1f5c42;color:#5fd3a0;border-color:#5fd3a0}
+.cmd-action-btn.run-btn-card{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.cmd-action-btn.run-btn-card:hover{background:var(--gold-ink);border-color:var(--gold-ink);color:#fff}
+.cmd-agent-badge{font-size:.8rem;font-weight:700;color:var(--gold-ink);display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace}
+.cmd-desc{font-size:.86rem;color:var(--dim);line-height:1.6;margin:0}
+.cmd-foot-hint{display:flex;align-items:center;justify-content:space-between;font-size:.76rem;color:var(--dim);opacity:.9;padding-top:6px;border-top:1px solid rgba(0,0,0,.05)}
+
 /* PIPELINE */
-.pipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
-.ph{border-radius:16px;padding:18px;border:1px solid var(--line)}
-.ph h4{font-size:.95rem;margin-bottom:8px}
-.ph .st{display:block;background:rgba(0,0,0,.25);border-radius:8px;padding:6px 10px;margin:6px 0;font-size:.82rem;font-family:ui-monospace,monospace}
-.ph.p1{background:#0d1830;border-color:#2c4a86}.ph.p1 h4{color:var(--blue)}
-.ph.p2{background:#0c2016;border-color:#1d5c40}.ph.p2 h4{color:var(--em)}
-.ph.p3{background:#241016;border-color:#7a2e3c}.ph.p3 h4{color:var(--red)}
-.ph.p4{background:#231a08;border-color:#6b5316}.ph.p4 h4{color:var(--gold)}
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
-.fb{background:var(--bg2);border:1px solid var(--line);color:var(--dim);padding:7px 15px;border-radius:99px;cursor:pointer;font-size:.83rem;font-family:inherit}
-.fb.on{border-color:var(--gold);color:var(--gold)}
-.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}
-.ccard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;transition:.2s}
-.ccard:hover{border-color:var(--gold);transform:translateY(-2px)}
-.ccard .e{font-size:1.7rem}.ccard h4{font-size:.95rem;margin:6px 0 1px}
-.ccard .id{color:var(--gold);font-family:ui-monospace,monospace;font-size:.74rem}
-.ccard p{color:var(--dim);font-size:.8rem;margin-top:5px}
-details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:10px}
-summary{cursor:pointer;font-weight:600}
-details p{color:var(--dim);margin-top:10px;font-size:.92rem}
-.final{text-align:center;background:linear-gradient(135deg,rgba(232,182,76,.08),rgba(61,220,151,.06));border:1px solid var(--line);border-radius:22px;padding:56px 30px;margin:74px 0}
-footer{text-align:center;color:var(--dim);padding:36px 0;font-size:.88rem;border-top:1px solid var(--line)}
-@media(max-width:700px){.navlinks a:not(.gh){display:none}.tbody{font-size:.76rem}}
+.pipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.ph{border-radius:22px;padding:28px;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow-sm);opacity:0;transform:translateY(18px);transition:.7s}
+.ph.in{opacity:1;transform:none}
+.ph .picon{width:50px;height:50px;border-radius:15px;display:grid;place-items:center;margin-bottom:16px}
+.ph h4{font-size:1.18rem;margin-bottom:12px;font-weight:700;font-family:'Sora',sans-serif}
+body[dir=rtl] .ph h4{font-family:'Tajawal',sans-serif}
+.ph .st{display:block;background:var(--bg2);border-radius:10px;padding:8px 13px;margin:8px 0;font-size:.88rem;font-family:'JetBrains Mono',monospace;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ph p{color:var(--dim);font-size:.96rem;line-height:1.75;margin-top:12px}
+.ph.p1 .picon{background:#eef1fb;color:var(--blue)}.ph.p1{border-color:#d7ddf0}
+.ph.p2 .picon{background:#e9f5ef;color:var(--em)}.ph.p2{border-color:#cfe4da}
+.ph.p3 .picon{background:#fbecec;color:var(--red)}.ph.p3{border-color:#f0d5d6}
+.ph.p4 .picon{background:#f6f0e0;color:var(--gold-ink)}.ph.p4{border-color:#ead9a2}
+
+/* COUNCIL */
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
+.fb{background:var(--card);border:1px solid var(--line2);color:var(--dim);padding:9px 18px;border-radius:99px;cursor:pointer;font-size:.9rem;font-family:inherit;font-weight:500;transition:.15s}
+.fb:hover{border-color:var(--gold)}
+.fb.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.ccard{display:flex;gap:16px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;transition:.25s;box-shadow:var(--shadow-sm);opacity:0;transform:translateY(14px)}
+.ccard.in{opacity:1;transform:none}
+.ccard:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:var(--shadow)}
+.avatar{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-family:'Sora',sans-serif;font-size:1rem;color:var(--bg);flex-shrink:0;letter-spacing:.02em}
+.ccard h4{font-size:1.05rem;margin:0 0 2px;font-weight:700}
+.ccard .id{color:var(--gold-ink);font-family:'JetBrains Mono',monospace;font-size:.76rem}
+.ccard p{color:var(--dim);font-size:.9rem;margin-top:6px;line-height:1.7}
+.teamnum{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:7px;margin-top:10px;background:var(--bg2);color:var(--dim)}
+
+/* FAQ */
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 24px;margin-bottom:12px;box-shadow:var(--shadow-sm)}
+summary{cursor:pointer;font-weight:700;font-family:'Sora',sans-serif;font-size:1.05rem;letter-spacing:-.01em;line-height:1.6}
+body[dir=rtl] summary{font-family:'Tajawal',sans-serif}
+summary::before{content:'+';display:inline-block;width:22px;color:var(--gold);font-weight:700;margin-inline-end:8px;transition:.2s}
+details[open] summary::before{transform:rotate(45deg)}
+details[open] summary{color:var(--gold-ink)}
+details p{color:var(--dim);margin:14px 0 0 30px;font-size:1rem;line-height:1.9}
+
+/* FINAL */
+.final{text-align:center;background:linear-gradient(150deg,#1d1910,#2b2415 55%,#3a2c16);border-radius:30px;padding:80px 34px;color:var(--bg);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.final::before{content:'';position:absolute;inset:0;background:radial-gradient(640px 280px at 50% -24%,rgba(232,206,138,.32),transparent 70%)}
+.final>*{position:relative}
+.final h2{margin:18px 0;color:var(--bg);font-family:'Sora',sans-serif}
+body[dir=rtl] .final h2{font-family:'Amiri',serif}
+.final p{color:#d3cdbd;max-width:780px;margin:0 auto 34px;font-size:1.15rem;line-height:1.9}
+.final .btn.primary{background:linear-gradient(135deg,var(--gold),#d3b24f);color:var(--ink);border:none}
+.final .btn.ghost{background:rgba(255,255,255,.07);border-color:#4b4430;color:var(--bg)}
+.fmark{width:84px;height:84px;border-radius:26px;background:rgba(232,206,138,.12);border:1px solid rgba(232,206,138,.3);display:grid;place-items:center;color:var(--gold-soft);margin:0 auto 8px;animation:pulse 3.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(232,206,138,.25)}50%{box-shadow:0 0 0 16px rgba(232,206,138,0)}}
+
+footer{text-align:center;color:var(--dim);padding:46px 0;font-size:.98rem;border-top:1px solid var(--line)}
+footer a{color:var(--gold-ink)}
+@media(max-width:760px){body{font-size:16.5px}.navlinks a:not(.gh){display:none}.tbody{font-size:.82rem}.stat{min-width:118px}}
 </style>
 </head>
 <body>
 
-<nav><div class="wrap in">
-  <div class="brand">🏛️ <b>Majlis</b></div>
+<nav id="nav"><div class="wrap in">
+  <div class="brand"><span class="brandmark"><svg width="18" height="18" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"><circle cx="50" cy="38" r="13"/><path d="M27 74c4-17 14-25 23-25s19 8 23 25"/></svg></span><b>Majlis</b> · The Council</div>
   <div class="navlinks">
-    <a href="#features" data-i="n_feat">Why it bites</a>
-    <a href="#demo" data-i="n_demo">Try it</a>
-    <a href="#council" data-i="n_council">The Forty</a>
-    <a href="#faq" data-i="n_faq">FAQ</a>
-    <a class="gh" href="https://github.com/basharalameed/The-Council" target="_blank">★ GitHub</a>
-    <button id="langBtn" onclick="toggleLang()">العربية</button>
+    <a href="majlis_interactive_city.html" style="color:var(--gold-ink); font-weight:700;">🌐 <span id="navSim">محاكاة عمل المجلس</span></a>
+    <a href="#features">Why it bites</a>
+    <a href="#demo">Live feed</a>
+    <a href="#council">The Forty</a>
+    <a class="gh" href="https://github.com/1stANUNNAKI/The-Council" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.3.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.3-5.1-5.6 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10 10 0 0 1 5.4 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.1 1.8 1.1 3 0 4.3-2.6 5.3-5.1 5.6.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.6 18.4.5 12 .5z"/></svg>GitHub</a>
+    <div class="actions">
+      <button id="langBtn" onclick="toggleLang()"><span class="dot-lg"></span><span id="langLabel">العربية</span></button>
+      <a class="cta-nav" href="#demo"><i><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v14m0 0l-5-5m5 5l5-5"/></svg></i><span id="navCta">Run it</span></a>
+    </div>
   </div>
 </div></nav>
 
 <div class="wrap">
 
 <section class="hero">
-  <div class="kick" data-i="kick">40 AGENTS · 3 HARD GATES · 0 EXCUSES</div>
-  <div class="logo">🏛️</div>
-  <h1 id="h1"></h1>
-  <p class="tag" id="tag"></p>
-  <div class="cta">
-    <a class="btn primary" href="#demo" id="cta1"></a>
-    <a class="btn" href="https://github.com/basharalameed/The-Council" target="_blank">★ GitHub</a>
+  <div class="hero-top">
+    <div class="kick" id="kick">40 AGENTS · 3 HARD GATES · 0 EXCUSES</div>
+    <h1 id="h1"></h1>
   </div>
-  <div class="install"><code>npx majlis-council --all</code><button onclick="copyCmd(this)" title="copy">⧉</button></div>
-  <div class="stats">
-    <div class="stat"><b>40</b><span data-i="s1"></span></div>
-    <div class="stat"><b>3</b><span data-i="s2"></span></div>
-    <div class="stat"><b>0.5s</b><span data-i="s3"></span></div>
-    <div class="stat"><b>30+</b><span data-i="s4"></span></div>
-    <div class="stat"><b>$0</b><span data-i="s5"></span></div>
+  <div class="hero-bottom">
+    <p class="tag" id="tag"></p>
+    <div class="cta" id="cta">
+      <a class="btn primary" href="majlis_interactive_city.html" style="background:linear-gradient(135deg,#2563eb,#1d4ed8);border:none;box-shadow:0 12px 28px rgba(37,99,235,0.45);"><i>🌐</i> <span id="cta3D">محاكاة عمل المجلس</span></a>
+      <a class="btn primary" href="#demo" id="cta1"></a>
+      <a class="btn" href="https://github.com/1stANUNNAKI/The-Council" target="_blank" id="cta2"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.3.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.3-5.1-5.6 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10 10 0 0 1 5.4 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.1 1.8 1.1 3 0 4.3-2.6 5.3-5.1 5.6.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.6 18.4.5 12 .5z"/></svg><span id="cta2t"></span></a>
+    </div>
+    <div class="install" id="install"><code>pnpm dlx majlis-council --all</code><button onclick="copyCmd(this)" title="copy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="3"/><path d="M5 15V6a2 2 0 0 1 2-2h10"/></svg></button></div>
+    <div class="stats" id="stats">
+      <div class="stat"><b data-count="40">0</b><span id="s1"></span></div>
+      <div class="stat"><b data-count="3">0</b><span id="s2"></span></div>
+      <div class="stat"><b>0.5s</b><span id="s3"></span></div>
+      <div class="stat"><b data-count="30">0</b><span id="s4"></span></div>
+      <div class="stat"><b>$0</b><span id="s5"></span></div>
+    </div>
   </div>
 </section>
 
-<h2 id="features"><span class="n">01</span><span data-i="f_t"></span></h2>
-<p class="sub" data-i="f_p"></p>
-<div class="grid4" id="featGrid"></div>
+<section class="sec" id="features">
+  <div class="h"><span class="n">01</span><h2 id="f_t"></h2></div>
+  <p class="sub" id="f_p"></p>
+  <div class="grid4" id="featGrid"></div>
+</section>
 
-<h2><span class="n">02</span><span data-i="c_t"></span></h2>
-<p class="sub" data-i="c_p"></p>
-<table class="cmp">
-<thead><tr><th data-i="th_f"></th><th data-i="th_a"></th><th data-i="th_b"></th><th>🏛️ Majlis</th></tr></thead>
-<tbody id="cmpRows"></tbody>
-</table>
-
-<h2 id="demo"><span class="n">03</span><span data-i="d_t"></span></h2>
-<p class="sub" data-i="d_p"></p>
-<div class="termwrap">
-  <div class="term">
-    <div class="bar">
-      <span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>
-      <span class="ttl" id="ttl">you@yourmachine — majlis</span>
-    </div>
-    <div class="tbody" id="tbody"></div>
+<section class="sec">
+  <div class="h"><span class="n">02</span><h2 id="c_t"></h2></div>
+  <p class="sub" id="c_p"></p>
+  <div class="cmpwrap">
+  <table class="cmp">
+    <thead><tr><th id="th_f"></th><th id="th_a"></th><th id="th_b"></th><th>Majlis <b style="color:var(--gold-ink)">· The Council</b></th></tr></thead>
+    <tbody id="cmpRows"></tbody>
+  </table>
   </div>
-  <div class="chips" id="chips"></div>
-  <div class="hint" id="hint"></div>
-</div>
+</section>
 
-<h2><span class="n">04</span><span data-i="p_t"></span></h2>
-<p class="sub" data-i="p_p"></p>
-<div class="pipe" id="pipeRow"></div>
+<section class="sec" id="demo">
+  <div class="h"><span class="n">03</span><h2 id="d_t"></h2></div>
+  <p class="sub" id="d_p"></p>
+  <div class="termwrap in reveal" id="termwrap">
+    <div class="term">
+      <div class="bar">
+        <span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>
+        <span class="ttl" id="ttl">you@yourmachine — majlis</span>
+      </div>
+      <div class="tbody" id="tbody"></div>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="hint" id="hint"></div>
 
-<h2 id="council"><span class="n">05</span><span data-i="k_t"></span></h2>
-<p class="sub" data-i="k_p"></p>
-<div class="filters" id="filters"></div>
-<div class="cgrid" id="cgrid"></div>
+    <!-- COMMAND PALETTE DRAWER -->
+    <div class="cmd-palette-box" id="cmdPaletteBox">
+      <button class="cmd-toggle-btn" id="cmdToggleBtn" onclick="toggleCmdPalette()">
+        <div class="cmd-toggle-left">
+          <span class="cmd-toggle-icon">⚡</span>
+          <span id="cmdToggleTxt"></span>
+          <span class="cmd-toggle-count" id="cmdToggleCount">12</span>
+        </div>
+        <svg class="cmd-chevron" id="cmdChevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="cmd-grid" id="cmdGrid"></div>
+    </div>
+  </div>
+</section>
 
-<h2><span class="n">06</span><span data-i="q_t"></span></h2>
-<div id="faqBox"></div>
+<section class="sec">
+  <div class="h"><span class="n">04</span><h2 id="p_t"></h2></div>
+  <p class="sub" id="p_p"></p>
+  <div class="pipe" id="pipeRow"></div>
+</section>
+
+<section class="sec" id="council">
+  <div class="h"><span class="n">05</span><h2 id="k_t"></h2></div>
+  <p class="sub" id="k_p"></p>
+  <div class="filters" id="filters"></div>
+  <div class="cgrid" id="cgrid"></div>
+</section>
+
+<section class="sec">
+  <div class="h"><span class="n">06</span><h2 id="q_t"></h2></div>
+  <div id="faqBox"></div>
+</section>
 
 <section class="final">
-  <div class="logo" style="font-size:3rem">🏛️</div>
-  <h2 style="margin:10px 0" id="fin_h"></h2>
-  <p class="sub" style="margin:0 auto 26px;max-width:560px" id="fin_p"></p>
-  <div class="cta" style="margin-top:0">
+  <div class="fmark"><svg width="38" height="38" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"><circle cx="50" cy="38" r="13"/><path d="M27 74c4-17 14-25 23-25s19 8 23 25"/></svg></div>
+  <h2 id="fin_h"></h2>
+  <p id="fin_p"></p>
+  <div class="cta">
     <a class="btn primary" href="#demo" id="fin_c1"></a>
-    <a class="btn" href="https://github.com/basharalameed/The-Council" target="_blank">★ GitHub</a>
+    <a class="btn ghost" href="https://github.com/1stANUNNAKI/The-Council" target="_blank" id="fin_c2"></a>
   </div>
 </section>
 
 <footer>
-  <p id="f_docs"></p>
-  <p style="margin-top:6px">MIT · <a href="https://github.com/basharalameed/The-Council" target="_blank">github.com/basharalameed/The-Council</a> · <span data-i="f_foot"></span></p>
+  <p id="f_docs" style="margin-bottom:12px;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-size:0.95rem;"></p>
+  <p style="margin-top:8px;font-size:1rem;">
+    <span style="opacity:0.7">MIT License</span> · 
+    <a href="https://github.com/1stANUNNAKI/The-Council" target="_blank" rel="noopener noreferrer" style="font-weight:600;display:inline-flex;align-items:center;gap:6px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.3.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.3-5.1-5.6 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10 10 0 0 1 5.4 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.1 1.8 1.1 3 0 4.3-2.6 5.3-5.1 5.6.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.6 18.4.5 12 .5z"/></svg>
+      https://github.com/1stANUNNAKI/The-Council
+    </a> · 
+    <span id="f_foot"></span>
+  </p>
 </footer>
 
 </div>
+<script src="https://unpkg.com/lucide@latest"></script>
 <script>
-/* ================= 40 AGENTS ================= */
-const AG=[
-['🧠','hadi-core','Hadi Core','Final word on any dispute','الكلمة الأخيرة في أي خلاف','lead'],
-['🎼','hadi-maestro','Maestro Hadi','Breaks work down, routes every step','يفكك العمل ويوجّه كل خطوة','lead'],
-['🧭','product-shaper','Product Shaper','Turns ideas into specs with acceptance criteria','يحوّل الفكرة إلى مواصفات بمعايير قبول','lead'],
-['🔍','rased-explorer','Rased','Reads your codebase before anyone touches it','يقرأ كودك قبل أن يلمسه أحد','recon'],
-['🕵️‍♂️','risk-assessor','Risk Assessor','Prices the damage before you pay it','يسعّر الضرر قبل أن تدفع ثمنه','recon'],
-['🔎','incident-detective','Incident Detective','Finds root causes, blames nobody','يجذور العطل دون لوم أحد','recon'],
-['⚙️','emad-api-shield','Emad','Builds backends that survive attacks','يبني خلفيات تصمد أمام الهجمات','eng'],
-['🗄️','data-modeler','Data Modeler','Schemas you will not curse in year two','مخططات لن تلعنها بعد سنتين','eng'],
-['📐','integrative-architect','Integrative Architect','Designs how systems talk, contracts first','يصمم حديث الأنظمة بالعقود أولاً','eng'],
-['🔀','stream-partitioner','Stream Partitioner','Chunks huge payloads without melting RAM','يقسّم البيانات الضخمة بلا ذوبان الذاكرة','eng'],
-['📦','dep-manager','Dep Manager','Kills vulnerable dependencies before CVEs do','يقتل الاعتمادات المثقوبة قبل الثغرات','eng'],
-['🔄','cicd-automator','CI/CD Automator','Pipelines that fail loudly, ship safely','خطوط تفشل بصوت عال وتسليم بأمان','eng'],
-['🧪','sandbox-isolator','Sandbox Isolator','Runs risky experiments without casualties','تجارب خطرة بلا ضحايا','eng'],
-['💻','motion-coder','Motion Coder','Programmatic video at 60FPS','فيديو برمجي بستين إطاراً','eng'],
-['📊','data-engineer','Data Engineer','Routes 35 science-database skills','يوجّه مهارات قواعد البيانات العلمية','eng'],
-['🚢','release-manager','Release Manager','Versioned, changelogged, rollback tested','إصدارات مرقمة وسجل وتراجع مجرَّب','eng'],
-['🛡️','sareem-security','Sareem','The red gate. Can freeze any release.','البوابة الحمراء. تجمّد أي إصدار.','gate'],
-['🎯','baher-qa','Baher','Demands running proof, accepts nothing less','يطلب الدليل الجاري وقبول ما دونه','gate'],
-['🧼','nadif-clean-code','Nadif','Reviews like a senior who hates shortcuts','يراجع كخبير يكره الطرق المختصرة','gate'],
-['✨','code-polisher','Code Polisher','Four passes, zero behavior changes','أربع جولات صقل بلا كسر سلوك','gate'],
-['⚗️','test-engineer','Test Engineer','Tests in YOUR framework, not his favorite','اختبارات بإطارك أنت لا إطار غيره','gate'],
-['⚡','perf-auditor','Perf Auditor','p95 or it did not happen','المئين 95 أو لم يحدث شيء','gate'],
-['♿','a11y-auditor','A11y Auditor','If keyboard users cannot reach it, it is broken','إن لم يصل إليه لوحة مفاتيح فهو معطوب','gate'],
-['📈','bayan-diagrams','Bayan','Architecture people actually understand','معمارٍ يفهمه البشر فعلاً','exp'],
-['🖌️','design-system-master','Design Master','One visual language, everywhere','لغة بصرية واحدة في كل مكان','exp'],
-['📱','responsive-layout','Responsive Layout','No broken viewport has survived him','لم تنجُ أمامه شاشة مكسورة','exp'],
-['🔬','ux-researcher','UX Researcher','Friction found with evidence, not opinions','الاحتكاك بالأدلة لا بالآراء','exp'],
-['👑','brand-guardian','Brand Guardian','Your voice, consistent or not shipped','صوتك متسقاً وإلا لم يُسلَّم','exp'],
-['🖨️','print-publisher','Print Publisher','PDFs a print shop will accept','ملفات PDF تقبلها المطابع','exp'],
-['🚀','growth-analyst','Growth Analyst','Funnels measured, guesses rejected','قمعات مقاسة والتخمين مرفوض','exp'],
-['🎨','cinematic-director','Cinematic Director','Directs motion productions end-to-end','يقود الإنتاج المرئي من أوله لآخره','exp'],
-['📝','sajeel-logger','Sajeel','Append-only history. Nobody rewrites it.','تاريخٍ لا يُمحى ولا يعاد كتابته','know'],
-['🧠','hakim-mentor','Hakim','Turns failures into documented lessons','يحوّل الإخفاق لدروس موثقة','know'],
-['📣','balegh-docs','Balegh','Docs written from real diffs, not wishes','توثيق من الفروقات الحقيقية لا الأمنيات','know'],
-['🧰','mubtakir-tools','Mubtakir','Hunts tools, wires them, drops the junk','يصطاد الأدوات ويوصّلها ويرمي الخردة','know'],
-['🐣','agent-weaver','Agent Weaver','Spawns new agents when the bench is short','يولّد وكلاء جدداً عند نقص الصف','know'],
-['🪄','prompt-smith','Prompt Smith','Forges prompts that survive production','يطاوع أوامر تصمد في الإنتاج','know'],
-['📚','context-steward','Context Steward','Maximum signal per token spent','أقصى إشارة من كل توكن تدفعه','know'],
-['🗂️','portfolio-steward','Portfolio Steward','Health dashboard for ALL your projects','لوحة صحّة لكل مشاريعك','know'],
-['🎙️','voice-engineer','Voice Engineer','TTS and narration pipelines','خطوط تعليق صوتي','know']];
+/* ================= TEAM PALETTE ================= */
+const PAL={lead:'#4a6bae',recon:'#4f8f74',eng:'#7a5fa8',gate:'#c1474b',exp:'#c07a3e',know:'#a0577a'};
 const TEAMS={lead:['Command','القيادة'],recon:['Recon','الرصد'],eng:['Builders','البنّاؤون'],gate:['Gates','البوابات'],exp:['Experience','التجربة'],know:['Memory','الذاكرة']};
+
+/* ================= 40 AGENTS = [id,name,enRole,arRole,team] ================= */
+const AG=[
+['hadi-core','Hadi Core','Final word on any dispute','الكلمة الأخيرة في أي خلاف','lead'],
+['hadi-maestro','Maestro Hadi','Breaks work down, routes every step','يفكك العمل ويوجّه كل خطوة','lead'],
+['product-shaper','Product Shaper','Turns ideas into specs with acceptance criteria','يحوّل الفكرة إلى مواصفات بمعايير قبول','lead'],
+['rased-explorer','Rased','Reads your codebase before anyone touches it','يقرأ كودك قبل أن يلمسه أحد','recon'],
+['risk-assessor','Risk Assessor','Prices the damage before you pay it','يسعّر الضرر قبل أن تدفع ثمنه','recon'],
+['incident-detective','Incident Detective','Finds root causes, blames nobody','يجذور العطل دون لوم أحد','recon'],
+['emad-api-shield','Emad','Builds backends that survive attacks','يبني خلفيات تصمد أمام الهجمات','eng'],
+['data-modeler','Data Modeler','Schemas you will not curse in year two','مخططات لن تلعنها بعد سنتين','eng'],
+['integrative-architect','Integrative Architect','Designs how systems talk, contracts first','يصمم حديث الأنظمة بالعقود أولاً','eng'],
+['stream-partitioner','Stream Partitioner','Chunks huge payloads without melting RAM','يقسّم البيانات الضخمة بلا ذوبان الذاكرة','eng'],
+['dep-manager','Dep Manager','Kills vulnerable dependencies before CVEs do','يقتل الاعتمادات المثقوبة قبل الثغرات','eng'],
+['cicd-automator','CI/CD Automator','Pipelines that fail loudly, ship safely','خطوط تفشل بصوت عال وتسليم بأمان','eng'],
+['sandbox-isolator','Sandbox Isolator','Runs risky experiments without casualties','تجارب خطرة بلا ضحايا','eng'],
+['motion-coder','Motion Coder','Programmatic video at 60FPS','فيديو برمجي بستين إطاراً','eng'],
+['data-engineer','Data Engineer','Routes 35 science-database skills','يوجّه مهارات قواعد البيانات العلمية','eng'],
+['release-manager','Release Manager','Versioned, changelogged, rollback tested','إصدارات مرقمة وسجل وتراجع مجرَّب','eng'],
+['sareem-security','Sareem','The red gate. Can freeze any release.','البوابة الحمراء. تجمّد أي إصدار.','gate'],
+['baher-qa','Baher','Demands running proof, accepts nothing less','يطلب الدليل الجاري وقبول ما دونه','gate'],
+['nadif-clean-code','Nadif','Reviews like a senior who hates shortcuts','يراجع كخبير يكره الطرق المختصرة','gate'],
+['code-polisher','Code Polisher','Four passes, zero behavior changes','أربع جولات صقل بلا كسر سلوك','gate'],
+['test-engineer','Test Engineer','Tests in YOUR framework, not his favorite','اختبارات بإطارك أنت لا إطار غيره','gate'],
+['perf-auditor','Perf Auditor','p95 or it did not happen','المئين 95 أو لم يحدث شيء','gate'],
+['a11y-auditor','A11y Auditor','If keyboard users cannot reach it, it is broken','إن لم يصل إليه لوحة مفاتيح فهو معطوب','gate'],
+['bayan-diagrams','Bayan','Architecture people actually understand','معمارٍ يفهمه البشر فعلاً','exp'],
+['design-system-master','Design Master','One visual language, everywhere','لغة بصرية واحدة في كل مكان','exp'],
+['responsive-layout','Responsive Layout','No broken viewport has survived him','لم تنجُ أمامه شاشة مكسورة','exp'],
+['ux-researcher','UX Researcher','Friction found with evidence, not opinions','الاحتكاك بالأدلة لا بالآراء','exp'],
+['brand-guardian','Brand Guardian','Your voice, consistent or not shipped','صوتك متسقاً وإلا لم يُسلَّم','exp'],
+['print-publisher','Print Publisher','PDFs a print shop will accept','ملفات PDF تقبلها المطابع','exp'],
+['growth-analyst','Growth Analyst','Funnels measured, guesses rejected','قمعات مقاسة والتخمين مرفوض','exp'],
+['cinematic-director','Cinematic Director','Directs motion productions end-to-end','يقود الإنتاج المرئي من أوله لآخره','exp'],
+['sajeel-logger','Sajeel','Append-only history. Nobody rewrites it.','تاريخٍ لا يُمحى ولا يعاد كتابته','know'],
+['hakim-mentor','Hakim','Turns failures into documented lessons','يحوّل الإخفاق لدروس موثقة','know'],
+['balegh-docs','Balegh','Docs written from real diffs, not wishes','توثيق من الفروقات الحقيقية لا الأمنيات','know'],
+['mubtakir-tools','Mubtakir','Hunts tools, wires them, drops the junk','يصطاد الأدوات ويوصّلها ويرمي الخردة','know'],
+['agent-weaver','Agent Weaver','Spawns new agents when the bench is short','يولّد وكلاء جدداً عند نقص الصف','know'],
+['prompt-smith','Prompt Smith','Forges prompts that survive production','يطاوع أوامر تصمد في الإنتاج','know'],
+['context-steward','Context Steward','Maximum signal per token spent','أقصى إشارة من كل توكن تدفعه','know'],
+['portfolio-steward','Portfolio Steward','Health dashboard for ALL your projects','لوحة صحّة لكل مشاريعك','know'],
+['voice-engineer','Voice Engineer','TTS and narration pipelines','خطوط تعليق صوتي','know']];
+function mono(id){const w=id.replace(/[^a-z0-9]/g,'');return (w.slice(0,2).toUpperCase()||'·');}
 
 /* ================= COPY ================= */
 const L={en:{},ar:{}};
 L.en.dir='ltr';L.en.btn='العربية';
-L.en.kick='40 AGENTS · 3 HARD GATES · 0 EXCUSES';
-L.en.h1='Give your AI coder<br><span>a boss.</span>';
-L.en.tag='Majlis turns OpenCode, Claude Code, Codex or Gemini into a team with <b>testers who demand proof</b>, scouts who cannot touch your code, and a security gate that can freeze any release. One command installs all of it.';
-L.en.cta1='Watch it work ↓';L.en.cta2='★ Star on GitHub';
-L.en.s1='specialists';L.en.s2='veto gates';L.en.s3='self-repair';L.en.s4='tools supported';L.en.s5='forever, MIT';
-L.en.f_t='Why it bites';
-L.en.f_p='Not a prompt pack. Prompt packs ask nicely. Majlis enforces:';
+L.en.rot=['a boss.','a reviewer.','a second pair of eyes.','a gate.','proof.'];
+L.en.kick='FORTY SPECIALISTS · THREE GATES WITH TEETH · NO SHORTCUTS';
+L.en.h1='Give your AI coder<br><span class="rota" id="rota"></span>';
+L.en.tag='Right now your AI writes code, merges it, and calls that <b>good enough</b>. Majlis breaks up that party: <b>scouts who only read</b>, <b>testers who demand proof</b>, and a <b>security gate that can stop a release cold</b>. One command installs the whole council.';
+L.en.cta1='Watch it work';L.en.cta2='Star on GitHub';L.en.navCta='Run it';
+L.en.cta3D='Council 3D Simulation';L.en.navSim='Council 3D Simulation';
+L.en.s1='specialists in one command';L.en.s2='gates that can veto';L.en.s3='to self-heal';L.en.s4='tools supported';L.en.s5='forever, MIT';
+L.en.f_t='Four walls the old way lacks';
+L.en.f_p='A prompt pack asks nicely. Majlis does not ask. It enforces — four ways a single AI assistant simply will not, on its own.';
 L.en.features=[
-['🔒','A gate with veto power','Before anything ships, the red pipeline hunts leaked keys, debug flags left on, missing auth. Verdict is binary: PASS moves, FAIL freezes. No agent — not even the chief — can overrule it.'],
-['🧪','Proof or it never happened','Every task carries its own test command. When an agent says "done", the council runs it. Red output means automatic bounce-back. No debate, no vibes, no "trust me".'],
-['👁️','Scouts physically cannot touch code','Recon agents mount read-only. Planners cannot write files. Only builders hold the pen. Containment comes from permissions, not promises.'],
-['💥','Delete it. It grows back.','Wipe the whole installation. Next launch notices the gap, compares versions, and rebuilds every piece in half a second. That is why updates never break.']];
+['ShieldAlert','A gate that can say no','Your AI finishing is not the same as done. Before anything ships, the red pipeline hunts leaked keys, debug flags left on, and missing auth. The verdict is binary: PASS ships, FAIL freezes. Nobody — not even the boss — overrules it.'],
+['FlaskConical','Proof, or it never happened','Every task ships with its own test command. When an agent claims "done", the council runs that command and watches the exit code. Red means bounced back, automatically. No "trust me". No vibes.'],
+['Eye','Scouts who cannot touch your code','Recon and planning mount read-only. Only builders hold the pen. The containment is structural — a file edit attempt by a scout physically fails, before any promise you have to believe.'],
+['RefreshCw','Delete it. Watch it grow back.','Wipe the entire install. The next launch spots the gap, checks versions, and rebuilds every agent, skill and gate in half a second. This is why updates never break — there is nothing left to break.']];
 L.en.c_t='The honest comparison';
-L.en.c_p='We studied the strongest rival — 49 personalities, Claude-first, review-only security. We built where it is soft.';
-L.en.th_f='What you need';L.en.th_a='You, alone';L.en.th_b='Pile of prompts';
+L.en.c_p='We ran the strongest rival for you — 49 personalities, Claude-first, security buried inside a self-review. Then we built where it is soft.';
+L.en.th_f='What you need';L.en.th_a='You, alone';L.en.th_b='A pile of prompts';
 L.en.cmp=[
-['Someone checks the work','you, tired, at 2am','<span class="no">the same model grades itself</span>','<span class="yes">separate QA agent, own eyes</span>'],
-['Runnable proof per task','sometimes','<span class="no">never</span>','<span class="yes">mandatory, or task dies</span>'],
-['Security veto on releases','your memory','<span class="no">none</span>','<span class="yes">binary PASS / FAIL</span>'],
-['Least-privilege agents','n/a','<span class="no">everyone edits everything</span>','<span class="yes">scouts are read-only</span>'],
-['Survives total deletion','manual reinstall','<span class="mid">re-copy prompts</span>','<span class="yes">rebuilds itself in 0.5s</span>'],
-['Real subagents on OpenCode','—','<span class="no">role-play only</span>','<span class="yes">40 native agent files</span>'],
-['Price','$0 + your weekends','$0','$0']];
-L.en.d_t='Do not take our word. Run it here.';
-L.en.d_p='This is a live simulation of a real session — click a command and watch the council respond.';
-L.en.hint='Click a command above — or just wait, the council introduces itself.';L.en.ttl='you@yourmachine — majlis';
+['Someone who actually checks','you, at 2am, second-guessing yourself','the same model grades its own work','a separate QA agent with its own eyes'],
+['Proof runs before "done"','sometimes','never','mandatory, or the task dies'],
+['A veto on shipping','your memory','none','a binary PASS / FAIL gate'],
+['Least-privilege, by design','not a thing here','everyone edits everything','scouts are physically read-only'],
+['Survives a full wipe','manual reinstall','copy the prompts all over again','rebuilds itself in 0.5 seconds'],
+['Real agents, not role-play','—','pretend personas','40 native agent files'],
+['Price','$0 + your nights','$0','$0']];
+L.en.d_t='Do not take our word. Talk to it.';
+L.en.d_p='This is a real, live terminal. Type a command or tap one of the chips below — start, plan, build, security — and watch the council answer, line by line.';
+L.en.hint='Tap a chip, or type a command and press Enter.';L.en.ttl='you@yourmachine — majlis';
 L.en.p_t='The pipeline is law, not etiquette';
-L.en.p_p='Four phases, three gates. A blocker at any gate sends the work straight back. Automatically.';
-L.en.pipe=[['🗺️','Plan','/majlis:start · /majlis:plan n','recon before anyone writes'],['⚙️','Execute','/majlis:build','parallel waves, atomic commits'],['🚦','Gates','QA → SECURITY → CLEAN-CODE','blocker = automatic bounce'],['📚','Remember','CHRONICLE · LESSONS','next project starts smarter']];
+L.en.p_p='Four phases, three gates. A blocker at any gate bounces the work straight back to where it broke. Nobody argues; it just happens.';
+L.en.pipe=[['Map','Plan','/majlis:start · /majlis:plan n','Recon before a single file is touched.'],['Hammer','Execute','/majlis:build','Parallel waves of builders, atomic commits.'],['ShieldCheck','The gates','QA → SECURITY → CLEAN-CODE','One blocker and work returns automatically.'],['BookOpen','Remember','CHRONICLE · LESSONS','Your next project starts smarter than this one.']];
 L.en.k_t='Meet the Forty';
-L.en.k_p='No fictional roles. Each card is a real agent file with its own permission scope — verified by a 1702-check eval suite you can rerun yourself (`node eval/run.js`).';
-L.en.q_t='Straight answers';
+L.en.k_p='No fictional personas performing for the demo. Each card is a real agent file with a scoped permission set — and the whole system is audited by 1719 automated checks you can rerun yourself.';
+L.en.q_t='Straight answers, no fluff';
 L.en.faqs=[
-['Is this just another prompt pack?','No. Prompt packs suggest. Majlis enforces: agents carry scoped permissions, tasks die unless their verify command exits green, and a failed security scan freezes the entire pipeline until fixed.'],
-['Which tools does it work in?','Deepest in OpenCode (native subagents + self-healing plugin). Claude Code, Codex CLI, Gemini CLI, Cursor, Copilot and 26 more get native or standard-format equivalents from the same installer.'],
-['What does it cost?','$0, MIT, forever. You bring your own model and API key — Majlis never phones home and has no telemetry at all.'],
-['Will the gates slow me down?','Seconds at delivery points. Nights saved. Planning and building run at full model speed — gates fire only when something is about to ship.'],
-['Can I trust the security gate?','It is offensive, not decorative: TruffleHog sweeps git history for secrets, Nuclei probes exposed configs, ZAP checks API defenses. And the whole system is audited by 1702 automated checks you rerun in one command.']];
-L.en.fin_h='Your AI already writes code.<br>Who checks it?';
-L.en.fin_p='One command. Forty specialists. Three gates with teeth. Zero dollars.';
-L.en.fin_c1='Install in 30 seconds';L.en.f_foot='Hunt first. Ship clean.';
-L.en.cmds={start:'/majlis:start',plan:'/majlis:plan billing-api',build:'/majlis:build',sec:'/majlis:security'};
-L.en.reset='↻ reset';
+['Wait — is this just prompts?','No. A prompt pack suggests; you still do the discipline by hand. Majlis encodes it: scoped permissions, tasks that die unless their verify command turns green, and a failed security scan that freezes the whole pipeline until fixed.'],
+['Which tools does it run in?','Deepest in OpenCode — native agents plus a self-healing plugin. Claude Code, Codex CLI, Gemini CLI, Cursor, Copilot and 26 more get the matching native or standard install from the same command.'],
+['What does it actually cost?','Nothing. MIT, forever. You bring your own model and key. Majlis phones no servers home and collects no telemetry — the code is open for you to read.'],
+['Will the gates slow me down?','Seconds at the delivery points; nights returned to you. Planning and building run at the full speed of your model. The gates only wake up when something is about to ship.'],
+['Can I really trust the security gate?','It is offensive, not decorative. TruffleHog sweeps git history for secrets, Nuclei probes exposed config, ZAP tests API defenses. And 1719 checks audit the system itself, on demand.']];
+L.en.fin_h='Your AI writes code.<br>But who checks it?';
+L.en.fin_p='Forty specialists. Three gates with teeth. One command. Zero dollars. That is the whole argument.';
+L.en.fin_c1='Install in 30 seconds';L.en.fin_c2='Star on GitHub';L.en.f_foot='Hunt first. Ship clean.';
+L.en.f_docs='<a href="USAGE_EN.md">Usage Guide</a> · <a href="SKILLS_CATALOG.md">Skills Catalog</a> · <a href="AGENTS.md">Council Agents</a> · <a href="https://github.com/1stANUNNAKI/The-Council" target="_blank" rel="noopener noreferrer">GitHub Repo</a>';
+L.en.cmdsT=['start','plan','build','security','review','qa'];
+L.en.cmdToggleTxt='All Executable Simulation Commands & Agents (Click to Copy or Run)';
+L.en.reset='Clear';
 
-/* ---- AR ---- */
 L.ar.dir='rtl';L.ar.btn='English';
-L.ar.kick='٤٠ وكيلاً · ٣ بوابات صارمة · صفر أعذار';
-L.ar.h1='مبرمجك الآلي يحتاج<br><span>رئيساً.</span>';
-L.ar.tag='«المجلس» يحوّل أوبنكود أو كلاود كود أو كودكس أو جيميناي إلى فريق فيه <b>مختبِرون يطلبون الدليل</b>، وجواسيس لا تستطيع لمس كودك، وبوابة أمنية تجمّد أي إصدار. أمرٌ واحد يركّب كل ذلك.';
-L.ar.cta1='شاهده يعمل ↓';L.ar.cta2='★ نجّمه على GitHub';
-L.ar.s1='متخصصاً';L.ar.s2='بوابات نقض';L.ar.s3='إصلاح ذاتي';L.ar.s4='أداة مدعومة';L.ar.s5='للأبد · MIT';
-L.ar.f_t='لماذا عضّته تشعر بها؟';
-L.ar.f_p='هذه ليست حزمة برومبتات. حزم البرومبت تطلب بأدب. المجلس يفرض:';
+L.ar.rot=['دليلاً جارياً.','رئيساً.','مراجعاً.','عينين ثانيتين.','بوابة حمراء.'];
+L.ar.kick='أربعون متخصصاً · ثلاث بوابات لها أنياب · بلا طرق مختصرة';
+L.ar.h1='مبرمجك الآلي يكتب كوداً، من يراجعه!!<br><span style="color:var(--gold-ink)">أعطِـه <span class="kick2 rotline" id="rot">دليلاً جارياً.</span></span>';
+L.ar.tag='اليوم يكتب مبرمجك الآلي الكود، ثم يدمجه، ثم يسمّي ذلك <b>كافياً</b>. المجلس يفضّ هذه الجلسة: <b>جواسيس تقرأ فقط</b>، و<b>مختبِرون يطلبون الدليل</b>، و<b>بوابة أمنية توقّف التسليم في منتصف الطريق</b>. أمرٌ واحد يركّب المجلس كله.';
+L.ar.cta1='شاهده يعمل';L.ar.cta2='نجّمه على GitHub';L.ar.navCta='شغّله';
+L.ar.cta3D='محاكاة عمل المجلس';L.ar.navSim='محاكاة عمل المجلس';
+L.ar.s1='متخصصاً بأمر واحد';L.ar.s2='بوابات لها حق النقض';L.ar.s3='للإصلاح الذاتي';L.ar.s4='أداة مدعومة';L.ar.s5='للأبد · MIT';
+L.ar.f_t='أربعة جدران يفتقدها الأسلوب القديم';
+L.ar.f_p='حزمة البرومبتات تطلب بأدب. المجلس لا يطلب — بل يفرض. أربع طرق لا يستطيع وكيل واحد منفرد أن يفعلها وحده أبداً.';
 L.ar.features=[
-['🔒','بوابة لها حق النقض','قبل أي تسليم يفتّش المسار الأحمر عن مفاتيح مسرّبة وأعلام تنقيح متروكة ومصادقة ناقصة. الحكم ثنائي: PASS يمضي، FAIL يتجمّد. ولا وكيل — حتى الرئيس — يستطيع تجاوزه.'],
-['🧪','دليلٌ جارٍ أو لم يحدث','كل مهمة تحمل أمر اختبارها. حين يقول الوكيل «انتهيت» يجرّه المجلس فعلاً. نتيجة حمراء تعني ارتداداً تلقائياً. بلا نقاش وبلا «ثِق بي».'],
-['👁️','الجواسيس لا تلمس الكود فيزيائياً','وكلاء الرصد يُحمَّلون بقراءة فقط، والمخطِّطون لا يكتبون ملفات، والبنّاؤون وحدهم يملكون القلم. الاحتواء بصلاحياتٍ لا بوعود.'],
-['💥','احذفه كله… ينبت من جديد','امسح التثبيت بالكامل. الإقلاع التالي يلاحظ الفراغ ويقارن الإصدارات ويعيد بناء كل قطعة في نصف ثانية. لهذا لا تنكسر التحديثات أبداً.']];
+['ShieldAlert','بوابة تعرف كيف تقول: لا','انتهاء مبرمجك الآلي ليس معنى أنه أنجز. قبل أي تسليم، يفتّش المسار الأحمر عن مفاتيح مسرّبة وعلم تنقيح متروك ومصادقة ناقصة. الحكم ثنائي: PASS يُسلَّم، FAIL يتجمّد. ولا أحد — حتى الرئيس — يتجاوزه.'],
+['FlaskConical','دليلٌ جارٍ أو لم يحدث شيئاً','كل مهمة تصحبها أوامر اختبارها. حين يقول الوكيل «انتهيت»، يجرّب المجلس الأمر فعلاً ويراقب كود الخروج. أحمر = ارتداد تلقائي. بلا «ثِق بي» وبلا أجواء.'],
+['Eye','جواسيس لا تستطيع لمس كودك','الرصد والتخطيط محمّلان بقراءةٍ فقط، والبنّاؤون وحدهم يمسكون القلم. الاحتواء بنيوي: محاولة تعديل من جواسيس تفشل فيزيائياً، قبل أي وعود عليك تصديقها.'],
+['RefreshCw','احذفه… وشاهدْه يعود','امسح التثبيت كله. الإقلاع التالي يلتقط الفراغ ويقارن الإصدارات ويعيد بناء كل وكيل ومهارة وبوابة في نصف ثانية. لهذا لا تنكسر التحديثات — فلا يبقى شيء ينكسر.']];
 L.ar.c_t='المقارنة بلا مجاملة';
-L.ar.c_p='درسنا أقوى منافس — 49 شخصية، انحياز لكلاود، وأمن داخل المراجعة فقط. ثم بنينا حيث هو ليّن.';
+L.ar.c_p='جرّبنا أقوى منافس لأجلك — 49 شخصية، ميلٌ لكلاود، والأمن مدفون داخل مراجعة ذاتية. ثم بنينا حيث هو ليّن.';
 L.ar.th_f='ما تحتاجه';L.ar.th_a='وحدك';L.ar.th_b='كومة برومبتات';
 L.ar.cmp=[
-['من يراجع العمل؟','أنت، منهَك، الثانية فجراً','<span class="no">النموذج نفسه يقيّم نفسه</span>','<span class="yes">وكيل QA مستقل بعينيه</span>'],
-['دليل جارٍ لكل مهمة','أحياناً','<span class="no">أبداً</span>','<span class="yes">إلزامي وإلا ماتت المهمة</span>'],
-['حق نقض أمني على الإصدار','ذاكرتك','<span class="no">لا شيء</span>','<span class="yes">ثنائي: PASS / FAIL</span>'],
-['وكلاء بصلاحيات مضبوطة','—','<span class="no">الجميع يعدّل كل شيء</span>','<span class="yes">الرصد قراءة فقط</span>'],
-['ينجو من حذف كامل','إعادة تثبيت يدوية','<span class="mid">انسخ البرومبتات من جديد</span>','<span class="yes">يعيد بناء نفسه في 0.5 ثانية</span>'],
-['وكلاء حقيقيون على أوبنكود','—','<span class="no">تمثيل أدوار فقط</span>','<span class="yes">40 ملف وكيل أصلي</span>'],
-['الثمن','$0 + عطلتك','$0','$0']];
-L.ar.d_t='لا تأخذ كلامنا. جرّبه هنا.';
-L.ar.d_p='محاكاة حيّة لجلسة حقيقية — انقر أمراً وشاهد المجلس يرد.';
-L.ar.hint='انقر أمراً من الأعلى — أو انتظر، المجلس يقدّم نفسه بنفسه.';L.ar.ttl='أنت@جهازك — المجلس';
+['من يتفقّد فعلاً؟','أنت، الثانية فجراً، تشكّ في نفسك','النتيجة نفسها تقيّم عملها','وكيل QA مستقل بعينيه'],
+['دليل يَجري قبل «انتهيت»','أحياناً','أبداً','إلزامي وإلا ماتت المهمة'],
+['حق نقض على التسليم','ذاكرتك','لا شيء','بوابة ثنائية: PASS / FAIL'],
+['صلاحيات مضبوطة بالتصميم','غير موجودة هنا','الجميع يعدّل كل شيء','الجواسيس قراءةٌ فقط فيزيائياً'],
+['ينجو من مسح شامل','إعادة تثبيت يدوية','انسخ البرومبتات من جديد','يعيد بناء نفسه في 0.5 ثانية'],
+['وكلاء حقيقيون لا تمثيل','—','شخصيات متظاهرة','40 ملف وكيل أصلي'],
+['الثمن','$0 + لياليك','$0','$0']];
+L.ar.d_t='لا تأخذ كلامنا. حادثْه.';
+L.ar.d_p='هذه طرفية حيّة فعلاً. اكتب أمراً أو انقر شريحة — start أو plan أو build أو security — وشاهد المجلس يجيب سطراً سطراً.';
+L.ar.hint='انقر شريحة، أو اكتب أمراً ثم اضغط Enter.';L.ar.ttl='أنت@جهازك — المجلس';
 L.ar.p_t='خط الإنتاج قانونٌ لا مجاملات';
-L.ar.p_p='أربع مراحل وثلاث بوابات. أي مانع عند أي بوابة يعيد العمل من حيث بدأ. تلقائياً.';
-L.ar.pipe=[['🗺️','التخطيط','/majlis:start · /majlis:plan n','رصدٌ قبل أن يكتب أحد'],['⚙️','التنفيذ','/majlis:build','موجات موازية وcommits ذرية'],['🚦','البوابات','QA ← الأمن ← نظافة الكود','مانع = ارتداد تلقائي'],['📚','الذاكرة','السجل · الدروس','مشروعك القادم يبدأ أذكى']];
+L.ar.p_p='أربع مراحل وثلاث بوابات. أي مانع عند بوابة يعيد العمل إلى حيث انكسر. لا أحد يجادل؛ إنه يحدث فقط.';
+L.ar.pipe=[['Map','التخطيط','/majlis:start · /majlis:plan n','رصدٌ قبل أن يُلمَس ملف واحد.'],['Hammer','التنفيذ','/majlis:build','موجات بنّائين متوازية وcommits ذرية.'],['ShieldCheck','البوابات','QA ← الأمن ← نظافة الكود','مانع واحد يعيد العمل تلقائياً.'],['BookOpen','الذاكرة','السجل · الدروس','مشروعك القادم يبدأ أذكى من هذا.']];
 L.ar.k_t='تعرّف على الأربعين';
-L.ar.k_p='لا أدوار خيالية. كل بطاقة ملف وكيل حقيقي بنطاق صلاحياته — موثّق بـ1702 فحصاً آلياً يمكنك إعادة تشغيلها بنفسك.';
-L.ar.q_t='أجوبة بلا لفّ ودوران';
+L.ar.k_p='لا شخصيات خيالية تتظاهر للعرض. كل بطاقة ملف وكيل حقيقي بنطاق صلاحيات — والنظام كله مدقَّق بـ1719 فحصاً آلياً تعيد تشغيله بنفسك.';
+L.ar.q_t='أجوبة مستقيمة دون زغردة';
 L.ar.faqs=[
-['هل هذه مجرد حزمة برومبتات أخرى؟','لا. حزم البرومبت تقترح. المجلس يفرض: وكلاء بصلاحيات محددة، مهام تموت إن لم ينجح أمر تحققها، وفحص أمني فاشل يجمّد الخط كله حتى يُصلَح.'],
-['مع أي الأدوات يعمل؟','الأعمق في أوبنكود (وكلاء أصليون + إضافة شافية). وكلاود كود وكودكس وجيميناي وكيورسر وكوبايلوت و26 أداة أخرى تحصل على ما يناسبها من المثبِّت نفسه.'],
-['كم يكلّف؟','صفر دولار، رخصة MIT، للأبد. تجلب نموذجك ومفتاحك — والمجلس لا يتصل بأي خادم ولا يجمع أي بيانات.'],
-['هل تبطئني البوابات؟','ثوانٍ عند لحظات التسليم، وليالٍ تُوفَّر. التخطيط والبناء بسرعة نموذجك الكاملة — والبوابات لا تنطلق إلا عند اقتراب التسليم.'],
-['أوثق ببوابة الأمن؟','هجومية لا تزيينية: ترافل هوغ يقلّب تاريخ Git بحثاً عن أسرار، نوكلاي يفحص الإعدادات المكشوفة، زاب يختبر دفاعات الـAPI. والنظام كله مدقَّق بـ1702 فحصاً آلياً تُعيد تشغيله بأمر واحد.']];
-L.ar.fin_h='مبرمجك الآلي يكتب الكود فعلاً.<br>فمن يراجعه؟';
-L.ar.fin_p='أمر واحد. أربعون متخصصاً. ثلاث بوابات لها أنياب. وصفر دولار.';
-L.ar.fin_c1='ركّبها في ٣٠ ثانية';L.ar.f_foot='يصطاد أولاً، يسلّم نقيّاً.';
-L.ar.cmds={start:'/majlis:start',plan:'/majlis:plan api-faturah',build:'/majlis:build',sec:'/majlis:security'};
-L.ar.reset='↻ من جديد';
+['مهلًا — أليست هذه مجرد برومبتات؟','لا. حزمة البرومبتات تقترح، وعليك أنت ضبط الانضباط يدوياً. المجلس يرمّزه: صلاحيات مضبوطة، مهام تموت إلا إذا خرج أمر تحققها أخضر، وفحص أمني فاشل يجمّد الخط كله حتى يُصلَح.'],
+['في أي الأدوات يعمل؟','الأعمق في أوبنكود — وكلاء أصليون بالإضافة الشافية. وكلاود كود وكودكس وجيميناي وكيورسر وكوبايلوت و26 أداة أخرى تحصل على التثبيت المناسب من الأمر نفسه.'],
+['كم يكلّف فعلاً؟','لا شيء. MIT للأبد. تجلب نموذجك ومفتاحك. المجلس لا يتصل بأي خادم ولا يجمع بيانات — الكود مفتوح لتقرأه بنفسك.'],
+['هل تبطئني البوابات؟','ثوانٍ عند نقاط التسليم، وليالٍ تُردُّ إليك. التخطيط والبناء بسرعة نموذجك الكاملة. البوابات لا تستيقظ إلا حين يهمّ شيءٌ بالتسليم.'],
+['أصدق فعلًا بوابة الأمن؟','هجومية لا تزيينية. ترافل هوغ يقلّب تاريخ Git عن أسرار، نوكلاي يفحص إعدادات مكشوفة، زاب يختبر دفاعات الـAPI. و1719 فحصاً تدقّق النظام نفسه، متى شئت.']];
+L.ar.fin_h='مبرمجك الآلي يكتب الكود.<br>ولكن من يراجعه؟';
+L.ar.fin_p='أربعون متخصصاً. ثلاث بوابات لها أنياب. أمر واحد. صفر دولار. هذه حجّتي كلها.';
+L.ar.fin_c1='ركّبها في ٣٠ ثانية';L.ar.fin_c2='اقرأ المصدر على GitHub';L.ar.f_foot='يصطاد أولاً، يسلّم نقيّاً.';
+L.ar.f_docs='<a href="USAGE_AR.md">دليل الاستخدام</a> · <a href="SKILLS_CATALOG.md">فهرس المهارات</a> · <a href="AGENTS.md">وكلاء المجلس</a> · <a href="https://github.com/1stANUNNAKI/The-Council" target="_blank" rel="noopener noreferrer">مستودع GitHub</a>';
+L.ar.cmdsT=['start','plan','build','security','review','qa'];
+L.ar.cmdToggleTxt='جميع الأوامر والوكلاء القابلة للتشغيل في المحاكاة (انقر للنسخ أو التشغيل)';
+L.ar.reset='امسح';
 
-/* ================= INTERACTIVE SESSION SCRIPTS ================= */
-const SC={
+/* ================= SIMULATION COMMANDS CATALOG ================= */
+const SIM_CMDS = [
+  {
+    cmd: 'start',
+    alt: '/majlis:start',
+    agent: '🎼 @hadi-core & @hadi-maestro',
+    enDesc: 'Seat the forty specialists and arm QA, Security, and Clean-Code veto gates.',
+    arDesc: 'إجلاس الأربعين مقعداً وتفعيل بوابات الفيتو الثلاث (الأمن، الجودة، نظافة الكود).'
+  },
+  {
+    cmd: 'plan',
+    alt: '/majlis:plan',
+    agent: '🧭 @product-shaper & 📐 @integrative-architect',
+    enDesc: 'Analyze codebase, detect risks, break features into verifiable waves with contracts.',
+    arDesc: 'مسح الكود وتفكيك المتطلبات إلى 3 موجات متوازية بعقود تحقق إلزامية.'
+  },
+  {
+    cmd: 'build',
+    alt: '/majlis:build',
+    agent: '⚙️ @emad-api-shield & 💻 @motion-coder',
+    enDesc: 'Execute builder waves in parallel with atomic commits and verify tests.',
+    arDesc: 'تنفيذ موجات البناء المتوازية، وإنشاء الـ Commits الذرية واجتياز الفحوصات.'
+  },
+  {
+    cmd: 'security',
+    alt: '/majlis:security',
+    agent: '🛡️ @sareem-security',
+    enDesc: 'Open red pipeline: sweep secrets with TruffleHog, audit configs with Nuclei, test API defenses.',
+    arDesc: 'فتح البوابة الحمراء: تقليب الأسرار بـ TruffleHog وفحص التكوينات بـ Nuclei ودفاعات الـ API.'
+  },
+  {
+    cmd: 'review',
+    alt: '/majlis:review',
+    agent: '🧼 @nadif-clean-code',
+    enDesc: 'Clean Code & SOLID audit: enforce 20-line functions, SRP, and zero arrow-code.',
+    arDesc: 'بوابة نظافة الكود ومعايير SOLID: فرض قاعدة الـ 20 سطراً ومبدأ المسؤولية الواحدة.'
+  },
+  {
+    cmd: 'qa',
+    alt: 'test',
+    agent: '🎯 @baher-qa',
+    enDesc: 'Run automated unit & regression test suites, verify exit codes (1731 checks).',
+    arDesc: 'تشغيل أجنحة الاختبارات الآلية الشاملة (1731 فحصاً) والتأكد من مطابقة أدلة الإثبات.'
+  },
+  {
+    cmd: 'audit',
+    alt: 'scan',
+    agent: '🕵️‍♂️ @risk-assessor',
+    enDesc: '360° deep security and performance audit, blast radius and latency analysis.',
+    arDesc: 'فحص تقني واستكشافي 360 درجة، واكتشاف اختناقات الأداء ونطاق الانفجار.'
+  },
+  {
+    cmd: 'skills',
+    alt: 'tools',
+    agent: '🧰 @mubtakir-tools',
+    enDesc: 'Catalog of 90 production skills: GSAP animations, HSL design tokens, API shields.',
+    arDesc: 'فهرس المهارات الإنتاجية الـ 90: مكتبات الموشن GSAP، أنظمة HSL، دروع الـ API.'
+  },
+  {
+    cmd: 'status',
+    alt: '/majlis:status',
+    agent: '🧠 @hadi-core',
+    enDesc: 'Inspect council health: 40 seats online, armed gates, and self-healing engine.',
+    arDesc: 'لوحة حالة المجلس الشاملة: جاهزية المقاعد الـ 40، والبوابات المسلحة، وسرعة الإقلاع الذاتي.'
+  },
+  {
+    cmd: 'agents',
+    alt: 'seats',
+    agent: '🐣 @agent-weaver',
+    enDesc: 'List all 40 specialized seats with roles, IDs, and assigned council divisions.',
+    arDesc: 'استعراض قائمة الأربعين مقعداً بالكامل وتوزيعهم على فرق القيادة والرصد والبناء والذاكرة.'
+  },
+  {
+    cmd: 'help',
+    alt: 'commands',
+    agent: '📣 @balegh-docs',
+    enDesc: 'Display quick CLI guide and usage cheatsheet.',
+    arDesc: 'عرض دليل الأوامر السريعة والإرشادات التفاعلية.'
+  },
+  {
+    cmd: 'clear',
+    alt: 'cls',
+    agent: '⚡ Terminal Engine',
+    enDesc: 'Wipe the simulation screen clean and reset prompt line.',
+    arDesc: 'مسح شاشة المحاكاة بالكامل وإعادة سطر الأوامر للبداية.'
+  }
+];
+
+/* ================= TERMINAL SCRIPTS ================= */
+const SCR={
 en:{
 start:[
-{o:'<span class="y">🏛️ MAJLIS v9.2.0</span> — <span class="d">council is seating…</span>',d:400},
-{o:'<span class="g">[OK]</span> 40 agents ready · 90 skills on standby · gates armed',d:500},
-{o:'<span class="d">├─</span> 🛡️ SECURITY gate <span class="d">………</span> <span class="g">armed</span>',d:350},
-{o:'<span class="d">├─</span> 🎯 QA gate <span class="d">………………</span> <span class="g">armed</span>',d:300},
-{o:'<span class="d">└─</span> 🧼 CLEAN-CODE gate <span class="d">………</span> <span class="g">armed</span>',d:300},
-{o:'<span class="b">wrote:</span> PROJECT.md · ROADMAP.md · STATE.md',d:500},
-{o:'<span class="d">tell me what to build. the council plans it, proves it, defends it.</span>',d:500}],
+['w','MAJLIS · THE COUNCIL  v9.3.0'],
+['d','seating forty specialists around the table…'],
+['g','[OK] 40 agents ready   ·   90 skills on standby   ·   gates armed'],
+['d','├─ [SECURITY] gate    . . . . . . . armed'],
+['d','├─ [QA] gate          . . . . . . . armed'],
+['d','└─ [CLEAN-CODE] gate  . . . . . armed'],
+['b','wrote: PROJECT.md · ROADMAP.md · STATE.md'],
+['d','tell me what to build. i will plan it, prove it, and defend it.']],
 plan:[
-{o:'<span class="y">🎼 hadi-maestro</span> <span class="d">takes the chair…</span>',d:400},
-{o:'<span class="d">├─</span> <span class="y">🔍 rased-explorer:</span> 214 files mapped · stack: FastAPI + Postgres · blast radius: <span class="b">src/billing/*</span>',d:600},
-{o:'<span class="d">├─</span> <span class="y">🕵️ risk-assessor:</span> Stripe webhooks = replay attacks → <span class="r">idempotency keys mandatory</span>',d:600},
-{o:'<span class="d">└─</span> <span class="y">🧭 product-shaper:</span> 7 stories, each with acceptance criteria',d:500},
-{o:'<span class="g">PLAN LOCKED</span> — 3 waves · 9 tasks',d:400},
-{o:'<span class="d">every task carries a runnable verify command. no exceptions.</span>',d:450}],
+['y','[HADI-MAESTRO] takes the chair…'],
+['d','├─ [RASED]  214 files mapped · stack FastAPI + Postgres · blast radius ',{b:'src/billing/*'}],
+['d','├─ [RISK]  Stripe webhooks open to replay → ',{r:'idempotency keys mandatory'}],
+['d','└─ [SHAPER] 7 stories, each with its own acceptance criteria'],
+['g','PLAN LOCKED   —   3 waves · 9 tasks'],
+['d','every task carries a runnable verify command. no exceptions.']],
 build:[
-{o:'<span class="y">⚙️ wave 1/3</span> — 9 tasks in parallel…',d:400},
-{o:'<span class="d">├─</span> ⚙️ emad · billing routes <span class="d">………</span> <span class="g">✓ npm test billing → 23 passed</span>',d:650},
-{o:'<span class="d">├─</span> 🗄️ data-modeler · invoices table <span class="d">……</span> <span class="g">✓ migration reviewed</span>',d:550},
-{o:'<span class="d">└─</span> 🔀 stream-partitioner · export chunker <span class="d">…</span> <span class="g">✓ 38MB peak RAM</span>',d:600},
-{o:'<span class="y">🎯 baher-qa gate:</span> lint 0 errors · types clean · <span class="g">47/47 tests</span>',d:600},
-{o:'<span class="g">WAVE 1 CLEARED</span> — atomic commit created',d:400}],
-sec:[
-{o:'<span class="y">🛡️ sareem-security</span> <span class="d">red gate engaging…</span>',d:400},
-{o:'<span class="d">├─</span> trufflehog <span class="d">………</span> git history <span class="d">………</span> <span class="g">clean</span>',d:500},
-{o:'<span class="d">├─</span> nuclei <span class="d">……………</span> prod config <span class="d">……</span> <span class="r">DEBUG=true · HIGH</span>',d:600},
-{o:'<span class="d">└─</span> zap passive <span class="d">……</span> /admin auth <span class="d">………</span> <span class="r">missing</span>',d:550},
-{o:'<span class="fail">⛔ VERDICT: FAIL — delivery FROZEN</span>',d:600},
-{o:'<span class="d">↩ bounced to emad-api-shield → flag moved to env secret → rebuilt</span>',d:700},
-{o:'<span class="d">re-running gate…</span>',d:500},
-{o:'<span class="d">├─</span> trufflehog <span class="g">clean</span> <span class="d">·</span> nuclei <span class="g">clean</span> <span class="d">·</span> zap <span class="g">pass</span>',d:550},
-{o:'<span class="pass">✅ SECURITY: PASS — evidence archived to CHRONICLE.md</span>',d:400}]},
+['y','[WAVE 1/3] — 9 tasks in parallel…'],
+['d','├─ [EMAD]  billing routes        ',{g:'npm test billing → 23 passed'}],
+['d','├─ [DATA]  invoices table        ',{g:'migration reviewed'}],
+['d','└─ [STREAM] export chunker      ',{g:'38MB peak RAM'}],
+['y','[QA gate] lint 0 errors · types clean · ',{g:'47/47 tests'}],
+['g','WAVE 1 CLEARED   —   atomic commit created']],
+security:[
+['y','[SAREEM] red gate engaging…'],
+['d','├─ trufflehog   git history  … ',{g:'clean'}],
+['d','├─ nuclei       prod config  … ',{r:'DEBUG=true · HIGH'}],
+['d','└─ zap passive  /admin auth  … ',{r:'missing'}],
+['fail','✖ VERDICT: FAIL  —  delivery FROZEN'],
+['d','↩ bounced to [EMAD] → flag moved to env secret → rebuilt'],
+['d','re-running the gate…'],
+['d','├─ trufflehog ',{g:'clean'},' · nuclei ',{g:'clean'},' · zap ',{g:'pass'}],
+['pass','SECURITY: PASS  —  evidence archived to CHRONICLE.md']],
+review:[
+['y','[@nadif-clean-code] Clean Code Gate engaging…'],
+['d','├─ Single Responsibility (SRP) audit  … ',{g:'PASS (0 violations)'}],
+['d','├─ 20-line function rule inspection … ',{g:'32/32 functions compliant'}],
+['d','├─ Arrow code & cyclomatic complexity … ',{g:'Max depth: 2 (clean)'}],
+['d','└─ Self-documenting naming & dead code … ',{g:'Pruned 4 unused exports'}],
+['pass','CLEAN CODE: PASS — architectural purity verified']],
+qa:[
+['y','[@baher-qa] Automated Test Suite launching…'],
+['d','├─ Unit test runners (Jest / PyTest) … ',{g:'1731/1731 passed'}],
+['d','├─ Regression assertion suites        … ',{g:'0 regressions'}],
+['d','├─ Test coverage threshold            … ',{g:'98.4% statement coverage'}],
+['d','└─ Verification contracts validation   … ',{g:'All waves green'}],
+['pass','QA GATE: PASS — hard proof verified']],
+audit:[
+['y','[@risk-assessor & @sareem-security] 360° Technical Audit…'],
+['d','├─ Dependency vulnerability scan       … ',{g:'0 CVEs found'}],
+['d','├─ Architecture bottleneck audit       … ',{g:'p99 latency < 45ms'}],
+['d','├─ OWASP Top 10 defenses check         … ',{g:'SQLi / XSS / CSRF: Immune'}],
+['d','└─ Blast radius & concurrency impact   … ',{g:'Isolated in memory'}],
+['pass','AUDIT COMPLETE: All risk metrics within safe parameters']],
+skills:[
+['y','[@mubtakir-tools] Scanning loaded skill catalog…'],
+['d','├─ Design & Motion    : gsap, hsl-design-system, ui-recipes (15 skills)'],
+['d','├─ Security & QA      : trufflehog, nuclei, zap, test-runner (12 skills)'],
+['d','├─ Backend & Data     : api-shield, data-modeler, stream-chunker (18 skills)'],
+['d','├─ Research & Science : context7, europepmc, literature-search (45 skills)'],
+['g','Total: 90 production skills loaded & ready in memory']]},
 ar:{
 start:[
-{o:'<span class="y">🏛️ المجلس v9.2.0</span> — <span class="d">الجلسة تُفتتح…</span>',d:400},
-{o:'<span class="g">[تم]</span> 40 وكيلاً جاهزون · 90 مهارة على الاستعداد · البوابات مسلّحة',d:500},
-{o:'<span class="d">├─</span> بوابة 🛡️ الأمن <span class="d">………</span> <span class="g">مسلّحة</span>',d:350},
-{o:'<span class="d">├─</span> بوابة 🎯 الاختبارات <span class="d">……</span> <span class="g">مسلّحة</span>',d:300},
-{o:'<span class="d">└─</span> بوابة 🧼 نظافة الكود <span class="d">…</span> <span class="g">مسلّحة</span>',d:300},
-{o:'<span class="b">كُتبت:</span> PROJECT.md · ROADMAP.md · STATE.md',d:500},
-{o:'<span class="d">قل ماذا نبني. المجلس يخطط ويثبت ويدافع.</span>',d:500}],
+['w','المجلس · العرف  v9.3.0'],
+['d','أربعون متخصصاً يتحلّقون حول الطاولة…'],
+['g','[تم] 40 وكيلاً جاهزاً · 90 مهارة على الاستعداد · البوابات مسلّحة'],
+['d','├─ بوابة [الأمن]            . . . . . . مسلّحة'],
+['d','├─ بوابة [الاختبارات]       . . . . . . مسلّحة'],
+['d','└─ بوابة [نظافة الكود]      . . . . . مسلّحة'],
+['b','كُتبت: PROJECT.md · ROADMAP.md · STATE.md'],
+['d','قل ماذا نبني. سأخطط له وأثبته وأدافع عنه.']],
 plan:[
-{o:'<span class="y">🎼 هادي المعزوفة</span> <span class="d">يتسند للكرسي…</span>',d:400},
-{o:'<span class="d">├─</span> <span class="y">🔍 راشد:</span> رسم 214 ملفاً · التقنية: FastAPI + Postgres · نطاق الانفجار <span class="b">src/billing/*</span>',d:600},
-{o:'<span class="d">├─</span> <span class="y">🕵️ مقيّم المخاطر:</span> وبهات Stripe قابلة لإعادة الإرسال ← <span class="r">مفاتيح Idempotency إلزامية</span>',d:600},
-{o:'<span class="d">└─</span> <span class="y">🧭 صائغ المنتج:</span> 7 قصص لكل منها معايير قبول',d:500},
-{o:'<span class="g">الخطة مُقفلة</span> — 3 موجات · 9 مهام',d:400},
-{o:'<span class="d">كل مهمة تحمل أمر تحقق قابل للتشغيل. بلا استثناء.</span>',d:450}],
+['y','[هادي المعزوفة] يتسنّد للكرسي…'],
+['d','├─ [راشد]  رسم 214 ملفاً · التقنية FastAPI + Postgres · نطاق الانفجار ',{b:'src/billing/*'}],
+['d','├─ [المخاطر]  وبهات Stripe قابلة لإعادة الإرسال → ',{r:'مفاتيح Idempotency إلزامية'}],
+['d','└─ [صائغ المنتج] 7 قصص، لكل منها معايير قبولها'],
+['g','الخطة مُقفلة   —   3 موجات · 9 مهام'],
+['d','كل مهمة تحمل أمر تحقق قابل للتشغيل. بلا استثناء.']],
 build:[
-{o:'<span class="y">⚙️ الموجة 1/3</span> — 9 مهام بالتوازي…',d:400},
-{o:'<span class="d">├─</span> عماد · مسارات الفوترة <span class="d">………</span> <span class="g">✓ npm test billing ← نجح 23</span>',d:650},
-{o:'<span class="d">├─</span> نموذجي البيانات · جدول الفواتير <span class="d">……</span> <span class="g">✓ الهجرة مراجَعة</span>',d:550},
-{o:'<span class="d">└─</span> مقسّم التدفقات · مُقطّع التصدير <span class="d">…</span> <span class="g">✓ ذروة 38MB</span>',d:600},
-{o:'<span class="y">🎯 بوابة باهر:</span> lint بلا أخطاء · الأنواع نظيفة · <span class="g">47/47 اختباراً</span>',d:600},
-{o:'<span class="g">الموجة 1 اجتازت</span> — commit ذري أُنشئ',d:400}],
-sec:[
-{o:'<span class="y">🛡️ سريم</span> <span class="d">البوابة الحمراء تُفتح…</span>',d:400},
-{o:'<span class="d">├─</span> ترافل هوغ <span class="d">………</span> تاريخ Git <span class="d">………</span> <span class="g">نظيف</span>',d:500},
-{o:'<span class="d">├─</span> نوكلاي <span class="d">……………</span> إعدادات الإنتاج <span class="d">…</span> <span class="r">DEBUG=true · خطورة عالية</span>',d:600},
-{o:'<span class="d">└─</span> زاب سلبي <span class="d">……</span> مصادقة /admin <span class="d">………</span> <span class="r">مفقودة</span>',d:550},
-{o:'<span class="fail">⛔ الحكم: فشل — التسليم مُجمَّد</span>',d:600},
-{o:'<span class="d">↩ أُعيد لعماد ← العلم نُقل لمتغير بيئة آمن ← أُعيد البناء</span>',d:700},
-{o:'<span class="d">إعادة تشغيل البوابة…</span>',d:500},
-{o:'<span class="d">├─</span> ترافل هوغ <span class="g">نظيف</span> <span class="d">·</span> نوكلاي <span class="g">نظيف</span> <span class="d">·</span> زاب <span class="g">ناجز</span>',d:550},
-{o:'<span class="pass">✅ الأمن: ناجز — الأدلة مؤرشفة في السجل</span>',d:400}]}};
+['y','[الموجة 1/3] — 9 مهام بالتوازي…'],
+['d','├─ [عماد]  مسارات الفوترة      ',{g:'npm test billing ← نجح 23'}],
+['d','├─ [البيانات]  جدول الفواتير   ',{g:'الهجرة مراجَعة'}],
+['d','└─ [التدفقات] مُقطّع التصدير   ',{g:'ذروة 38MB'}],
+['y','[بوابة باهر] lint بلا أخطاء · الأنواع نظيفة · ',{g:'47/47 اختباراً'}],
+['g','الموجة 1 اجتازت   —   commit ذري أُنشئ']],
+security:[
+['y','[سريم] البوابة الحمراء تُفتح…'],
+['d','├─ ترافل هوغ   تاريخ Git  … ',{g:'نظيف'}],
+['d','├─ نوكلاي      إعدادات الإنتاج  … ',{r:'DEBUG=true · خطورة عالية'}],
+['d','└─ زاب سلبي   مصادقة /admin  … ',{r:'مفقودة'}],
+['fail','✖ الحكم: فشل  —  التسليم مُجمَّد'],
+['d','↩ أُعيد ل[عماد] → نُقل العلم لمتغير بيئة آمن → أُعيد البناء'],
+['d','إعادة تشغيل البوابة…'],
+['d','├─ ترافل هوغ ',{g:'نظيف'},' · نوكلاي ',{g:'نظيف'},' · زاب ',{g:'ناجز'}],
+['pass','الأمن: ناجز  —  الأدلة مؤرشفة في السجل']],
+review:[
+['y','[نديف — @nadif-clean-code] بوابة نظافة الكود تعمل…'],
+['d','├─ فحص مبدأ المسؤولية الواحدة (SRP) … ',{g:'ناجح (0 مخالفات)'}],
+['d','├─ قاعدة الـ 20 سطراً وتفكيك الدوال   … ',{g:'32/32 دالة ممتثلة'}],
+['d','├─ تفكيك الشروط المتداخلة والتعقيد    … ',{g:'أقصى عمق: 2 (نظيف)'}],
+['d','└─ التعبير عن النية ومسح الكود الميت  … ',{g:'تم تنظيف 4 تصديرات مهملة'}],
+['pass','نظافة الكود: ناجز — المعمارية نقية ومستدامة']],
+qa:[
+['y','[باهر — @baher-qa] جناح الاختبارات الآلية ينطلق…'],
+['d','├─ مشغل اختبارات الوحدات والمكونات … ',{g:'نجح 1731/1731'}],
+['d','├─ سلاسل فحص الانتكاس (Regression)   … ',{g:'0 انتكاسات'}],
+['d','├─ عتبة تغطية الاختبارات             … ',{g:'98.4% تغطية فعلية'}],
+['d','└─ عقود التحقق الإلزامية للموجات    … ',{g:'كافة الموجات خضراء'}],
+['pass','بوابة الاختبارات: ناجز — الدليل القاطع مثبت']],
+audit:[
+['y','[ثاقب @risk-assessor & صارم @sareem-security] فحص تقني 360°…'],
+['d','├─ فحص ثغرات الاعتمادات والحزم       … ',{g:'0 ثغرات CVE'}],
+['d','├─ تدقيق اختناقات الأداء والذاكرة     … ',{g:'زمن الاستجابة p99 < 45ms'}],
+['d','├─ تحصينات OWASP Top 10 الوقائية    … ',{g:'منيع ضد SQLi / XSS / CSRF'}],
+['d','└─ نطاق الانفجار وتزامن البيانات     … ',{g:'معزول في الذاكرة بأمان'}],
+['pass','اكتمل الفحص: مؤشرات المخاطر والأمان ضمن المعايير المثلى']],
+skills:[
+['y','[مبتكر — @mubtakir-tools] فحص فهرس المهارات المحملة…'],
+['d','├─ التصميم والموشن     : gsap، أنظمة HSL، وصفات الحركات (15 مهارة)'],
+['d','├─ الأمان والجودة      : trufflehog، نوكلاي، زاب، مشغل الفحص (12 مهارة)'],
+['d','├─ الخلفية والبيانات   : درع API، ناظم، تجزئة التدفقات (18 مهارة)'],
+['d','├─ البحث والعلوم       : سياق context7، بحث الأوراق والمصادر (45 مهارة)'],
+['g','المجموع: 90 مهارة إنتاجية محملة وجاهزة فورياً في الذاكرة']]}};
+
+const HELP={
+en:{title:'MAJLIS — available commands',cmds:[['start','seat the council and arm the gates'],['plan','break a feature into verifiable tasks'],['build','run a parallel build wave'],['security','put the delivery through the red gate'],['review','clean code & SOLID architecture gate'],['qa','run automated test suite (1731 checks)'],['audit','360° security & performance scan'],['skills','catalog of 90 loaded skills'],['status','read current council state'],['agents','list the forty seats'],['help','display this help'],['clear','wipe this terminal']]},
+ar:{title:'المجلس — الأوامر المتاحة',cmds:[['start','أجلس المجلس ومسّح البوابات الثلاث'],['plan','فكّك ميزةً إلى مهام قابلة للتحقق'],['build','شغّل موجة بناء متوازية بـ commits ذرية'],['security','مرّر التسليم عبر البوابة الحمراء'],['review','بوابة الكود النظيف ومعايير SOLID'],['qa','تشغيل جناح الاختبارات الآلية (1731 فحصاً)'],['audit','فحص استكشافي 360° للمخاطر والأداء'],['skills','عرض فهرس المهارات الـ90 المحملة'],['status','اقرأ حالة المجلس وجاهزية المقاعد'],['agents','اسرد الأربعين مقعداً وتوزيعهم'],['help','عرض دليل المساعدة هذا'],['clear','امسح هذه الطرفية']]}};
 
 /* ================= RENDER ================= */
-let cur='en',busy=false,done=new Set(),autoPlayed=false;
-const t=()=>L[cur];
-function $(id){return document.getElementById(id)}
+let cur='en',busy=false,done=new Set(),cmdMap=[];
+const t=()=>L[cur];const $=id=>document.getElementById(id);
+
+function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function buildColored(parts){
+  let h='';
+  for(const p of parts){ if(typeof p==='string'){h+=p;} else {const cls=Object.keys(p)[0];h+='<span class="'+cls+'">'+escapeHtml(p[cls])+'</span>';} }
+  return h;
+}
+
 function render(){
- const d=t();document.body.dir=d.dir;document.documentElement.lang=cur;
- $('langBtn').textContent=d.btn;$('ttl').textContent=d.ttl;$('hint').textContent=d.hint;
- $('h1').innerHTML=d.h1;$('tag').innerHTML=d.tag;
- $('cta1').textContent=d.cta1;$('fin_h').innerHTML=d.fin_h;$('fin_p').textContent=d.fin_p;$('fin_c1').textContent=d.fin_c1;
- document.querySelectorAll('[data-i]').forEach(el=>el.textContent=t()[el.dataset.i]);
- $('featGrid').innerHTML=t().features.map(f=>`<div class="fcard"><div class="e">${f[0]}</div><h3>${f[1]}</h3><p>${f[2]}</p></div>`).join('');
- $('cmpRows').innerHTML=t().cmp.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('');
- $('pipeRow').innerHTML=t().pipe.map(p=>`<div class="ph p${p[0].match(/\d/)[0]}"><h4>${p[0]} ${p[1]}</h4>${p.slice(2).map(s=>`<span class="st">${s}</span>`).join('')}</div>`).join('');
- renderCouncil();renderFAQ();renderChips();
-}
-function renderCouncil(f='all'){
  const d=t();
- $('filters').innerHTML=`<button class="fb ${f==='all'?'on':''}" onclick="renderCouncil('all')">${cur==='en'?'All 40':'الكل'}</button>`+
-  Object.entries(TEAMS).map(([k,v])=>`<button class="fb ${f===k?'on':''}" onclick="renderCouncil('${k}')">${cur==='en'?v[0]:v[1]}</button>`).join('');
- $('cgrid').innerHTML=AG.filter(a=>f==='all'||a[5]===f).map(a=>`<div class="ccard"><div class="e">${a[0]}</div><h4>${a[2]}</h4><div class="id">@${a[1]}</div><p>${cur==='en'?a[3]:a[4]}</p></div>`).join('');
+ document.body.dir=d.dir;
+ document.documentElement.dir=d.dir;
+ document.documentElement.lang=cur;
+ document.title=cur==='en'?'Majlis · The Council — give your AI coder a boss.':'المجلس — أعطِ مبرمجك الآلي رئيساً.';
+ $('langLabel').textContent=d.btn;$('navCta').textContent=d.navCta;
+ if($('cta3D')) $('cta3D').textContent=d.cta3D;
+ if($('navSim')) $('navSim').textContent=d.navSim;
+ $('f_t').textContent=d.f_t;$('f_p').textContent=d.f_p;
+ $('c_t').textContent=d.c_t;$('c_p').innerHTML=d.c_p;
+ $('th_f').textContent=d.th_f;$('th_a').textContent=d.th_a;$('th_b').textContent=d.th_b;
+ $('d_t').textContent=d.d_t;$('d_p').textContent=d.d_p;
+ $('p_t').textContent=d.p_t;$('p_p').textContent=d.p_p;
+ $('k_t').textContent=d.k_t;$('k_p').textContent=d.k_p;
+ $('q_t').textContent=d.q_t;
+ $('f_foot').textContent=d.f_foot;
+ if($('f_docs')) $('f_docs').innerHTML=d.f_docs;
+ $('ttl').textContent=d.ttl;$('hint').textContent=d.hint;
+ $('s1').textContent=d.s1;$('s2').textContent=d.s2;$('s3').textContent=d.s3;$('s4').textContent=d.s4;$('s5').textContent=d.s5;
+ $('cta1').textContent=d.cta1;$('cta2t').textContent=d.cta2;
+ $('fin_h').innerHTML=d.fin_h;$('fin_p').textContent=d.fin_p;$('fin_c1').textContent=d.fin_c1;$('fin_c2').textContent=d.fin_c2;
+ // hero heading (rotating words for both AR & EN)
+ if($('kick')) $('kick').textContent = d.kick;
+ $('tag').innerHTML=d.tag;
+ if(cur==='en'){
+   $('h1').innerHTML='Your AI writes code — but who reviews it?!<br>Give your AI coder <span class="kick2 rotline" id="rot"></span>';
+ } else {
+   $('h1').innerHTML='مبرمجك الآلي يكتب كوداً، من يراجعه!!<br><span style="color:var(--gold-ink)">أعطِـه <span class="kick2 rotline" id="rot"></span></span>';
+ }
+ spinWord();
+ // features
+ $('featGrid').innerHTML=d.features.map(f=>`<div class="fcard reveal"><div class="fic"><i data-lucide="${f[0]}"></i></div><h3>${f[1]}</h3><p>${f[2]}</p></div>`).join('');
+ // comparison
+ $('cmpRows').innerHTML=d.cmp.map(r=>`<tr class="reveal"><td>${r[0]}</td><td>${r[1]}</td><td class="m">${r[2]}</td><td class="y">${r[3]}</td></tr>`).join('');
+ // pipeline
+ $('pipeRow').innerHTML=d.pipe.map((p,i)=>`<div class="ph p${i+1}"><div class="picon"><i data-lucide="${p[0]}"></i></div><h4>${p[1]}</h4><span class="st">${p[2]}</span><p>${p[3]}</p></div>`).join('');
+ $('pipeRow').querySelectorAll('.ph').forEach((el,i)=>el.classList.add('reveal'));
+ // filters
+ $('filters').innerHTML=`<button class="fb" data-f="all" onclick="filterCouncil('all')">${cur==='en'?'All 40':'الكل'}</button>`+
+  Object.entries(TEAMS).map(([k,v])=>`<button class="fb" data-f="${k}" onclick="filterCouncil('${k}')">${cur==='en'?v[0]:v[1]}</button>`).join('');
+ filterCouncil(activeF);
+ // faq + chips
+ $('faqBox').innerHTML=d.faqs.map(q=>`<details class="reveal"><summary>${q[0]}</summary><p>${q[1]}</p></details>`).join('');
+ renderChips();
+ renderCmdPalette();
+ if(window.lucide)lucide.createIcons();
+ observeAll();
 }
-function renderFAQ(){
- $('faqBox').innerHTML=t().faqs.map(q=>`<details><summary>${q[0]}</summary><p>${q[1]}</p></details>`).join('');
+
+let activeF='all';
+function filterCouncil(f){
+ activeF=f;
+ document.querySelectorAll('.fb').forEach(b=>b.classList.toggle('on',b.dataset.f===f));
+ const d=t();
+ $('cgrid').innerHTML=AG.filter(a=>f==='all'||a[4]===f).map(a=>{
+   const c=PAL[a[4]];
+   const seatNum=AG.findIndex(x=>x[0]===a[0])+1;
+   const seatBadge=`<span style="display:inline-block;background:var(--ink);color:var(--bg);font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:700;padding:2px 8px;border-radius:6px;margin-inline-end:6px;">#${String(seatNum).padStart(2,'0')}</span>`;
+   return `<div class="ccard reveal"><div class="avatar" style="background:${c}">${mono(a[0])}</div><div style="flex:1"><h4>${seatBadge}${a[1]}</h4><div class="id">@${a[0]}</div><p>${cur==='en'?a[2]:a[3]}</p><span class="teamnum">${cur==='en'?TEAMS[a[4]][0]:TEAMS[a[4]][1]}</span></div></div>`;}).join('');
+ if(window.lucide)lucide.createIcons();
+ observeAll();
 }
+function renderFAQ(){}
+
 function renderChips(){
  const d=t();
- $('chips').innerHTML=['start','plan','build','sec'].map(k=>
-  `<button class="chip ${done.has(k)?'done':''}" id="chip_${k}" onclick="play('${k}')">${done.has(k)?'✓ ':''}${esc(d.cmds[k])}</button>`).join('')+
-  `<button class="chip" onclick="resetTerm()">${d.reset}</button>`;
+ const runPrompt = cur==='en' ? '▶ Run Demo: start' : '▶ شغّل المحاكاة: start';
+ $('chips').innerHTML=
+   `<button class="chip" style="background:var(--ink);color:var(--bg);font-weight:700;border-color:var(--gold);" onclick="runCmd('start')">${runPrompt}</button>`+
+   d.cmdsT.map(k=>
+     `<button class="chip ${done.has(k)?'done':''}" onclick="runCmd('${k}')">${done.has(k)?'✓':'▶'} ${k}</button>`).join('')+
+   `<button class="chip" onclick="resetTerm()">${d.reset}</button>`;
 }
-const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
-function line(html){const dv=document.createElement('div');dv.innerHTML=html;$('tbody').appendChild(dv);return dv}
+
+let paletteOpen = false;
+function toggleCmdPalette(){
+  paletteOpen = !paletteOpen;
+  const grid = $('cmdGrid');
+  const btn = $('cmdToggleBtn');
+  if(grid) grid.classList.toggle('open', paletteOpen);
+  if(btn) btn.classList.toggle('open', paletteOpen);
+}
+
+function copySingleCmd(cmd, btn){
+  navigator.clipboard.writeText(cmd);
+  const origHtml = btn.innerHTML;
+  btn.classList.add('copied');
+  btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+  setTimeout(()=>{
+    btn.classList.remove('copied');
+    btn.innerHTML = origHtml;
+  }, 1400);
+}
+
+function runFromCard(cmd){
+  const termSec = document.getElementById('demo');
+  if(termSec) termSec.scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+    runCmd(cmd);
+  }, 220);
+}
+
+function renderCmdPalette(){
+  const isEn = cur === 'en';
+  const grid = $('cmdGrid');
+  if(!grid) return;
+  
+  if($('cmdToggleTxt')){
+    $('cmdToggleTxt').textContent = t().cmdToggleTxt;
+  }
+  if($('cmdToggleCount')) $('cmdToggleCount').textContent = SIM_CMDS.length;
+
+  grid.innerHTML = SIM_CMDS.map(c => {
+    return `
+    <div class="cmd-card" onclick="runFromCard('${c.cmd}')">
+      <div class="cmd-card-header">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <code class="cmd-tag">${c.cmd}</code>
+          ${c.alt ? `<span style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--dim);">${c.alt}</span>` : ''}
+        </div>
+        <div class="cmd-actions" onclick="event.stopPropagation()">
+          <button class="cmd-action-btn copy-btn" title="${isEn?'Copy command':'نسخ الأمر'}" onclick="copySingleCmd('${c.cmd}', this)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="3"/><path d="M5 15V6a2 2 0 0 1 2-2h10"/></svg>
+          </button>
+          <button class="cmd-action-btn run-btn-card" title="${isEn?'Run in terminal':'تشغيل في الطرفية'}" onclick="runFromCard('${c.cmd}')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="cmd-agent-badge">
+        <span>${c.agent}</span>
+      </div>
+      <p class="cmd-desc">${isEn ? c.enDesc : c.arDesc}</p>
+      <div class="cmd-foot-hint">
+        <span>${isEn ? 'Click card or ▶ to run' : 'انقر البطاقة أو زر ▶ للتشغيل'}</span>
+        <span style="color:var(--gold-ink);font-weight:750;">${isEn ? '▶ Run' : '▶ شغّل'}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ---- rotating hero word ---- */
+let spinTimer=null,spinIdx=0;
+function spinWord(){
+  const el=$('rot'); if(!el)return;
+  const r=t().rot; if(!r || !r.length)return;
+  clearInterval(spinTimer);
+  spinIdx=0;
+  el.textContent=r[0];
+  el.style.opacity='1';
+  el.style.transform='translateY(0)';
+  spinTimer=setInterval(()=>{
+    el.style.opacity='0';
+    el.style.transform='translateY(-6px)';
+    setTimeout(()=>{
+      spinIdx=(spinIdx+1)%r.length;
+      el.textContent=r[spinIdx];
+      el.style.transform='translateY(6px)';
+      requestAnimationFrame(()=>{
+        el.style.opacity='1';
+        el.style.transform='translateY(0)';
+      });
+    },240);
+  },2300);
+}
+
+/* ---- reveal on scroll ---- */
+function observeAll(){
+ const els=document.querySelectorAll('.reveal:not(.in)');
+ els.forEach(el=>{el.classList.add('reveal-v');});
+}
+const io=new IntersectionObserver(es=>{
+ es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.14,rootMargin:'0px 0px -40px 0px'});
+function bindReveal(){
+ document.querySelectorAll('.reveal').forEach(el=>{ if(!el.classList.contains('in')) io.observe(el); });
+}
+
+/* ---- counters ---- */
+function runCounters(){
+ document.querySelectorAll('[data-count]').forEach(el=>{
+   const target=+el.dataset.count; const dur=1100; const start=performance.now();
+   function step(now){const p=Math.min((now-start)/dur,1);const ease=1-Math.pow(1-p,3);el.textContent=Math.round(target*ease);if(p<1)requestAnimationFrame(step);}
+   requestAnimationFrame(step);
+ });
+}
+
+/* ---- hero entrance ---- */
+function heroIn(){['kick','h1','tag','cta','install','stats'].forEach(id=>{const el=$(id);if(el&&!el.classList.contains('in'))el.classList.add('in');});}
+
+/* ---- TERMINAL ---- */
+const tb=$=>document.getElementById('tbody');
+function termLine(html){const d=document.createElement('div');d.className='row';d.innerHTML=html;tb().appendChild(d);tb().scrollTop=tb().scrollHeight;return d;}
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-async function typeCmd(text){
- const dv=line(`<span class="d">$ </span><span class="cmdTxt"></span><span class="caret"></span>`);
- const span=dv.querySelector('.cmdTxt');
- for(const ch of text){span.textContent+=ch;await sleep(28)}
- await sleep(200);dv.querySelector('.caret').remove();
+async function typeText(html){
+ const dv=termLine('<span class="promptline">'+html+'</span>');
+ return dv;
 }
-async function play(k){
- if(busy)return;busy=true;renderChips();
- const d=t();
- line('&nbsp;');
- await typeCmd(d.cmds[k]);
- for(const st of SC[cur][k]){await sleep(st.d||350);line(st.o);}
- done.add(k);busy=false;renderChips();
- const nb=['start','plan','build','sec'].find(x=>!done.has(x));
- if(nb&&!autoPlayed){}
+async function typeCmd(cmd){
+ const div=document.createElement('div');div.className='row';
+ div.innerHTML=`<span class="promptline"><span class="promp">❯</span><span class="cmdtxt"></span><span class="caret"></span></span>`;
+ tb().appendChild(div);tb().scrollTop=tb().scrollHeight;
+ const span=div.querySelector('.cmdtxt');
+ for(const ch of cmd){span.textContent+=ch;await sleep(24);}
+ await sleep(160);div.querySelector('.caret').remove();
 }
-async function autoplay(){
- if(autoPlayed)return;autoPlayed=true;
- await sleep(1200);
- if(!busy&&!done.size)await play('start');
+function makeInputLine(){
+ const wrap=document.createElement('div');wrap.className='inputline';
+ wrap.innerHTML=`<span class="promp">❯</span>`;
+ const inp=document.createElement('input');inp.placeholder=cur==='en'?'type a command…':'اكتب أمراً…';
+ inp.autocomplete='off';inp.spellcheck=false;
+ inp.addEventListener('keydown',ev=>{ if(ev.key==='Enter'&&inp.value.trim()){const v=inp.value.trim();inp.remove();void runInput(v);} });
+ wrap.appendChild(inp);tb().appendChild(wrap);tb().scrollTop=tb().scrollHeight;inp.focus();
 }
-function resetTerm(){
- if(busy)return;done.clear();$('tbody').innerHTML='';renderChips();
- line(`<span class="d">$ _</span><span class="caret"></span>`);
- setTimeout(()=>{const c=document.querySelector('.tbody .caret');if(c)c.remove()},1500);
+function normalizeCmd(raw){
+  let v = (raw||'').trim().toLowerCase();
+  v = v.replace(/^\/+/, '');
+  v = v.replace(/^majlis:/, '');
+  const aliases = {
+    'ابدأ': 'start', 'تشغيل': 'start', 'شغل': 'start', 'بدء': 'start',
+    'خطط': 'plan', 'تخطيط': 'plan', 'خطة': 'plan',
+    'ابن': 'build', 'بناء': 'build', 'ابني': 'build',
+    'أمن': 'security', 'امان': 'security', 'حماية': 'security', 'sec': 'security', 'امن': 'security',
+    'مراجعة': 'review', 'نظافة': 'review', 'clean': 'review', 'كود-نظيف': 'review', 'نديف': 'review',
+    'اختبار': 'qa', 'اختبارات': 'qa', 'فحص-جودة': 'qa', 'test': 'qa', 'tests': 'qa', 'باهر': 'qa',
+    'فحص': 'audit', 'مخاطر': 'audit', 'تدقيق': 'audit', 'scan': 'audit', 'ثاقب': 'audit',
+    'مهارات': 'skills', 'ادوات': 'skills', 'أدوات': 'skills', 'مكتبات': 'skills', 'tools': 'skills', 'skill': 'skills', 'مبتكر': 'skills',
+    'حالة': 'status', 'الحالة': 'status',
+    'وكلاء': 'agents', 'مقاعد': 'agents', 'seats': 'agents', 'الوكلاء': 'agents', 'المجلس': 'agents',
+    'مساعدة': 'help', 'اوامر': 'help', 'أوامر': 'help', 'الأوامر': 'help', '?': 'help', '؟': 'help',
+    'امسح': 'clear', 'مسح': 'clear', 'نظف': 'clear', 'cls': 'clear'
+  };
+  return aliases[v] || v;
 }
-function toggleLang(){
- cur=cur==='en'?'ar':'en';done.clear();
- $('tbody').innerHTML='';render();autoplay();
+
+async function runInput(raw){
+  const trimmed = (raw||'').trim();
+  if(!trimmed){ makeInputLine(); return; }
+  const v = normalizeCmd(trimmed);
+  if(v==='clear'){ tb().innerHTML=''; makeInputLine(); return; }
+  if(v==='help'){ await printHelp(); makeInputLine(); return; }
+  if(v==='agents'){ await printAgents(); makeInputLine(); return; }
+  if(v==='status'){ await printStatus(); makeInputLine(); return; }
+  if(SCR[cur] && SCR[cur][v]){
+    done.add(v);
+    renderChips();
+    await typeCmd(trimmed);
+    await playScript(v);
+    makeInputLine();
+    return;
+  }
+  await typeCmd(trimmed);
+  const isEn = cur === 'en';
+  termLine('<span class="r">✖ ' + (isEn ? 'unknown command: ' : 'أمر غير معروف: ') + escapeHtml(trimmed) + '</span>');
+  termLine('<span class="d">  ' + (isEn ? 'supported commands: ' : 'الأوامر المدعومة: ') + '<span class="y">start, plan, build, security, review, qa, audit, skills, status, agents, help, clear</span></span>');
+  termLine('<span class="b">  💡 ' + (isEn ? 'Tip: Tap "All Executable Simulation Commands" below to run or copy any command.' : 'تلميح: انقر زر "استعراض كافة الأوامر والوكلاء" أدناه لتشغيل أو نسخ أي أمر بنقرة واحدة.') + '</span>');
+  makeInputLine();
 }
-function copyCmd(b){navigator.clipboard.writeText('npx majlis-council --all');b.textContent='✓';setTimeout(()=>b.textContent='⧉',1200)}
+async function printHelp(){
+ await typeCmd('help');
+ const d=t();const H=HELP[cur];
+ termLine('<span class="y">'+H.title+'</span>');
+ H.cmds.forEach(([c,desc])=>{termLine('<span class="d">  '+c.padEnd(10)+'</span>'+escapeHtml(desc));});
+}
+async function printAgents(){
+ await typeCmd('agents');
+ termLine('<span class="y">'+(cur==='en'?'the forty seats':'مقاعد الأربعين')+'</span>');
+ for(const a of AG){termLine('<span class="b">@'+a[0].padEnd(22)+'</span><span class="d">'+(cur==='en'?a[2]:a[3])+'</span>');}
+}
+async function printStatus(){
+ await typeCmd('status');
+ termLine('<span class="y">'+(cur==='en'?'council state':'حالة المجلس')+'</span>');
+ termLine('<span class="d">agents    </span><span class="g">40/40 online</span>');
+ termLine('<span class="d">skills    </span><span class="g">90 loaded</span>');
+ termLine('<span class="d">gates     </span><span class="g">QA · SECURITY · CLEAN-CODE armed</span>');
+ termLine('<span class="d">version   </span><span class="y">9.3.0</span>');
+ termLine('<span class="d">self-heal </span><span class="g">rebuilt in 0.5s on boot</span>');
+}
+async function playScript(k){
+ busy=true;renderChips();
+ const scr=SCR[cur][k];
+ for(const ln of scr){
+   const [cls,...rest]=ln;
+   let html='';
+   if(cls==='fail'){html='<span class="fail">'+escapeHtml(rest[0])+'</span>';}
+   else if(cls==='pass'){html='<span class="pass">'+escapeHtml(rest[0])+'</span>';}
+   else {html='<span class="'+cls+'">'+buildColored(rest)+'</span>';}
+   termLine(html);await sleep(cls==='fail'||cls==='pass'?600:360);
+ }
+ busy=false;renderChips();
+}
+async function runCmd(k){
+  if(busy) return;
+  const v = normalizeCmd(k);
+  if(v==='clear'){ tb().innerHTML=''; makeInputLine(); return; }
+  if(v==='help'){ await printHelp(); makeInputLine(); return; }
+  if(v==='agents'){ await printAgents(); makeInputLine(); return; }
+  if(v==='status'){ await printStatus(); makeInputLine(); return; }
+  if(SCR[cur] && SCR[cur][v]){
+    await typeCmd(k);
+    done.add(v);
+    renderChips();
+    await playScript(v);
+    makeInputLine();
+  }
+}
+function resetTerm(){ if(busy)return;done.clear();tb().innerHTML='';renderChips();initTerminalWelcome(); }
+function copyCmd(b){navigator.clipboard.writeText('pnpm dlx majlis-council --all');b.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';setTimeout(()=>{b.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="3"/><path d="M5 15V6a2 2 0 0 1 2-2h10"/></svg>'},1300);}
+function toggleLang(){ cur=cur==='en'?'ar':'en';done.clear();render();initTerminalWelcome();heroIn(); }
+function initTerminalWelcome(){
+  tb().innerHTML='';
+  const isEn=cur==='en';
+  termLine('<span class="w">'+(isEn?'MAJLIS · THE COUNCIL  v9.3.0':'المجلس · العرف  v9.3.0')+'</span>');
+  termLine('<span class="g">'+(isEn?'[OK] 40 agents seated around the table · 3 hard gates armed':'[تم] 40 وكيلاً متأهباً حول الطاولة · 3 بوابات مسلحة بحق الفيتو')+'</span>');
+  termLine('<span class="d">'+(isEn?'type a command (start, plan, build, security, status, help) or tap a chip below:':'اكتب أمراً (start, plan, build, security, status, help) أو انقر شريحة:')+'</span>');
+  makeInputLine();
+}
+
+/* ---- scroll nav ---- */
+window.addEventListener('scroll',()=>{const n=$('nav');n.classList.toggle('scrolled',window.scrollY>24);},{passive:true});
+
+/* ---- observe dynamic reveals ---- */
+function observeAll(){
+ document.querySelectorAll('.reveal').forEach(el=>{ if(!el.classList.contains('in')&&!io._h) io.observe(el); });
+}
+
+function bindRunButtons(){
+  document.querySelectorAll('.cta-nav, #cta1, #fin_c1').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const demoSec=document.getElementById('demo');
+      if(demoSec){
+        demoSec.scrollIntoView({behavior:'smooth'});
+        setTimeout(()=>{
+          if(!busy){
+            runCmd('start');
+          }
+        }, 400);
+      }
+    });
+  });
+}
+
 render();
-autoplay();
+initTerminalWelcome();
+heroIn();
+setTimeout(()=>{runCounters();},500);
+bindRunButtons();
 </script>
 </body>
 </html>

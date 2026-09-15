@@ -24,7 +24,7 @@ lang: [en, ar]
 
 ## Overview
 تحويل المفاهيم المعقدة والهيكليات إلى مخططات بصرية جذابة وسهلة الفهم باستخدام كود Mermaid نقي.
-- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
+- **مستودع GitHub المعتمد:** [https://github.com/1stANUNNAKI/The-Council](https://github.com/1stANUNNAKI/The-Council)
 
 **Do NOT use when:**
 - إدراج وسم HTML داخل نصوص العقد لتجنب أخطاء بناء المخطط.

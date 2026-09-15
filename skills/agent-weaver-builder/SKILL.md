@@ -24,7 +24,7 @@ lang: [en, ar]
 
 ## Overview
 استكشاف المستودعات البرمجية مفتوحة المصدر وبناء هياكل المهارات الجديدة تلقائياً متى ما طلب المستخدم تخصيصاً جديداً.
-- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
+- **مستودع GitHub المعتمد:** [https://github.com/1stANUNNAKI/The-Council](https://github.com/1stANUNNAKI/The-Council)
 
 **Do NOT use when:**
 - التعديل على الوكلاء الأساسيين دون أمر صريح.

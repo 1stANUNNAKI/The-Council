@@ -24,7 +24,7 @@ lang: [en, ar]
 
 ## Overview
 أتمتة عملية الأرشفة والتوثيق النصي الدقيق بكافة تفاصيل التعديلات والسبب والتوقيت الفعلي لضمان تتبع تاريخ المشروع.
-- **مستودع GitHub المعتمد:** [https://github.com/basharalameed/The-Council](https://github.com/basharalameed/The-Council)
+- **مستودع GitHub المعتمد:** [https://github.com/1stANUNNAKI/The-Council](https://github.com/1stANUNNAKI/The-Council)
 
 **Do NOT use when:**
 - كتابة تواريخ وهمية أو تقديرية؛ يلتزم بالتاريخ والساعة الحقيقية للنظام.

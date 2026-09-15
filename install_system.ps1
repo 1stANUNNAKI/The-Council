@@ -23,6 +23,8 @@ $ErrorActionPreference = 'Stop'
 $pkg     = $PSScriptRoot
 $version = (Get-Content (Join-Path $pkg 'VERSION.txt') -Raw).Trim()
 $master  = Join-Path $pkg 'AGENTS.md'
+$coreDoc = Join-Path $pkg 'templates\MAJLIS_CORE_DIRECTIVES.md'
+$corePrompt = Join-Path $pkg 'templates\MAJLIS_CORE_SYSTEM.prompt'
 $nameRegex = '^[a-z0-9]+(-[a-z0-9]+)*$'
 $utf8    = New-Object System.Text.UTF8Encoding($false)
 
@@ -30,7 +32,7 @@ Write-Host "`n=== MAJLIS Council System Installer v$version (multi-platform) ===
 
 function Read-Template([string]$name) {
   $t = [System.IO.File]::ReadAllText((Join-Path $pkg "templates\$name"))
-  return $t.Replace('{MASTER}', $master)
+  return $t.Replace('{MASTER}', $master).Replace('{CORE_DIRECTIVES}', $coreDoc).Replace('{CORE_SYSTEM_PROMPT}', $corePrompt)
 }
 
 # ---------- 1) Normalize skill library once ----------
@@ -45,7 +47,7 @@ $descFix = @{
   'find-skills'                     = 'Search GitHub and skill registries for existing skills/tools before building new ones; returns candidates with install steps.'
   'skill-creator'                   = 'Create new SKILL.md skills and agent definitions following platform frontmatter conventions and validation rules.'
 }
-function Normalize-Name([string]$raw) {
+function Format-SkillName([string]$raw) {
   $n = $raw.ToLowerInvariant() -replace '_+','-' -replace '\s+','-'
   return (($n -replace '[^a-z0-9-]','') -replace '-{2,}','-').Trim('-')
 }
@@ -58,7 +60,7 @@ foreach ($dir in (Get-ChildItem -LiteralPath $srcSkills -Directory)) {
   $text = [System.IO.File]::ReadAllText($f)
   $m = [regex]::Match($text, '(?m)^name:\s*(.+?)\s*$')
   $fmName = if ($m.Success) { $m.Groups[1].Value.Trim() } else { '' }
-  $target = if ($fmName -match $nameRegex) { $fmName } else { Normalize-Name $dir.Name }
+  $target = if ($fmName -match $nameRegex) { $fmName } else { Format-SkillName $dir.Name }
   if ($target -notmatch $nameRegex -or $library.ContainsKey($target)) { continue }
   if ($descFix.ContainsKey($target)) {
     $pat = '(?ms)^(description:\s*)(>-\s*\r?\n(\s+.*\r?\n)*?|.+?)(?=\r?\n[a-zA-Z-]+:|\r?\n---)'
@@ -68,7 +70,7 @@ foreach ($dir in (Get-ChildItem -LiteralPath $srcSkills -Directory)) {
   $library[$target] = $text
   $skillDirs[$target] = $dir.FullName
 }
-function Deploy-SkillLibrary([string]$destRoot) {
+function Install-SkillLibrary([string]$destRoot) {
   foreach ($k in $library.Keys) {
     $d = Join-Path $destRoot $k
     New-Item -ItemType Directory -Path $d -Force | Out-Null
@@ -135,7 +137,7 @@ foreach ($af in (Get-ChildItem "$agentsSrc\*.md")) {
   $desc  = if ($descM.Success) { $descM.Groups[1].Value.Trim() } else { "Antigravity legion role $($af.BaseName)" }
   $converted[$af.BaseName] = @{ body = $body; desc = $desc }
 }
-function Deploy-Agents-Claude([string]$destRoot) {
+function Install-ClaudeAgents([string]$destRoot) {
   New-Item -ItemType Directory -Path $destRoot -Force | Out-Null
   foreach ($id in $converted.Keys) {
     $fm = "---`nname: $id`ndescription: $($converted[$id].desc)`n"
@@ -144,7 +146,7 @@ function Deploy-Agents-Claude([string]$destRoot) {
   }
   return $converted.Count
 }
-function Deploy-Agents-CodexPrompts([string]$destRoot) {
+function Install-CodexAgentPrompts([string]$destRoot) {
   New-Item -ItemType Directory -Path $destRoot -Force | Out-Null
   foreach ($id in $converted.Keys) {
     $hint = "---`ndescription: Adopt the Antigravity '$id' role for this task.`nargument-hint: TASK`n---`n`n"
@@ -155,7 +157,7 @@ function Deploy-Agents-CodexPrompts([string]$destRoot) {
 }
 
 # ---------- 3) Pointer ----------
-function Deploy-Pointer([string]$file) {
+function Install-PointerTemplate([string]$file) {
   $d = Split-Path -Parent $file
   if (-not (Test-Path $d)) { New-Item -ItemType Directory -Path $d -Force | Out-Null }
   [System.IO.File]::WriteAllText($file, (Read-Template 'pointer.md'), $utf8)
@@ -167,12 +169,12 @@ $results = @()
 
 if ($t -contains 'universal') {
   $p = Join-Path $env:USERPROFILE '.agents\skills'
-  $results += "universal : $(Deploy-SkillLibrary $p) skills -> $p"
+  $results += "universal : $(Install-SkillLibrary $p) skills -> $p"
 }
 if ($t -contains 'opencode') {
   $sk = Join-Path $env:USERPROFILE '.config\opencode\skills'
   $ag = Join-Path $env:USERPROFILE '.config\opencode\agents'
-  $results += "opencode  : $(Deploy-SkillLibrary $sk) skills -> $sk"
+  $results += "opencode  : $(Install-SkillLibrary $sk) skills -> $sk"
   Copy-Item -Path "$agentsSrc\*.md" -Destination (New-Item -ItemType Directory -Path $ag -Force).FullName -Force
   $results += "            $($converted.Count) native subagents -> $ag"
   $cm = Join-Path $env:USERPROFILE '.config\opencode\command'
@@ -198,24 +200,24 @@ if ($t -contains 'claude') {
   $sk = Join-Path $env:USERPROFILE '.claude\skills'
   $ag = Join-Path $env:USERPROFILE '.claude\agents'
   $cm = Join-Path $env:USERPROFILE '.claude\commands'
-  $results += "claude    : $(Deploy-SkillLibrary $sk) skills -> $sk"
-  $results += "            $(Deploy-Agents-Claude $ag) subagents -> $ag"
+  $results += "claude    : $(Install-SkillLibrary $sk) skills -> $sk"
+  $results += "            $(Install-ClaudeAgents $ag) subagents -> $ag"
   New-Item -ItemType Directory -Path $cm -Force | Out-Null
   Copy-Item -Path "$pkg\commands\majlis-*.md" -Destination $cm -Force
   $results += "            6 slash commands /majlis-* -> $cm"
-  Deploy-Pointer (Join-Path $env:USERPROFILE '.claude\CLAUDE.md')
+  Install-PointerTemplate (Join-Path $env:USERPROFILE '.claude\CLAUDE.md')
   $results += "            global memory pointer -> ~\.claude\CLAUDE.md"
 }
 if ($t -contains 'codex') {
   $sk = Join-Path $env:USERPROFILE '.codex\skills'
   $pr = Join-Path $env:USERPROFILE '.codex\prompts'
-  $results += "codex     : $(Deploy-SkillLibrary $sk) skills (`$skill-name) -> $sk"
-  $results += "            $(Deploy-Agents-CodexPrompts $pr) role prompts (/prompts:) -> $pr"
+  $results += "codex     : $(Install-SkillLibrary $sk) skills (`$skill-name) -> $sk"
+  $results += "            $(Install-CodexAgentPrompts $pr) role prompts (/prompts:) -> $pr"
   foreach ($cf in (Get-ChildItem "$pkg\commands\majlis-*.md")) {
     [System.IO.File]::WriteAllText((Join-Path $pr ($cf.BaseName + '.md')), ("---`ndescription: Majlis workflow command`nargument-hint: ARGS`n---`n`n" + ([System.IO.File]::ReadAllText($cf.FullName))), $utf8)
   }
   $results += "            6 workflow commands (/prompts:majlis-*) -> $pr"
-  Deploy-Pointer (Join-Path $env:USERPROFILE '.codex\AGENTS.md')
+  Install-PointerTemplate (Join-Path $env:USERPROFILE '.codex\AGENTS.md')
   $results += "            global AGENTS.md pointer -> ~\.codex\AGENTS.md"
 }
 if ($t -contains 'gemini') {
